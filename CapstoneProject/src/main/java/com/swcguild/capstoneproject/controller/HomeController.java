@@ -1,4 +1,4 @@
-package com.swcguild.capstoneproject;
+package com.swcguild.capstoneproject.controller;
 
 import java.util.Map;
 import org.springframework.stereotype.Controller;
