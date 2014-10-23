@@ -35,6 +35,8 @@ public interface AssetInterface {
     
     public List<Asset> getAllAvailableAssetsByAssetType(int assetTypeId);
     
+    public void changeAssetDamageStatus(int assetId);
+    
     
     //Asset Types
     public void addAssetType(AssetType assetType);
@@ -64,10 +66,11 @@ public interface AssetInterface {
     
     public void retireAsset(int assetId);
     
-    public int checkOutAsset(int assetTypeId); 
-    //this one will take a particular assetTypeId and then check out any available asset of that type, then return the assetId  
-    //of that particular table
-    public boolean checkInAsset(int assetId);
+    public int checkOutAsset(int assetTypeId, int eventId); 
+    //this one will take a particular assetTypeId and then check out any available asset of that type for a particular event, 
+    //then return the assetId of that particular table
+    
+    public boolean checkInAsset(int assetId, int eventId);
     //takes an asset Id and then returns whether the Item has been succesfully checked in or not, eg asset.isInStock();
     
 }
