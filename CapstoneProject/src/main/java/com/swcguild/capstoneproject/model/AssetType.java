@@ -16,6 +16,15 @@ public class AssetType {
     private String name;
     private String category;
     private String imagePath;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getAssetTypeId() {
         return assetTypeId;
@@ -52,10 +61,10 @@ public class AssetType {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.assetTypeId;
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.category);
-        hash = 97 * hash + Objects.hashCode(this.imagePath);
+        hash = 67 * hash + this.assetTypeId;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.category);
+        hash = 67 * hash + Objects.hashCode(this.imagePath);
         return hash;
     }
 
@@ -82,6 +91,8 @@ public class AssetType {
         }
         return true;
     }
+
+    
     
     
 }
