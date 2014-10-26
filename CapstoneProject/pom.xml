@@ -5,7 +5,7 @@
     <artifactId>Library</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>Library Spring MVC Webapp</name>
+    <name>Asset Management MVC Webapp</name>
     <url>http://maven.apache.org</url>
   
     <properties>

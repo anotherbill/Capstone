@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,14 +30,14 @@ public class AssetType {
     @Column(name="name")
     private String name;
     
-    @OneToOne(mappedBy = "category")  //I think this is right
+    @ManyToOne
+    @JoinColumn(name="category_id")//I think this is right
     private String category;
     
     @Column(name="image_path")
     private String imagePath;
     
-    @ManyToOne
-    @JoinColumn(name="asset_type_id") //also think this is right, but need to check
+    @OneToMany(mappedBy="asset")
     private List<Asset> assets;
     
 
