@@ -17,18 +17,12 @@ public interface UserInterface {
     
     public void editUser(User user);
     
-    public void deleteUser(int userId);
+    public void deleteUser(User user);
     
     public User getUserByUserId(int userId);
     
-    public void resetPassword(int userId);
-    
-    public void addNoteToUser(String note, int userId);
+    public void resetPassword(User user);
     
     public void changeUserPassword(int userId);
-    
-    
-    
-    
     
 }
