@@ -6,18 +6,40 @@
 package com.swcguild.capstoneproject.model;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author apprentice
  */
+@Entity
+@Table(name="assets")
 public class Asset {
+    @Id
+    @GeneratedValue
+    @Column(name="asset_id")
     private int assetId;
-    AssetType assetType; //using Hibernate we can have the entire type
+    
+    @ManyToOne
+    @JoinColumn(name="asset_type_id")
+    private AssetType assetType; //using Hibernate we can have the entire type
+    
+    @Column(name="in_stock")
     private boolean inStock;
+    
+    @Column(name="serial_number")
     private int serialNumber;
+    
+    @Column(name="damage_loss_theft")
     private String damageStatus; 
 
+    //Getters and setters
     public int getAssetId() {
         return assetId;
     }
