@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.capstoneproject.interfaces;
+package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
-import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -27,14 +27,16 @@ public interface AssetInterface {
     
     public Asset getAssetById(int assetId);
     
-    public List<Asset> getAllAssets();
+    public Asset getAnyAvailableAssetByAssetType(AssetType assetType);
+    
+    public Set<Asset> getAllAssets();
     
     //some basic filtering methods
-    public List<Asset> getAllAvailableAssets();
+    public Set<Asset> getAllAvailableAssets();
     
-    public List<Asset> getAllAssetsByAssetType(AssetType assetType);
+    public Set<Asset> getAllAssetsByAssetType(AssetType assetType);
     
-    public List<Asset> getAllAvailableAssetsByAssetType(AssetType assetType);
+    public Set<Asset> getAllAvailableAssetsByAssetType(AssetType assetType);
     
     public void changeAssetDamageStatus(Asset asset, String damageStatus);
     
@@ -48,10 +50,10 @@ public interface AssetInterface {
     
     public AssetType getAssetTypeById(int assetTypeId);
     
-    public List<AssetType> getAssetTypeByCategory(Category category);
+    public Set<AssetType> getAssetTypeByCategory(Category category);
 
     
-    //public List<AssetType> getAssetTypesByCategory(String category);
+    //public Set<AssetType> getAssetTypesByCategory(String category);
     
     //Categories
     public void addCategory(Category category);
@@ -60,5 +62,5 @@ public interface AssetInterface {
     
     public void deleteCategory(Category category);
     
-    public List<Category> getAllCategories();  
+    public Set<Category> getAllCategories();  
 }

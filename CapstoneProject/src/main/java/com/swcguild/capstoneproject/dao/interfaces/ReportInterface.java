@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.capstoneproject.interfaces;
+package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.google.visualization.datasource.datatable.DataTable;
 

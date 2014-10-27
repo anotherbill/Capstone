@@ -5,7 +5,7 @@
  */
 package com.swcguild.capstoneproject.dao;
 
-import com.swcguild.capstoneproject.interfaces.UserInterface;
+import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.User;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;

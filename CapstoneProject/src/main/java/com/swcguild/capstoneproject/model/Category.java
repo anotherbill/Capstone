@@ -5,6 +5,7 @@
  */
 package com.swcguild.capstoneproject.model;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,32 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.categoryId;
+        hash = 53 * hash + Objects.hashCode(this.categoryName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Category other = (Category) obj;
+        if (this.categoryId != other.categoryId) {
+            return false;
+        }
+        if (!Objects.equals(this.categoryName, other.categoryName)) {
+            return false;
+        }
+        return true;
     }
     
     

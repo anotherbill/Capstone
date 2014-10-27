@@ -7,6 +7,7 @@ package com.swcguild.capstoneproject.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +42,8 @@ public class User {
     @Column(name="name")
     private String name; 
     
-    @OneToMany(mappedBy="event")
-    private List<Event> events;
+    @OneToMany(mappedBy="user")
+    private Set<Event> events;
 
     public int getUserId() {
         return userId;
@@ -92,24 +93,24 @@ public class User {
         this.name = name;
     }
 
-    public List<Event> getEvents() {
+    public Set<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Set<Event> events) {
         this.events = events;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.userId;
-        hash = 97 * hash + Objects.hashCode(this.userName);
-        hash = 97 * hash + Objects.hashCode(this.password);
-        hash = 97 * hash + this.enabled;
-        hash = 97 * hash + (this.goodStanding ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.events);
+        hash = 67 * hash + this.userId;
+        hash = 67 * hash + Objects.hashCode(this.userName);
+        hash = 67 * hash + Objects.hashCode(this.password);
+        hash = 67 * hash + this.enabled;
+        hash = 67 * hash + (this.goodStanding ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.events);
         return hash;
     }
 
@@ -145,11 +146,6 @@ public class User {
         }
         return true;
     }
-    
-    
-
-    
-    
-    
+ 
     
 }

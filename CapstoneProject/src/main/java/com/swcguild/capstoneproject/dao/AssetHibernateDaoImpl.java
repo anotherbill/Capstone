@@ -5,14 +5,15 @@
  */
 package com.swcguild.capstoneproject.dao;
 
-import com.swcguild.capstoneproject.interfaces.AssetInterface;
+import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
-import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,27 +57,34 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public Asset getAssetById(int assetId) {
         return (Asset) currentSession().get(Asset.class, assetId);
     }
-
+    
     @Override
-    public List<Asset> getAllAssets() {
-        return (List<Asset>) currentSession().createCriteria(Asset.class).list();
+    public Asset getAnyAvailableAssetByAssetType(AssetType assetType) {
+        return (Asset) currentSession()
+                .createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId() + " and in_stock = 1")
+                .addEntity(Asset.class);
+    }
+    
+    @Override
+    public Set<Asset> getAllAssets() {
+        return (Set<Asset>) currentSession().createCriteria(Asset.class).list();
     }
 
     @Override
-    public List<Asset> getAllAvailableAssets() {
-        return (List<Asset>) currentSession().createSQLQuery("select * from assets where in_stock = true").addEntity(Asset.class).list();
+    public Set<Asset> getAllAvailableAssets() {
+        return (Set<Asset>) currentSession().createSQLQuery("select * from assets where in_stock = 1").addEntity(Asset.class).list();
     }
 
     @Override
-    public List<Asset> getAllAssetsByAssetType(AssetType assetType) {
-        return (List<Asset>) currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
+    public Set<Asset> getAllAssetsByAssetType(AssetType assetType) {
+        return (Set<Asset>) currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
                 .addEntity(Asset.class).list();
     }
 
     @Override
-    public List<Asset> getAllAvailableAssetsByAssetType(AssetType assetType) {
-        return (List<Asset>) currentSession()
-                .createSQLQuery("select * from assets where in_stock = true and asset_type_id = " + assetType.getAssetTypeId())
+    public Set<Asset> getAllAvailableAssetsByAssetType(AssetType assetType) {
+        return (Set<Asset>) currentSession()
+                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
                 .addEntity(Asset.class).list();
     }
 
@@ -108,8 +116,8 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     }
 
     @Override
-    public List<AssetType> getAssetTypeByCategory(Category category) {
-        return (List<AssetType>) currentSession()
+    public Set<AssetType> getAssetTypeByCategory(Category category) {
+        return (Set<AssetType>) currentSession()
                 .createSQLQuery("select * from asset_types where category_id =" + category.getCategoryId())
                 .addEntity(AssetType.class).list();
     }
@@ -131,8 +139,9 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     }
 
     @Override
-    public List<Category> getAllCategories() {
-        return (List<Category>) currentSession().createCriteria(Category.class).list();
+    public Set<Category> getAllCategories() {
+        return (Set<Category>) currentSession().createCriteria(Category.class).list();
     }
 
+    
 }

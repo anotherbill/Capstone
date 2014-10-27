@@ -6,8 +6,11 @@
 package com.swcguild.capstoneproject.model;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,13 +35,13 @@ public class AssetType {
     
     @ManyToOne
     @JoinColumn(name="category_id")//I think this is right
-    private String category;
+    private Category category;
     
     @Column(name="image_path")
     private String imagePath;
     
-    @OneToMany(mappedBy="asset")
-    private List<Asset> assets;
+    @OneToMany(mappedBy="assetType", fetch = FetchType.EAGER)
+    private Set<Asset> assets;
 
     public int getAssetTypeId() {
         return assetTypeId;
@@ -56,11 +59,11 @@ public class AssetType {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -72,17 +75,51 @@ public class AssetType {
         this.imagePath = imagePath;
     }
 
-    public List<Asset> getAssets() {
+    public Set<Asset> getAssets() {
         return assets;
     }
 
-    public void setAssets(List<Asset> assets) {
+    public void setAssets(Set<Asset> assets) {
         this.assets = assets;
     }
-    
 
-    
-    
-    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.assetTypeId;
+        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(this.category);
+        hash = 29 * hash + Objects.hashCode(this.imagePath);
+        hash = 29 * hash + Objects.hashCode(this.assets);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AssetType other = (AssetType) obj;
+        if (this.assetTypeId != other.assetTypeId) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.category, other.category)) {
+            return false;
+        }
+        if (!Objects.equals(this.imagePath, other.imagePath)) {
+            return false;
+        }
+        if (!Objects.equals(this.assets, other.assets)) {
+            return false;
+        }
+        return true;
+    }
+
     
 }
