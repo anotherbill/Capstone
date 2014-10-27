@@ -27,6 +27,8 @@ public interface EventInterface {
     
     public List<Event> getAllEvents();
     
+    public List<Asset> getAllAssetsForEvent(Event event);
+    
     public void closeEvent(Event event);
     
     

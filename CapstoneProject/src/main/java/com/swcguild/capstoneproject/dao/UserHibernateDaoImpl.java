@@ -22,7 +22,7 @@ public class UserHibernateDaoImpl implements UserInterface{
      private SessionFactory sessionFactory;
 
     @Inject //constructor injection
-    public void setSesstionFactory(SessionFactory sessionFactory) {
+    public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

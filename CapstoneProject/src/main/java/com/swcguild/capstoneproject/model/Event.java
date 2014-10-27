@@ -108,53 +108,7 @@ public class Event {
         this.open = open;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + this.eventId;
-        hash = 37 * hash + Objects.hashCode(this.user);
-        hash = 37 * hash + Objects.hashCode(this.eventName);
-        hash = 37 * hash + Objects.hashCode(this.checkOutDate);
-        hash = 37 * hash + Objects.hashCode(this.dueDate);
-        hash = 37 * hash + Objects.hashCode(this.assets);
-        hash = 37 * hash + (this.open ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Event other = (Event) obj;
-        if (this.eventId != other.eventId) {
-            return false;
-        }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.eventName, other.eventName)) {
-            return false;
-        }
-        if (!Objects.equals(this.checkOutDate, other.checkOutDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.dueDate, other.dueDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.assets, other.assets)) {
-            return false;
-        }
-        if (this.open != other.open) {
-            return false;
-        }
-        return true;
-    }
-
-   
+    
 
     
 }
