@@ -23,6 +23,6 @@ public interface UserInterface {
     
     public void resetPassword(User user);
     
-    public void changeUserPassword(int userId);
+    public void changeUserPassword(User user, String password);
     
 }

@@ -24,15 +24,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class AssetHibernateDaoImpl implements AssetInterface {
-    
+
     private SessionFactory sessionFactory;
-    
+
     @Inject //constructor injection
-    public void setSesstionFactory(SessionFactory sessionFactory){
+    public void setSesstionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
-    private Session currentSession(){
+
+    private Session currentSession() {
         return this.sessionFactory.getCurrentSession();
     }
 
@@ -54,7 +54,7 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 
     @Override
     public Asset getAssetById(int assetId) {
-        return(Asset) currentSession().get(Asset.class, assetId);
+        return (Asset) currentSession().get(Asset.class, assetId);
     }
 
     @Override
@@ -115,9 +115,10 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     }
 
     @Override
-   public void addCategory(Category category) {
-       currentSession().save(category);
-   }
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void addCategory(Category category) {
+        currentSession().save(category);
+    }
 
     @Override
     public void editCategory(Category category) {
@@ -133,5 +134,5 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public List<Category> getAllCategories() {
         return (List<Category>) currentSession().createCriteria(Category.class).list();
     }
-    
+
 }
