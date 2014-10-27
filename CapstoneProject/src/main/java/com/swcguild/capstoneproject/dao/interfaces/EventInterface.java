@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.capstoneproject.interfaces;
+package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
-import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -23,9 +23,11 @@ public interface EventInterface {
     
     public Event getEventByEventId(int eventId);
 
-    public List<Event> getEventsByUserId(int userId);
+    public Set<Event> getEventsByUserId(int userId);
     
-    public List<Event> getAllEvents();
+    public Set<Event> getAllEvents();
+    
+    public Set<Asset> getAllAssetsForEvent(Event event);
     
     public void closeEvent(Event event);
     

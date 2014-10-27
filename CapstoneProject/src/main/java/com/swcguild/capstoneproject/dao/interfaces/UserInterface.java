@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.capstoneproject.interfaces;
+package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.User;
 
@@ -23,6 +23,6 @@ public interface UserInterface {
     
     public void resetPassword(User user);
     
-    public void changeUserPassword(int userId);
+    public void changeUserPassword(User user, String password);
     
 }
