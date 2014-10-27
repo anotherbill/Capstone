@@ -7,6 +7,7 @@ package com.swcguild.capstoneproject.interfaces;
 
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
+import com.swcguild.capstoneproject.model.Category;
 import java.util.List;
 
 /**
@@ -31,11 +32,11 @@ public interface AssetInterface {
     //some basic filtering methods
     public List<Asset> getAllAvailableAssets();
     
-    public List<Asset> getAllAssetsByAssetType();
+    public List<Asset> getAllAssetsByAssetType(AssetType assetType);
     
     public List<Asset> getAllAvailableAssetsByAssetType(AssetType assetType);
     
-    public void changeAssetDamageStatus(Asset asset);
+    public void changeAssetDamageStatus(Asset asset, String damageStatus);
     
     
     //Asset Types
@@ -47,16 +48,17 @@ public interface AssetInterface {
     
     public AssetType getAssetTypeById(int assetTypeId);
     
-    public List<AssetType> getAllAssetTypes();
+    public List<AssetType> getAssetTypeByCategory(Category category);
+
     
     //public List<AssetType> getAssetTypesByCategory(String category);
     
     //Categories
-    public void addCategory(String category);
+    public void addCategory(Category category);
     
-    public void editCategory(int categoryId);
+    public void editCategory(Category category);
     
-    public void deleteCategory(int categoryId);
+    public void deleteCategory(Category category);
     
-    public List<String> getAllCategories();  
+    public List<Category> getAllCategories();  
 }

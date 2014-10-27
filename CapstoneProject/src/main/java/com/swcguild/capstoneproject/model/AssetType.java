@@ -39,8 +39,49 @@ public class AssetType {
     
     @OneToMany(mappedBy="asset")
     private List<Asset> assets;
+
+    public int getAssetTypeId() {
+        return assetTypeId;
+    }
+
+    public void setAssetTypeId(int assetTypeId) {
+        this.assetTypeId = assetTypeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public List<Asset> getAssets() {
+        return assets;
+    }
+
+    public void setAssets(List<Asset> assets) {
+        this.assets = assets;
+    }
     
 
+    
     
     
     

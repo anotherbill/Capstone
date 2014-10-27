@@ -17,7 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,7 +32,7 @@ public class Event {
     @Column(name="event_id")
     private int eventId;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_id")
     private User user; //get everything about the user through Hibernate
     
@@ -49,7 +49,7 @@ public class Event {
     @JoinTable(name="assets_events", joinColumns ={@JoinColumn(name="event_id")}, inverseJoinColumns={@JoinColumn(name="asset_id")})
     private List<Asset> assets; //we can do this through Hibernate
     
-    @Column(name="open")
+    @Column(name="is_open")
     boolean open;
 
     public int getEventId() {
