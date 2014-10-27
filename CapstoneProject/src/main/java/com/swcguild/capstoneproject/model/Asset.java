@@ -6,18 +6,40 @@
 package com.swcguild.capstoneproject.model;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author apprentice
  */
+@Entity
+@Table(name="assets")
 public class Asset {
+    @Id
+    @GeneratedValue
+    @Column(name="asset_id")
     private int assetId;
-    private String assetType;
+    
+    @ManyToOne
+    @JoinColumn(name="asset_type_id")
+    private AssetType assetType; //using Hibernate we can have the entire type
+    
+    @Column(name="in_stock")
     private boolean inStock;
+    
+    @Column(name="serial_number")
     private int serialNumber;
+    
+    @Column(name="damage_loss_theft")
     private String damageStatus; 
 
+    //Getters and setters
     public int getAssetId() {
         return assetId;
     }
@@ -26,11 +48,11 @@ public class Asset {
         this.assetId = assetId;
     }
 
-    public String getAssetType() {
+    public AssetType getAssetType() {
         return assetType;
     }
 
-    public void setAssetType(String assetType) {
+    public void setAssetType(AssetType assetType) {
         this.assetType = assetType;
     }
 
@@ -61,11 +83,11 @@ public class Asset {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 67 * hash + this.assetId;
-        hash = 67 * hash + Objects.hashCode(this.assetType);
-        hash = 67 * hash + (this.inStock ? 1 : 0);
-        hash = 67 * hash + this.serialNumber;
-        hash = 67 * hash + Objects.hashCode(this.damageStatus);
+        hash = 41 * hash + this.assetId;
+        hash = 41 * hash + Objects.hashCode(this.assetType);
+        hash = 41 * hash + (this.inStock ? 1 : 0);
+        hash = 41 * hash + this.serialNumber;
+        hash = 41 * hash + Objects.hashCode(this.damageStatus);
         return hash;
     }
 
@@ -95,6 +117,8 @@ public class Asset {
         }
         return true;
     }
+
+    
     
     
 }

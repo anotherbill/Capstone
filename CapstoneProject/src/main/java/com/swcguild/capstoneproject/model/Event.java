@@ -8,18 +8,49 @@ package com.swcguild.capstoneproject.model;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author apprentice
  */
+@Entity
+@Table(name="events")
 public class Event {
+    @Id
+    @GeneratedValue
+    @Column(name="event_id")
     private int eventId;
-    private int userId;
+    
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user; //get everything about the user through Hibernate
+    
+    @Column(name="event_name")
     private String eventName;
+    
+    @Column(name="check_out_date")
     private LocalDate checkOutDate;
+    
+    @Column(name="due_date")
     private LocalDate dueDate;
-    private List<Integer> assets;
+    
+    @ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.ALL})
+    @JoinTable(name="assets_events", joinColumns ={@JoinColumn(name="event_id")}, inverseJoinColumns={@JoinColumn(name="asset_id")})
+    private List<Asset> assets; //we can do this through Hibernate
+    
+    @Column(name="open")
+    boolean open;
 
     public int getEventId() {
         return eventId;
@@ -29,12 +60,12 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getEventName() {
@@ -61,23 +92,32 @@ public class Event {
         this.dueDate = dueDate;
     }
 
-    public List<Integer> getAssets() {
+    public List<Asset> getAssets() {
         return assets;
     }
 
-    public void setAssets(List<Integer> assets) {
+    public void setAssets(List<Asset> assets) {
         this.assets = assets;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + this.eventId;
-        hash = 23 * hash + this.userId;
-        hash = 23 * hash + Objects.hashCode(this.eventName);
-        hash = 23 * hash + Objects.hashCode(this.checkOutDate);
-        hash = 23 * hash + Objects.hashCode(this.dueDate);
-        hash = 23 * hash + Objects.hashCode(this.assets);
+        int hash = 3;
+        hash = 37 * hash + this.eventId;
+        hash = 37 * hash + Objects.hashCode(this.user);
+        hash = 37 * hash + Objects.hashCode(this.eventName);
+        hash = 37 * hash + Objects.hashCode(this.checkOutDate);
+        hash = 37 * hash + Objects.hashCode(this.dueDate);
+        hash = 37 * hash + Objects.hashCode(this.assets);
+        hash = 37 * hash + (this.open ? 1 : 0);
         return hash;
     }
 
@@ -93,7 +133,7 @@ public class Event {
         if (this.eventId != other.eventId) {
             return false;
         }
-        if (this.userId != other.userId) {
+        if (!Objects.equals(this.user, other.user)) {
             return false;
         }
         if (!Objects.equals(this.eventName, other.eventName)) {
@@ -108,18 +148,13 @@ public class Event {
         if (!Objects.equals(this.assets, other.assets)) {
             return false;
         }
+        if (this.open != other.open) {
+            return false;
+        }
         return true;
     }
+
+   
+
     
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Event Id: ").append(eventId).append("\n");
-        sb.append("Event Name: ").append(eventName).append("\n");
-        sb.append("User Id: ").append(userId).append("\n");
-        sb.append("Start Date: ").append(checkOutDate).append("\n");
-        sb.append("Due Date: ").append(dueDate).append("\n");
-        sb.append("Number of Assets: ").append(assets.size()).append("\n");
-        return sb.toString();
-    }
 }

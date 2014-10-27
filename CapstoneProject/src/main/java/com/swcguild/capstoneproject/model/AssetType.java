@@ -5,92 +5,41 @@
  */
 package com.swcguild.capstoneproject.model;
 
-import java.util.Objects;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author apprentice
  */
+@Entity
+@Table(name="asset_types")
 public class AssetType {
+    @Id
+    @GeneratedValue
+    @Column(name="asset_type_id")
     private int assetTypeId;
+    
+    @Column(name="name")
     private String name;
+    
+    @ManyToOne
+    @JoinColumn(name="category_id")//I think this is right
     private String category;
+    
+    @Column(name="image_path")
     private String imagePath;
-    private int count;
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getAssetTypeId() {
-        return assetTypeId;
-    }
-
-    public void setAssetTypeId(int assetTypeId) {
-        this.assetTypeId = assetTypeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.assetTypeId;
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.category);
-        hash = 67 * hash + Objects.hashCode(this.imagePath);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AssetType other = (AssetType) obj;
-        if (this.assetTypeId != other.assetTypeId) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.category, other.category)) {
-            return false;
-        }
-        if (!Objects.equals(this.imagePath, other.imagePath)) {
-            return false;
-        }
-        return true;
-    }
+    
+    @OneToMany(mappedBy="asset")
+    private List<Asset> assets;
+    
 
     
     

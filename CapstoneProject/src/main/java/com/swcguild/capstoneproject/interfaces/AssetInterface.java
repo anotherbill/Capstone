@@ -15,27 +15,27 @@ import java.util.List;
  */
 public interface AssetInterface {
     //This interface contains all the methods necessary for managing the inventory
-    //This includes CRUD on Assets, AssetTypes, and Catgories
+    //This includes CRUD on Assets, AssetTypes, and Categories
     
     //Assets
     public void addAsset(Asset asset);
     
     public void editAsset(Asset asset);
     
-    public void deleteAsset(int assetId);
+    public void deleteAsset(Asset asset);
     
     public Asset getAssetById(int assetId);
     
     public List<Asset> getAllAssets();
     
-        //some basic filtering methods
+    //some basic filtering methods
     public List<Asset> getAllAvailableAssets();
     
     public List<Asset> getAllAssetsByAssetType();
     
-    public List<Asset> getAllAvailableAssetsByAssetType(int assetTypeId);
+    public List<Asset> getAllAvailableAssetsByAssetType(AssetType assetType);
     
-    public void changeAssetDamageStatus(int assetId);
+    public void changeAssetDamageStatus(Asset asset);
     
     
     //Asset Types
@@ -58,19 +58,5 @@ public interface AssetInterface {
     
     public void deleteCategory(int categoryId);
     
-    public List<String> getAllCategories();
-    
-    
-    //Operation Methods
-    public void addNoteToAsset(String note, int assetId);
-    
-    public void retireAsset(int assetId);
-    
-    public int checkOutAsset(int assetTypeId, int eventId); 
-    //this one will take a particular assetTypeId and then check out any available asset of that type for a particular event, 
-    //then return the assetId of that particular table
-    
-    public boolean checkInAsset(int assetId, int eventId);
-    //takes an asset Id and then returns whether the Item has been succesfully checked in or not, eg asset.isInStock();
-    
+    public List<String> getAllCategories();  
 }

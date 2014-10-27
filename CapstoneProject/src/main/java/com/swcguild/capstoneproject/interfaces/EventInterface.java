@@ -19,17 +19,15 @@ public interface EventInterface {
     
     public void editEvent(Event event);
     
-    public void deleteEvent(int eventId);
+    public void deleteEvent(Event event);
     
     public Event getEventByEventId(int eventId);
-    
-    List<Asset> getAllAssetsByEventId(int eventId);
-    
-    public void addAssetToEvent(int eventId);
-    
-    public void addNoteToEvent(String note, int eventId);
-    
+
     public List<Event> getEventsByUserId(int userId);
+    
+    public List<Event> getAllEvents();
+    
+    public void closeEvent(Event event);
     
     
     
