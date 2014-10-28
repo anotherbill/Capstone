@@ -147,7 +147,14 @@
             <groupId>com.google.visualization</groupId>
             <artifactId>visualization-datasource</artifactId>
             <version>1.1.1</version>
-        </dependency>                                          
+        </dependency>
+        <!-- needed for ScriptRunner -->
+        <dependency>
+            <groupId>org.apache.ibatis</groupId>
+            <artifactId>ibatis-core</artifactId>
+            <version>3.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
