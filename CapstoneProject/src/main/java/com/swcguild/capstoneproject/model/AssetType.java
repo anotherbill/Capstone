@@ -33,14 +33,14 @@ public class AssetType {
     @Column(name="name")
     private String name;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_id")//I think this is right
     private Category category;
     
     @Column(name="image_path")
     private String imagePath;
     
-    @OneToMany(mappedBy="assetType", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="assetType")
     private Set<Asset> assets;
 
     public int getAssetTypeId() {
@@ -86,11 +86,10 @@ public class AssetType {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.assetTypeId;
-        hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + Objects.hashCode(this.category);
-        hash = 29 * hash + Objects.hashCode(this.imagePath);
-        hash = 29 * hash + Objects.hashCode(this.assets);
+        hash = 61 * hash + this.assetTypeId;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.category);
+        hash = 61 * hash + Objects.hashCode(this.imagePath);
         return hash;
     }
 
@@ -115,11 +114,10 @@ public class AssetType {
         if (!Objects.equals(this.imagePath, other.imagePath)) {
             return false;
         }
-        if (!Objects.equals(this.assets, other.assets)) {
-            return false;
-        }
         return true;
     }
+
+    
 
     
 }
