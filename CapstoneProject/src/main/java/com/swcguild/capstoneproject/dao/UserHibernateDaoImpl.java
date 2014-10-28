@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author apprentice
  */
+@Transactional
 public class UserHibernateDaoImpl implements UserInterface{
 
      private SessionFactory sessionFactory;
