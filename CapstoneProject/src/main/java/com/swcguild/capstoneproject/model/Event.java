@@ -32,7 +32,7 @@ public class Event {
     @Column(name="event_id")
     private int eventId;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user; //get everything about the user through Hibernate
     
@@ -110,14 +110,12 @@ public class Event {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.eventId;
-        hash = 89 * hash + Objects.hashCode(this.user);
-        hash = 89 * hash + Objects.hashCode(this.eventName);
-        hash = 89 * hash + Objects.hashCode(this.checkOutDate);
-        hash = 89 * hash + Objects.hashCode(this.dueDate);
-        hash = 89 * hash + Objects.hashCode(this.assets);
-        hash = 89 * hash + (this.open ? 1 : 0);
+        int hash = 3;
+        hash = 23 * hash + this.eventId;
+        hash = 23 * hash + Objects.hashCode(this.eventName);
+        hash = 23 * hash + Objects.hashCode(this.checkOutDate);
+        hash = 23 * hash + Objects.hashCode(this.dueDate);
+        hash = 23 * hash + (this.open ? 1 : 0);
         return hash;
     }
 
@@ -133,9 +131,6 @@ public class Event {
         if (this.eventId != other.eventId) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
         if (!Objects.equals(this.eventName, other.eventName)) {
             return false;
         }
@@ -145,13 +140,12 @@ public class Event {
         if (!Objects.equals(this.dueDate, other.dueDate)) {
             return false;
         }
-        if (!Objects.equals(this.assets, other.assets)) {
-            return false;
-        }
         if (this.open != other.open) {
             return false;
         }
         return true;
     }
+
+    
    
 }

@@ -12,11 +12,13 @@ import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author apprentice
  */
+@Transactional
 public class EventHibernateDaoImpl implements EventInterface {
 
     private SessionFactory sessionFactory;

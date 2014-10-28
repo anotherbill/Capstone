@@ -8,6 +8,7 @@ package com.swcguild.capstoneproject.model;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -26,7 +27,7 @@ public class Asset {
     @Column(name="asset_id")
     private int assetId;
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="asset_type_id")
     private AssetType assetType; //using Hibernate we can have the entire type
     
@@ -83,11 +84,10 @@ public class Asset {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + this.assetId;
-        hash = 41 * hash + Objects.hashCode(this.assetType);
-        hash = 41 * hash + (this.inStock ? 1 : 0);
-        hash = 41 * hash + this.serialNumber;
-        hash = 41 * hash + Objects.hashCode(this.damageStatus);
+        hash = 67 * hash + this.assetId;
+        hash = 67 * hash + (this.inStock ? 1 : 0);
+        hash = 67 * hash + this.serialNumber;
+        hash = 67 * hash + Objects.hashCode(this.damageStatus);
         return hash;
     }
 
@@ -103,9 +103,6 @@ public class Asset {
         if (this.assetId != other.assetId) {
             return false;
         }
-        if (!Objects.equals(this.assetType, other.assetType)) {
-            return false;
-        }
         if (this.inStock != other.inStock) {
             return false;
         }
@@ -117,6 +114,8 @@ public class Asset {
         }
         return true;
     }
+
+    
 
     
     
