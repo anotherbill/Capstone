@@ -5,11 +5,11 @@
  */
 package com.swcguild.capstoneproject.model;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -42,7 +42,7 @@ public class User {
     @Column(name="name")
     private String name; 
     
-    @OneToMany(mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
     private Set<Event> events;
 
     public int getUserId() {
