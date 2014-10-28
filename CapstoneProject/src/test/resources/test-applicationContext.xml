@@ -34,6 +34,18 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
+    <bean id="assetDao" class="com.swcguild.capstoneproject.dao.AssetHibernateDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="eventDao" class="com.swcguild.capstoneproject.dao.EventHibernateDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="noteDao" class="com.swcguild.capstoneproject.dao.NoteDbImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
     <bean id="jdbcTemplate"
           class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource" />
