@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.swcguild.capstoneproject.dao.test;
+package com.swcguild.capstoneproject.test;
 
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.model.Event;
@@ -62,7 +62,10 @@ public class EventDaoTest {
     @Test
     public void crudEventTest() {
         //System.out.println(dao.getEventByEventId(5).getEventName());
-        assertEquals(dao.getEventByEventId(5).getEventName(), "Girl scouts camping trip");
+        Event e = new Event();
+        int eventId = 5;
         
+        e = dao.getEventByEventId(eventId);
+        assertEquals(dao.getEventByEventId(eventId).getEventName(), e.getEventName());
     }
 }
