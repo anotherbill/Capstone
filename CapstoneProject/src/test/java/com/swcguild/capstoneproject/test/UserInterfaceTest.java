@@ -125,6 +125,22 @@ public class UserInterfaceTest {
         assertTrue(failure);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertTrue(null == fromStorage);
+    }
+    
+    @Test
+    public void resetupdatePasswordTest(){
+        User fromStorage;
+        String resetPw = "???";
+        String newPw = "new0";
+        
+        userDao.addUser(u1);
+        userDao.resetPassword(u1);
+        fromStorage = userDao.getUserByUserId(u1.getUserId());
+        //assertEquals(resetPw, fromStorage.getPassword());
+        
+        userDao.changeUserPassword(u1, newPw);
+        fromStorage = userDao.getUserByUserId(u1.getUserId());
+        assertEquals(newPw, fromStorage.getPassword());
         
     }
 }
