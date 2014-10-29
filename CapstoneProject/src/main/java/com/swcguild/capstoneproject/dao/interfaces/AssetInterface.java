@@ -31,6 +31,7 @@ public interface AssetInterface {
     
     public Set<Asset> getAllAssets();
     
+    
     //some basic filtering methods
     public Set<Asset> getAllAvailableAssets();
     

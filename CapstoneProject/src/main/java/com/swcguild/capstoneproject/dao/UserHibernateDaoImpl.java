@@ -54,7 +54,8 @@ public class UserHibernateDaoImpl implements UserInterface{
 
     @Override
     public void resetPassword(User user) {
-        //I have no idea how to do this yet
+        user.setPassword(user.getUserName());
+        currentSession().update(user);
     }
 
     @Override

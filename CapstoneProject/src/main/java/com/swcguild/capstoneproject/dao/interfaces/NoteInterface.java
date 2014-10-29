@@ -5,6 +5,8 @@
  */
 package com.swcguild.capstoneproject.dao.interfaces;
 
+import java.util.Set;
+
 /**
  *
  * @author apprentice
@@ -17,5 +19,11 @@ public interface NoteInterface {
     public void addNoteToEvent(String note, int eventId);
 
     public void addNoteToUser(String note, int userId);
+    
+    public Set<String> getEventNote(int eventId);
+    
+    public Set<String> getUserNotes(int userId);
+    
+    public Set<String> getAssetNotes(int assetId);
     
 }
