@@ -130,13 +130,14 @@ public class UserInterfaceTest {
     @Test
     public void resetupdatePasswordTest(){
         User fromStorage;
-        String resetPw = "???";
+        String resetPw;
         String newPw = "new0";
         
         userDao.addUser(u1);
         userDao.resetPassword(u1);
+        resetPw = u1.getUserName();
         fromStorage = userDao.getUserByUserId(u1.getUserId());
-        //assertEquals(resetPw, fromStorage.getPassword());
+        assertEquals(resetPw, fromStorage.getPassword());
         
         userDao.changeUserPassword(u1, newPw);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
