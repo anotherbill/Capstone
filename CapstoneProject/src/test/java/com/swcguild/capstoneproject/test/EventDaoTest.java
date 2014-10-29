@@ -7,6 +7,10 @@ package com.swcguild.capstoneproject.test;
 
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.model.Event;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.SQLException;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -15,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -22,6 +27,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class EventDaoTest {
 
+    JdbcTemplate jdbcT;
     EventInterface dao;
     Event e1;
     Event e2;
@@ -40,11 +46,15 @@ public class EventDaoTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws SQLException, FileNotFoundException {
         // Ask Spring for Dao
         ApplicationContext ctx
             = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         dao = (EventInterface) ctx.getBean("eventDao");
+        
+        jdbcT = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
+        ScriptRunner scrRun = new ScriptRunner(jdbcT.getDataSource().getConnection());
+        scrRun.runScript(new FileReader("quartermaster_test_data_script.sql"));
         
         
     }
