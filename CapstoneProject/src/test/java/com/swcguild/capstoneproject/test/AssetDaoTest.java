@@ -11,6 +11,7 @@ import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,18 +49,15 @@ public class AssetDaoTest {
         jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
         
         Tents = new Category();
-        Tents.setCategoryId(1);
         Tents.setCategoryName("Tents");
         
         t1 = new AssetType();
-        t1.setAssetTypeId(1);
         t1.setName("Tent");
         t1.setCategory(Tents);
         t1.setImagePath("tentImage.jpg");
         
         
         a = new Asset();
-        a.setAssetId(1);
         a.setAssetType(t1);
         a.setSerialNumber(111);
         a.setInStock(true);
@@ -74,7 +72,8 @@ public class AssetDaoTest {
 
    
     @Test
-    public void addGetRemoveAsset(){
+    public void addGetRemoveCategory(){
+        dao.addCategory(Tents);
         
     }
     

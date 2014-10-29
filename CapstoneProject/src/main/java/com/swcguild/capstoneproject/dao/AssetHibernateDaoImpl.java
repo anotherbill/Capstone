@@ -9,11 +9,12 @@ import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,35 +58,39 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public Asset getAssetById(int assetId) {
         return (Asset) currentSession().get(Asset.class, assetId);
     }
-    
+
     @Override
     public Asset getAnyAvailableAssetByAssetType(AssetType assetType) {
         return (Asset) currentSession()
-                .createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId() + " and in_stock = 1")
+                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
                 .addEntity(Asset.class);
     }
-    
+
     @Override
     public Set<Asset> getAllAssets() {
-        return (Set<Asset>) currentSession().createCriteria(Asset.class).list();
+        List<Asset> getAllAssetsList =  currentSession().createCriteria(Asset.class).list();
+        return new HashSet<>(getAllAssetsList);
     }
 
     @Override
     public Set<Asset> getAllAvailableAssets() {
-        return (Set<Asset>) currentSession().createSQLQuery("select * from assets where in_stock = 1").addEntity(Asset.class).list();
+       List<Asset> getAllAvailableAssetsList = currentSession().createSQLQuery("select * from assets where in_stock = 1").addEntity(Asset.class).list();
+       return new HashSet<>(getAllAvailableAssetsList);
     }
 
     @Override
     public Set<Asset> getAllAssetsByAssetType(AssetType assetType) {
-        return (Set<Asset>) currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
+       List<Asset> getAllAssetsByAssetTypeList = currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
                 .addEntity(Asset.class).list();
+       return new HashSet<>(getAllAssetsByAssetTypeList);
     }
 
     @Override
     public Set<Asset> getAllAvailableAssetsByAssetType(AssetType assetType) {
-        return (Set<Asset>) currentSession()
-                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
+        List<Asset> getAllAvailableAssetsByAssetTypeList = currentSession()
+                .createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId() + " and in_stock = 1")
                 .addEntity(Asset.class).list();
+        return new HashSet<>(getAllAvailableAssetsByAssetTypeList);
     }
 
     @Override
@@ -117,9 +122,10 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 
     @Override
     public Set<AssetType> getAssetTypeByCategory(Category category) {
-        return (Set<AssetType>) currentSession()
+        List<AssetType> assetTypeList = currentSession()
                 .createSQLQuery("select * from asset_types where category_id =" + category.getCategoryId())
                 .addEntity(AssetType.class).list();
+       return  new HashSet(assetTypeList);
     }
 
     @Override
@@ -140,8 +146,8 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 
     @Override
     public Set<Category> getAllCategories() {
-        return (Set<Category>) currentSession().createCriteria(Category.class).list();
+        List<Category> getAllCategoriesList = currentSession().createCriteria(Category.class).list();
+        return new HashSet<>(getAllCategoriesList);
     }
 
-    
 }
