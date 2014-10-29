@@ -104,13 +104,12 @@ public class User {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.userId;
-        hash = 67 * hash + Objects.hashCode(this.userName);
-        hash = 67 * hash + Objects.hashCode(this.password);
-        hash = 67 * hash + this.enabled;
-        hash = 67 * hash + (this.goodStanding ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.events);
+        hash = 59 * hash + this.userId;
+        hash = 59 * hash + Objects.hashCode(this.userName);
+        hash = 59 * hash + Objects.hashCode(this.password);
+        hash = 59 * hash + this.enabled;
+        hash = 59 * hash + (this.goodStanding ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.name);
         return hash;
     }
 
@@ -141,11 +140,10 @@ public class User {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.events, other.events)) {
-            return false;
-        }
         return true;
     }
+
+   
  
     
 }
