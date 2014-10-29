@@ -6,7 +6,6 @@
 package com.swcguild.capstoneproject.test;
 
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
-import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
 import java.io.FileNotFoundException;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -35,9 +33,10 @@ public class UserInterfaceTest {
 
     UserInterface userDao;
     JdbcTemplate jdbcT;
-    Set<Event> events;
+    //Set<Event> events;
     User u1;
     User u2;
+    User u3;
 
     public UserInterfaceTest() {
     }
@@ -64,21 +63,25 @@ public class UserInterfaceTest {
         //events.add(new Event());
         
         u1 = new User();
-        //u1.setUserId(3);
-        u1.setUserName("bill");
-        u1.setPassword("");
-        u1.setEnabled(1);
+        u1.setUserName("testMan1");
+        u1.setPassword("thePass0rd");
         u1.setGoodStanding(true);
-        u1.setName("1");
-        //u1.setEvents(events);
+        u1.setEnabled(1);
+        u1.setName("John Doe");
         
         u2 = new User();
-        u2.setUserName("testMan1");
-        u2.setPassword("thePass0rd");
+        u2.setUserName("testMan2");
+        u2.setPassword("thePass3rd");
         u2.setGoodStanding(true);
         u2.setEnabled(1);
-        u2.setName("John Doe");
-        //u2.setEvents(new HashSet());
+        u2.setName("John Smith");
+        
+        u3 = new User();
+        u3.setUserName("testLady1");
+        u3.setPassword("thePass1rd");
+        u3.setGoodStanding(true);
+        u3.setEnabled(1);
+        u3.setName("Jane Doe");
 
     }
 
@@ -87,11 +90,41 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void addGetUserTest() {
+    public void addGetDeleteUpdateUserTest() {
         User fromStorage;
-        userDao.addUser(u2);
+        boolean failure = false;
         
+        //successfully add and retrieve users
+        userDao.addUser(u1);
+        fromStorage = userDao.getUserByUserId(u1.getUserId());
+        assertEquals(u1, fromStorage);
+        
+        userDao.addUser(u2);
         fromStorage = userDao.getUserByUserId(u2.getUserId());
         assertEquals(u2, fromStorage);
+        
+        //delete user and confirm removal
+        userDao.deleteUser(u1);
+        fromStorage = userDao.getUserByUserId(u1.getUserId());
+        assertTrue(null == fromStorage);
+        
+        //update user and confirm changes
+        u3.setUserId(u2.getUserId());
+        userDao.editUser(u3);
+        fromStorage = userDao.getUserByUserId(u2.getUserId());
+        assertEquals(u3, fromStorage);
+        
+        //attempt update of non-exstant user and confirm failure
+        try{
+            userDao.editUser(u1);
+            failure = false;
+        }
+        catch(Exception e){
+            failure = true;
+        }
+        assertTrue(failure);
+        fromStorage = userDao.getUserByUserId(u1.getUserId());
+        assertTrue(null == fromStorage);
+        
     }
 }
