@@ -8,6 +8,8 @@ package com.swcguild.capstoneproject.dao;
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
@@ -54,14 +56,17 @@ public class EventHibernateDaoImpl implements EventInterface {
 
     @Override
     public Set<Event> getEventsByUserId(int userId) {
-        return (Set<Event>) currentSession()
+        List<Event> getEventsByUserIdList = currentSession()
                 .createSQLQuery("select * from events where user_id = " + userId)
                 .addEntity(Event.class).list();
+        return new HashSet<>(getEventsByUserIdList);
     }
 
     @Override
     public Set<Event> getAllEvents() {
-        return (Set<Event>) currentSession().createCriteria(Event.class);
+        List<Event> getAllEventsList = currentSession().createCriteria(Event.class).list();
+        return new HashSet<>(getAllEventsList);
+        
     }
 
     @Override
