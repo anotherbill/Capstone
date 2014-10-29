@@ -6,6 +6,7 @@
 package com.swcguild.capstoneproject.dao;
 
 import com.swcguild.capstoneproject.dao.interfaces.NoteInterface;
+import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -49,5 +50,20 @@ public class NoteDbImpl implements NoteInterface {
         sb.append("insert into user_notes(user_id, note_detail) values");
         sb.append("(").append(userId).append(",").append(note).append(")");
         currentSession().createSQLQuery(sb.toString());
+    }
+
+    @Override
+    public Set<String> getEventNote(int eventId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<String> getUserNotes(int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<String> getAssetNotes(int assetId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
