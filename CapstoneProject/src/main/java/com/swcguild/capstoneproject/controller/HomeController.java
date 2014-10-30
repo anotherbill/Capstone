@@ -102,15 +102,8 @@ public class HomeController {
 
     @RequestMapping(value = {"/addAsset"}, method = RequestMethod.GET)
     public String displayAddAsset(Model model) {
-        Set<AssetType> types = new HashSet<>();
-        Set<Category> categories = assetDao.getAllCategories();
-        
-        for(Category cat: categories){
-            types.addAll(assetDao.getAssetTypeByCategory(cat));
-        }
-        
-        model.addAttribute("categories", categories);
-        model.addAttribute("assetTypes", types);
+        model.addAttribute("categories", assetDao.getAllCategories());
+        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
         
         return "addAsset";
     }
