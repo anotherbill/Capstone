@@ -76,17 +76,13 @@
 
             </div>
 
-<<<<<<< HEAD
+
             <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
                 <div class="col-md-2">
-                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset.jsp">Add Asset</a>
+                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
                 </div>
-=======
-        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-            <div class="col-md-2">
-                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset.html">Add Asset</a>
->>>>>>> 3e82e885dabeef4e78cf6e6eb4a9a811c6e62513
             </div>
+
 
 
 

@@ -9,6 +9,7 @@ import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import java.util.List;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -245,4 +246,6 @@ public class AssetDaoTest {
         assertEquals(a.getDamageStatus(), "Damaged");
         
     }
+    
+    
 }

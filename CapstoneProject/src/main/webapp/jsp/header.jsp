@@ -3,9 +3,6 @@
     Created on : Oct 29, 2014, 9:25:27 AM
     Author     : apprentice
 --%>
-<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +29,7 @@
         <div class="container">
             <div class="page-header">
                 <div class="text-center">
-                    <a href="home"><img src="../img/Meadow-Of-Flowers-1080x1920.jpg" alt="" /></a>
+                    <a href="index.jsp"><img src="../img/Meadow-Of-Flowers-1080x1920.jpg" alt="" /></a>
                     <br>
                 </div>
             </div>
@@ -53,9 +50,9 @@
                         <li class="dropdown">
                             <a href="browseAssets.jsp" class="dropdown-toggle" data-toggle="dropdown">Assets <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="assets">Browse Assets</a>
+                                <li><a href="browseAssets.jsp">Browse Assets</a>
                                 </li>
-                                <li><a href="manage_assets">Manage Assets</a>
+                                <li><a href="../manageAssets.jsp">Manage Assets</a>
                                 </li>
                             </ul>
                         </li>
