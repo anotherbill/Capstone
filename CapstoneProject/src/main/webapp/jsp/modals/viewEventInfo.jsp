@@ -49,10 +49,15 @@
                                 </table>
                             </div>
 
+
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal">Close</button>
                         </div>
+                        <button class="hidden" data-toggle="modal" data-target="#viewEventAssetsModal">
+                            <jsp:include page="viewEventAssets.jsp"/>
+                        </button>
                     </div>
                 </div>
             </div>

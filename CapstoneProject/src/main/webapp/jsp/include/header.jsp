@@ -29,7 +29,7 @@
         <div class="container">
             <div class="page-header">
                 <div class="text-center">
-                    <a href="admin_home.html"><img src="img/Meadow-Of-Flowers-1080x1920.jpg" alt="" /></a>
+                    <a href="index.jsp"><img src="../img/Meadow-Of-Flowers-1080x1920.jpg" alt="" /></a>
                     <br>
                 </div>
             </div>
@@ -43,36 +43,30 @@
                         <li class="dropdown">
                             <a href="#events" class="dropdown-toggle" data-toggle="dropdown">Events<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#addEventModal" role="button" data-toggle="modal">Create</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a onclick="window.location.href = 'admin_view_all_events.html'" role="button" >Manage Events</a>
+                                <li><a href="index.jsp" role="button">Events</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="assets.html" class="dropdown-toggle" data-toggle="dropdown">Assets <span class="caret"></span></a>
+                            <a href="browseAssets.jsp" class="dropdown-toggle" data-toggle="dropdown">Assets <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="assets.html">Browse Assets</a>
+                                <li><a href="browseAssets.jsp">Browse Assets</a>
                                 </li>
-                                <li><a href="manage_assets.html">Manage Assets</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="checkInAsset.html" role="button" data-toggle="modal">Check-in</a>
+                                <li><a href="manageAssets.jsp">Manage Assets</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#users" class="dropdown-toggle" data-toggle="dropdown">Users <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a onclick="window.location.href = 'view_all_users.html'">View All Users</a>
+                                <li><a href="viewAllUsers.jsp">View All Users</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="reports.html" class="dropdown-toggle" data-toggle="dropdown">Reports <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a onclick="window.location.href = 'view_reports.html'">View All Reports</a>
+                                <li><a href="viewReports.jsp">View All Reports</a>
                                 </li>
                             </ul>
                         </li>

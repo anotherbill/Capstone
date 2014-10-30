@@ -12,68 +12,69 @@
         <title>Add Event Step One</title>
     </head>
     <body>
-        <jsp:include page="header.jsp"/>
+        <div class="container">
+            <jsp:include page="include/header.jsp"/>
 
-        <form class="addEditEvent form-horizontal" role="form" name="editAddEvent" id="editEventModal">
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">Event Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Name" name="nameUser"/>
+            <form class="addEditEvent form-horizontal" role="form" name="editAddEvent" id="editEventModal">
+                <div class="form-group">
+                    <label for="input" class="col-sm-2 control-label">Event Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="nameUser"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inout" class="col-sm-2 control-label">UserName</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="user" placeholder="UserName" name="userName"/>
+                <div class="form-group">
+                    <label for="inout" class="col-sm-2 control-label">UserName</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="user" placeholder="UserName" name="userName"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">Location</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="location" placeholder="Location" name="location"/>
+                <div class="form-group">
+                    <label for="input" class="col-sm-2 control-label">Location</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="location" placeholder="Location" name="location"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inout" class="col-sm-2 control-label">Size</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="size" placeholder="How many are in your party" name="size"/>
+                <div class="form-group">
+                    <label for="inout" class="col-sm-2 control-label">Size</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="size" placeholder="How many are in your party" name="size"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">StartDate</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" id="startDate" placeholder="Enter Date (datepicker)" name="startDate"/>
+                <div class="form-group">
+                    <label for="input" class="col-sm-2 control-label">StartDate</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="startDate" name="startDate"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">End Date</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" id="endDate" placeholder="Enter Date (datepicker)" name="endDate"/>
+                <div class="form-group">
+                    <label for="input" class="col-sm-2 control-label">End Date</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="endDate" name="endDate"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail" class="col-sm-2 control-label">Image</label>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" name="image"/>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="image"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">Note</label>
-                <div class="col-sm-10">
-                    <textArea type="text" class="form-control" id="note" name="note">Enter Note Here</textArea>
+                <div class="form-group">
+                    <label for="input" class="col-sm-2 control-label">Note</label>
+                    <div class="col-sm-10">
+                        <textArea class="form-control" id="note" name="note">Enter Note Here</textArea>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" class="btn btn-primary glyphicon glyphicon-chevron-right" href="add_event_step_2.html" value="Next"/>
+                    <input type="submit" class="btn btn-primary glyphicon glyphicon-chevron-right" value="Next"/>
                 </div>
             </div>
         </form>
         
         
         
-        <a class="btn btn-primary glyphicon glyphicon-chevron-right" href="add_event_step_2.html" >Next</a>
+        <a class="btn btn-primary glyphicon glyphicon-chevron-right" href="addEventStepTwo.jsp" >Next</a>
         
         
         
@@ -81,6 +82,7 @@
 
         
         
-        <jsp:include page="footer.jsp"/>
+            <jsp:include page="include/footer.jsp"/>
+        </div>
     </body>
 </html>

@@ -36,7 +36,7 @@
                                     </tr>
                                     <tr>
                                         <td>1</td>
-                                        <td><img class="image-responsive" src="img/asset/placeholder.jpg" alt="..."></td>
+                                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
                                         <td>Camping Trip</td>
                                         <td>Yosemite, CA</td>
                                         <td>Eugene</td>
@@ -46,7 +46,7 @@
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td><img class="image-responsive" src="img/asset/placeholder.jpg" alt="..."></td>
+                                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
                                         <td>Mountaneering</td>
                                         <td>Fairbanks, AK</td>
                                         <td>Sean</td>
@@ -65,6 +65,7 @@
                 </div>
             </div>
         </div>
+        
 
 
     </body>

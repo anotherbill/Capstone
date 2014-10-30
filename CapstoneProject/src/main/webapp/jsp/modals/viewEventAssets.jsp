@@ -20,8 +20,8 @@
                         <h4 class="modal-title" id="myModalLabel">Event's Assets</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <div class="col-md-8">
+                       
+                            <div class="col-md-12">
                                 <table class="table table-hover">
 
                                     <tr>
@@ -33,11 +33,11 @@
                                         <th>Serial Number</th>
                                         <th>Category</th>
                                         <th>Notes</th>
-                                        <th>Actions</th>
+                      
                                     </tr>
 
                                     <tr>
-                                        <td><img class="image-responsive" src="img/asset/placeholder.jpg" alt="..."></td>
+                                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
                                         <td>Tent</td>
                                         <td>2-Person</td>
                                         <td>In Store</td>
@@ -45,7 +45,7 @@
                                         <td>xyz-123</td>
                                         <td>Shelter</td>
                                         <td>Small rip in door- damage from use- non intentional</td>
-                                        <td><a href="#editAssetModal" class="btn btn-warning" data-toggle="modal">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a></td>
+                                        
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -59,7 +59,6 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal">Close</button>
                         </div>

@@ -71,9 +71,7 @@
                     <td>xyz-123</td>
                     <td>Shelter</td>
                     <td>Small rip in door- damage from use- non intentional</td>
-                    <td><a href="#editAssetModal" class="btn btn-warning" data-toggle="modal">Edit</a><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/>
-                        <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/>
-                        <a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
+                    <td><a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -96,9 +94,7 @@
                     <td>xyz-123</td>
                     <td>Shelter</td>
                     <td>Small rip in door- damage from use- non intentional</td>
-                    <td><a href="#editAssetModal" class="btn btn-warning" data-toggle="modal">Edit</a><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/>
-                        <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/>
-                        <a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
+                    <td><a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -132,9 +128,7 @@
                     <td>xyz-123</td>
                     <td>Shelter</td>
                     <td>Small rip in door- damage from use- non intentional</td>
-                    <td><a href="#editAssetModal" class="btn btn-warning" data-toggle="modal">Edit</a><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/>
-                        <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/>
-                        <a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
+                    <td><a href="assignToEvent" class="btn btn-primary glyphicon glyphicon-plus">Assign To Event</a></td>
                 </tr>
                 <tr>
                     <td></td>
