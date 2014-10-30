@@ -5,7 +5,7 @@
  */
 package com.swcguild.capstoneproject.dao.interfaces;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  *
@@ -20,10 +20,10 @@ public interface NoteInterface {
 
     public void addNoteToUser(String note, int userId);
     
-    public Set<String> getEventNote(int eventId);
+    public List<String> getEventNote(int eventId);
     
-    public Set<String> getUserNotes(int userId);
+    public List<String> getUserNotes(int userId);
     
-    public Set<String> getAssetNotes(int assetId);
+    public List<String> getAssetNotes(int assetId);
     
 }

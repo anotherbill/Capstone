@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 -- Database: `quartermaster_test`
 --
 CREATE DATABASE IF NOT EXISTS `quartermaster_dev` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
-USE `quartermaster_test`;
+USE `quartermaster_dev`;
 
 -- --------------------------------------------------------
 

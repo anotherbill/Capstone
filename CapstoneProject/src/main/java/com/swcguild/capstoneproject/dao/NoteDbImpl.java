@@ -6,15 +6,19 @@
 package com.swcguild.capstoneproject.dao;
 
 import com.swcguild.capstoneproject.dao.interfaces.NoteInterface;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author apprentice
  */
+@Transactional
 public class NoteDbImpl implements NoteInterface {
 
     private SessionFactory sessionFactory;
@@ -29,6 +33,7 @@ public class NoteDbImpl implements NoteInterface {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addNoteToAsset(int assetId, String note, String category) {
         StringBuilder sb = new StringBuilder();
         sb.append("insert into asset_notes(asset_id, note_detail, note_category) values");
@@ -37,6 +42,7 @@ public class NoteDbImpl implements NoteInterface {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addNoteToEvent(String note, int eventId) {
         StringBuilder sb = new StringBuilder();
         sb.append("insert into event_notes(event_id, note_detail) values");
@@ -45,6 +51,7 @@ public class NoteDbImpl implements NoteInterface {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addNoteToUser(String note, int userId) {
         StringBuilder sb = new StringBuilder();
         sb.append("insert into user_notes(user_id, note_detail) values");
@@ -53,17 +60,25 @@ public class NoteDbImpl implements NoteInterface {
     }
 
     @Override
-    public Set<String> getEventNote(int eventId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getEventNote(int eventId) {
+        return (List<String>) currentSession()
+                .createSQLQuery("select * from event_notes where event_id =  " + eventId)
+                .addEntity(String.class).list();
     }
 
     @Override
-    public Set<String> getUserNotes(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getUserNotes(int userId) {
+        return (List<String>) currentSession()
+                .createSQLQuery("select * from user_notes where user_id = " + userId)
+                .addEntity(String.class).list();
     }
 
     @Override
-    public Set<String> getAssetNotes(int assetId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getAssetNotes(int assetId) {
+        return (List<String>) currentSession()
+                .createSQLQuery("select * from asset_notes where asset_id = " + assetId )
+                .addEntity(String.class).list();
     }
+
+   
 }

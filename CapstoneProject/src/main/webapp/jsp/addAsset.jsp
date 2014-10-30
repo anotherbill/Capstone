@@ -15,12 +15,20 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
+<<<<<<< HEAD
             <form class="addEditAsset form-horizontal" role="form" id="addEditAsset">
                 <div class="form-group">
                     <label for="input" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="name" placeholder="Name" name="name">
                     </div>
+=======
+        <form class="addEditAsset form-horizontal" role="form"  action="submitNewAsset" method="post" id="addEditAsset">
+            <div class="form-group">
+                <label for="input" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+>>>>>>> 3e82e885dabeef4e78cf6e6eb4a9a811c6e62513
                 </div>
                 <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Category</label>
