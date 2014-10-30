@@ -14,7 +14,7 @@
     <body>
         <jsp:include page="header.jsp"/>
 
-        <form class="addEditAsset form-horizontal" role="form" id="addEditAsset">
+        <form class="addEditAsset form-horizontal" role="form"  action="submitNewAsset" method="post" id="addEditAsset">
             <div class="form-group">
                 <label for="input" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">

@@ -77,7 +77,7 @@
 
         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
             <div class="col-md-2">
-                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset.jsp">Add Asset</a>
+                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset.html">Add Asset</a>
             </div>
         </div>
 
