@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -68,7 +69,7 @@ public class HomeController {
         }
 
         //get all asset types if no category selected
-        if (catName.equalsIgnoreCase("All") || selectedCat == null) {
+        if (selectedCat == null || catName == null || catName.equalsIgnoreCase("All")) {
             for (Category cat : categories) {
                 types.addAll(assetDao.getAssetTypeByCategory(cat));
             }
@@ -105,6 +106,8 @@ public class HomeController {
         model.addAttribute("categories", assetDao.getAllCategories());
         model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
         
+        model.addAttribute("newAsset", new Asset());
+        
         return "addAsset";
     }
 
@@ -114,63 +117,63 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
-    public String submitNewAsset(Model model, HttpServletRequest request) {
-        Asset asset = new Asset();
-        Set<Category> categories = assetDao.getAllCategories();
-        Set<AssetType> types;
-        Category selectedCat = null;
-        AssetType typeSelected = null;
-
-        String name = request.getParameter("name");
-        String catDescription = request.getParameter("category");
-        String type = request.getParameter("assetType");
-        String status = request.getParameter("status");
-        String serial = request.getParameter("serialNum");
-        String imagePath = request.getParameter(""); //not sure how to handle image file. Will investigate.
-        String damage = request.getParameter("damage");
-        String note = request.getParameter("assetNote");
-
-        int serialNum;
-
-        try {
-            serialNum = Integer.parseInt(serial);
-        } catch (NumberFormatException e) {
-            return "redirect:addAsset";
-        }
-
-        for (Category c : categories) {
-            if (c.getCategoryName().equalsIgnoreCase(catDescription)) {
-                selectedCat = c;
-            }
-        }
-        if (selectedCat == null) {
-            selectedCat = new Category();
-            selectedCat.setCategoryName(catDescription);
-            assetDao.addCategory(selectedCat);
-        }
-
-        types = assetDao.getAssetTypeByCategory(selectedCat);
-        for (AssetType t : types) {
-            if (t.getName().equalsIgnoreCase(type) || t.getName().equalsIgnoreCase(name)) {
-                typeSelected = t;
-            }
-        }
-        if (typeSelected == null) {
-            typeSelected = new AssetType();
-            typeSelected.setCategory(selectedCat);
-            typeSelected.setName(name);
-            typeSelected.setImagePath(imagePath);
-            assetDao.addAssetType(typeSelected);
-        }
-
-        asset.setAssetType(typeSelected);
-        asset.setDamageStatus(damage);
-        asset.setInStock(status.equalsIgnoreCase("available"));
-        asset.setSerialNumber(serialNum);
+    public String submitNewAsset(@ModelAttribute("newAsset") Asset asset, Model model, HttpServletRequest request) {
+//        Asset asset = new Asset();
+//        Set<Category> categories = assetDao.getAllCategories();
+//        Set<AssetType> types;
+//        Category selectedCat = null;
+//        AssetType typeSelected = null;
+//
+//        String name = request.getParameter("name");
+//        String catDescription = request.getParameter("category");
+//        String type = request.getParameter("assetType");
+//        String status = request.getParameter("status");
+//        String serial = request.getParameter("serialNum");
+//        String imagePath = request.getParameter(""); //not sure how to handle image file. Will investigate.
+//        String damage = request.getParameter("damage");
+//        String note = request.getParameter("assetNote");
+//
+//        int serialNum;
+//
+//        try {
+//            serialNum = Integer.parseInt(serial);
+//        } catch (NumberFormatException e) {
+//            return "redirect:addAsset";
+//        }
+//
+//        for (Category c : categories) {
+//            if (c.getCategoryName().equalsIgnoreCase(catDescription)) {
+//                selectedCat = c;
+//            }
+//        }
+//        if (selectedCat == null) {
+//            selectedCat = new Category();
+//            selectedCat.setCategoryName(catDescription);
+//            assetDao.addCategory(selectedCat);
+//        }
+//
+//        types = assetDao.getAssetTypeByCategory(selectedCat);
+//        for (AssetType t : types) {
+//            if (t.getName().equalsIgnoreCase(type) || t.getName().equalsIgnoreCase(name)) {
+//                typeSelected = t;
+//            }
+//        }
+//        if (typeSelected == null) {
+//            typeSelected = new AssetType();
+//            typeSelected.setCategory(selectedCat);
+//            typeSelected.setName(name);
+//            typeSelected.setImagePath(imagePath);
+//            assetDao.addAssetType(typeSelected);
+//        }
+//
+//        asset.setAssetType(typeSelected);
+//        asset.setDamageStatus(damage);
+//        asset.setInStock(status.equalsIgnoreCase("available"));
+//        asset.setSerialNumber(serialNum);
 
         assetDao.addAsset(asset);
         
-        assetDao.addNoteToAsset(asset.getAssetId(), note, damage);
+        //assetDao.addNoteToAsset(asset.getAssetId(), note, damage);
         
         return "redirect:manage_assets";
     }
