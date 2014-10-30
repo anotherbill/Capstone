@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.stereotype.Repository;
@@ -61,11 +62,11 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 
     @Override
     public Asset getAnyAvailableAssetByAssetType(AssetType assetType) {
-        return (Asset) currentSession()
-                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id =:param order by asset_id limit 1")
-                .addEntity(Asset.class).setParameter("param", assetType.getAssetTypeId());
-//                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
-//                .addEntity(Asset.class);
+        List<Asset> assetToGet = currentSession()
+                .createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId() + " and in_stock = 1 limit 1")
+                .addEntity(Asset.class).list();
+        
+        return assetToGet.get(0);
     }
 
     @Override

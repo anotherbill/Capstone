@@ -171,17 +171,25 @@ public class AssetDaoTest {
         assertTrue(assetSet.contains(d));
     }
 
-//    @Test
-//    public void getAnyAvailableAssetByAssetTypeTest() {
-//        dao.addCategory(Tents);
-//        dao.addAssetType(t1);
-//        dao.addAsset(a);
-//        dao.addAsset(c);
-//        dao.addAsset(d);
-//        
-//        Asset toCheck = dao.getAnyAvailableAssetByAssetType(t1);
-//        assertTrue(toCheck.isInStock());
-//    }
+    @Test
+    public void getAnyAvailableAssetByAssetTypeTest() {
+        dao.addCategory(Tents);
+        dao.addAssetType(t1);
+        dao.addAsset(a);
+        dao.addAsset(c);
+        dao.addAsset(d);
+        
+        Asset toCheck = dao.getAnyAvailableAssetByAssetType(t1);
+        assertTrue(toCheck.isInStock());
+    }
+    
+    //What about when you want to get an available asset but there is none?
+    @Test
+    public void getAnUnavailableAsset(){
+        
+    }
+    
+    
     @Test
     public void getAllAvailableAssetsTest() {
         dao.addCategory(Tents);

@@ -43,6 +43,11 @@ public class Asset {
     @Size(min = 5, max =20, message="The damage must be between 5 and 20 characters")
     private String damageStatus; 
 
+    //@OneToMany(fetch = FetchType.EAGER, Cascade = Cascade.ALL)
+    //@JoinColumn(asset_id)
+    //private Set<AssetNote> assetNotes;
+    
+    
     //Getters and setters
     public int getAssetId() {
         return assetId;
