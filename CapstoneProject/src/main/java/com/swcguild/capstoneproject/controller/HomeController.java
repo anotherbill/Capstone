@@ -27,15 +27,13 @@ public class HomeController {
     private AssetInterface assetDao;
     private EventInterface eventDao;
     private UserInterface userDao;
-    private NoteInterface noteDao;
     private ReportInterface reportDao;
     
     @Inject
-    public HomeController(AssetInterface assetDao, EventInterface eventDao, UserInterface userDao, NoteInterface noteDao) {
+    public HomeController(AssetInterface assetDao, EventInterface eventDao, UserInterface userDao) {
         this.assetDao = assetDao;
         this.eventDao = eventDao;
         this.userDao = userDao;
-        this.noteDao = noteDao;
     }
 //    
 //    @Inject
@@ -132,7 +130,7 @@ public class HomeController {
         
         assetDao.addAsset(asset);
         
-        noteDao.addNoteToAsset(asset.getAssetId(), note, damage);
+        //noteDao.addNoteToAsset(asset.getAssetId(), note, damage);
         
         return "redirect:manage_assets";
     }
