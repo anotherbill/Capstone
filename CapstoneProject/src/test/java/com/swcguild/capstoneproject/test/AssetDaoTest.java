@@ -55,7 +55,6 @@ public class AssetDaoTest {
         dao = (AssetInterface) ctx.getBean("assetDao");
         jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
 
-        jdbcTemplate.execute("delete from asset_notes");
         jdbcTemplate.execute("delete from assets_events");
         jdbcTemplate.execute("delete from assets");
         jdbcTemplate.execute("delete from asset_types");
@@ -238,36 +237,6 @@ public class AssetDaoTest {
         
         assertEquals(a.getDamageStatus(), "Damaged");
         
-    }
-    
-    @Test
-    public void addNoteToAssetTest() {
-        dao.addCategory(Tents);
-        dao.addAssetType(t1);
-        dao.addAsset(a);
-        String damageNote = "111 slash across entrance flap";
-        String damageType = "Damage";
-                
-//        dao.addNoteToAsset(a.getAssetId(), damageNote, damageType);
-        
-//        assertEquals(dao.getAssetNotes(a.getAssetId()).size(), 1);
-        
-    }
-    
-    @Test
-    public void getAssetNotesTest() {
-        dao.addCategory(Tents);
-        dao.addAssetType(t1);
-        dao.addAsset(a);
-        String damageNote = "111 slash across entrance flap";
-        String damageType = "Damage";
-                
-//        dao.addNoteToAsset(a.getAssetId(), damageNote, damageType);
-//        dao.addNoteToAsset(a.getAssetId(), damageNote, damageType);
-        
-//        List<String> assetList = dao.getAssetNotes(a.getAssetId());
-        
-//        assertEquals(assetList.size(), 2);
     }
     
     

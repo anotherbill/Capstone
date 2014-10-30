@@ -27,7 +27,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author apprentice
  */
 public class AssetDaoAssetTypesTest {
-    JdbcTemplate jdbcT;
+    JdbcTemplate jdbcTemplate;
     AssetInterface assetDao;
     
     Category catA;
@@ -53,10 +53,13 @@ public class AssetDaoAssetTypesTest {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         assetDao = ctx.getBean("assetDao", AssetInterface.class);
         
-        jdbcT = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
-        jdbcT.execute("delete from assets_events");
-        jdbcT.execute("delete from events");
-        jdbcT.execute("delete from users");
+        jdbcTemplate = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
+        jdbcTemplate.execute("delete from assets_events");
+        jdbcTemplate.execute("delete from assets");
+        jdbcTemplate.execute("delete from asset_types");
+        jdbcTemplate.execute("delete from categories");
+        jdbcTemplate.execute("delete from events");
+        jdbcTemplate.execute("delete from users");
         
         catA = new Category();
         catA.setCategoryName("Alpha");
@@ -142,5 +145,21 @@ public class AssetDaoAssetTypesTest {
         
         assertTrue(failure);
         
+    }
+    
+    @Test
+    public void getAllAssetTypesTest() {
+        assetDao.addCategory(catA);
+        assetDao.addCategory(catB);
+        assetDao.addAssetType(t1);
+        assetDao.addAssetType(t2);
+        assetDao.addAssetType(t3);
+        
+        Set<AssetType> assetTypeSet = new HashSet<>();
+        assetTypeSet.add(t1);
+        assetTypeSet.add(t2);
+        assetTypeSet.add(t3);
+        
+        assertEquals(assetDao.getAllAssetTypes().size(), assetTypeSet.size());
     }
 }

@@ -121,6 +121,13 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public AssetType getAssetTypeById(int assetTypeId) {
         return (AssetType) currentSession().get(AssetType.class, assetTypeId);
     }
+    
+    public Set<AssetType> getAllAssetTypes() {
+        List<AssetType> assetTypeList = currentSession()
+                .createSQLQuery("select * from asset_types")
+                .addEntity(AssetType.class).list();
+        return new HashSet(assetTypeList);
+    }
 
     @Override
     public Set<AssetType> getAssetTypeByCategory(Category category) {

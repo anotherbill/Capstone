@@ -49,6 +49,8 @@ public interface AssetInterface {
     public void deleteAssetType(AssetType assetType);
 
     public AssetType getAssetTypeById(int assetTypeId);
+    
+    public Set<AssetType> getAllAssetTypes();
 
     public Set<AssetType> getAssetTypeByCategory(Category category);
 
