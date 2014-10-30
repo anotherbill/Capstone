@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -35,9 +36,11 @@ public class Asset {
     private boolean inStock;
     
     @Column(name="serial_number")
+    @Size(min = 2, max =11, message="The serial number must be between 2 and 11 characters")
     private int serialNumber;
     
     @Column(name="damage_loss_theft")
+    @Size(min = 5, max =20, message="The damage must be between 5 and 20 characters")
     private String damageStatus; 
 
     //Getters and setters

@@ -5,7 +5,6 @@
  */
 package com.swcguild.capstoneproject.model;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -17,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -31,6 +31,7 @@ public class AssetType {
     private int assetTypeId;
     
     @Column(name="name")
+    @Size(min =3, max = 30, message="Asset type name must be between 3 and 30 characters")
     private String name;
     
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,6 +39,7 @@ public class AssetType {
     private Category category;
     
     @Column(name="image_path")
+    @Size(min = 4, max =35, message="The image path must be between 4 and 35 characters")
     private String imagePath;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy="assetType")

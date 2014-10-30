@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -28,9 +30,13 @@ public class User {
     private int userId;
     
     @Column(name="username")
+    @Size(min=3, max=20, message="The user name must be between 3 and 20 characters")
+    @NotEmpty
     private String userName;
     
     @Column(name="password")
+    @Size(min=8, max=20, message="The password must be between 8 and 20 characters")
+    @NotEmpty
     private String password;
     
     @Column(name="enabled")
@@ -40,6 +46,7 @@ public class User {
     private boolean goodStanding;
     
     @Column(name="name")
+    @Size(min=5, max=20, message="The name must be between 5 and 20 characters")
     private String name; 
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
