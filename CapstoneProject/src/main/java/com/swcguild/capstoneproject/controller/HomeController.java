@@ -2,17 +2,12 @@ package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
-import com.swcguild.capstoneproject.dao.interfaces.NoteInterface;
 import com.swcguild.capstoneproject.dao.interfaces.ReportInterface;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -130,7 +125,7 @@ public class HomeController {
         
         assetDao.addAsset(asset);
         
-        //noteDao.addNoteToAsset(asset.getAssetId(), note, damage);
+        assetDao.addNoteToAsset(asset.getAssetId(), note, damage);
         
         return "redirect:manage_assets";
     }
