@@ -62,8 +62,10 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     @Override
     public Asset getAnyAvailableAssetByAssetType(AssetType assetType) {
         return (Asset) currentSession()
-                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
-                .addEntity(Asset.class);
+                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id =:param order by asset_id limit 1")
+                .addEntity(Asset.class).setParameter("param", assetType.getAssetTypeId());
+//                .createSQLQuery("select * from assets where in_stock = 1 and asset_type_id = " + assetType.getAssetTypeId() + " order by asset_id LIMIT 1")
+//                .addEntity(Asset.class);
     }
 
     @Override
@@ -142,6 +144,11 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     @Override
     public void deleteCategory(Category category) {
         currentSession().delete(category);
+    }
+    
+    @Override
+    public Category getCategoryById(int categoryId){
+        return (Category) currentSession().get(Category.class, categoryId);
     }
 
     @Override
