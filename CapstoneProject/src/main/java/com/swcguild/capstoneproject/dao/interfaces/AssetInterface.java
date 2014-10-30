@@ -53,15 +53,15 @@ public interface AssetInterface {
     
     public Set<AssetType> getAssetTypeByCategory(Category category);
 
-    
-    //public Set<AssetType> getAssetTypesByCategory(String category);
-    
+  
     //Categories
     public void addCategory(Category category);
     
     public void editCategory(Category category);
     
     public void deleteCategory(Category category);
+    
+    public Category getCategoryById(int categoryId);
     
     public Set<Category> getAllCategories();  
 }
