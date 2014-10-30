@@ -6,23 +6,27 @@
 package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.User;
+import java.util.List;
 
 /**
  *
  * @author apprentice
  */
 public interface UserInterface {
-    
+
     public void addUser(User user);
-    
+
     public void editUser(User user);
-    
+
     public void deleteUser(User user);
-    
+
     public User getUserByUserId(int userId);
-    
+
     public void resetPassword(User user);
-    
+
     public void changeUserPassword(User user, String password);
-    
+
+    public void addNoteToUser(String note, int userId);
+
+    public List<String> getUserNotes(int userId);
 }

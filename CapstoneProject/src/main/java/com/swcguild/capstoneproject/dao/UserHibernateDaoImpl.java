@@ -7,6 +7,7 @@ package com.swcguild.capstoneproject.dao;
 
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.User;
+import java.util.List;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -18,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author apprentice
  */
 @Transactional
-public class UserHibernateDaoImpl implements UserInterface{
+public class UserHibernateDaoImpl implements UserInterface {
 
-     private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Inject //constructor injection
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -30,7 +31,7 @@ public class UserHibernateDaoImpl implements UserInterface{
     private Session currentSession() {
         return this.sessionFactory.getCurrentSession();
     }
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addUser(User user) {
@@ -63,5 +64,21 @@ public class UserHibernateDaoImpl implements UserInterface{
         user.setPassword(password);
         currentSession().update(user);
     }
-    
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void addNoteToUser(String note, int userId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("insert into user_notes(user_id, note_detail) values");
+        sb.append("(").append(userId).append(",").append(note).append(")");
+        currentSession().createSQLQuery(sb.toString());
+    }
+
+    @Override
+    public List<String> getUserNotes(int userId) {
+        return (List<String>) currentSession()
+                .createSQLQuery("select * from user_notes where user_id = " + userId)
+                .addEntity(String.class).list();
+    }
+
 }
