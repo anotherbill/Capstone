@@ -20,7 +20,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <sf:form cssClass="form-horizontal" role="form"  action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="newAsset">
+                    <sf:form cssClass="form-horizontal" role="form" action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="newAsset">
                 
                         <%--   
                         <sf:select path="categoryName" cssClass="form-control" name="category">
