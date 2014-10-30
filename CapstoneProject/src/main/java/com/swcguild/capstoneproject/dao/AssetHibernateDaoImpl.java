@@ -70,21 +70,21 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 
     @Override
     public Set<Asset> getAllAssets() {
-        List<Asset> getAllAssetsList =  currentSession().createCriteria(Asset.class).list();
+        List<Asset> getAllAssetsList = currentSession().createCriteria(Asset.class).list();
         return new HashSet<>(getAllAssetsList);
     }
 
     @Override
     public Set<Asset> getAllAvailableAssets() {
-       List<Asset> getAllAvailableAssetsList = currentSession().createSQLQuery("select * from assets where in_stock = 1").addEntity(Asset.class).list();
-       return new HashSet<>(getAllAvailableAssetsList);
+        List<Asset> getAllAvailableAssetsList = currentSession().createSQLQuery("select * from assets where in_stock = 1").addEntity(Asset.class).list();
+        return new HashSet<>(getAllAvailableAssetsList);
     }
 
     @Override
     public Set<Asset> getAllAssetsByAssetType(AssetType assetType) {
-       List<Asset> getAllAssetsByAssetTypeList = currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
+        List<Asset> getAllAssetsByAssetTypeList = currentSession().createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId())
                 .addEntity(Asset.class).list();
-       return new HashSet<>(getAllAssetsByAssetTypeList);
+        return new HashSet<>(getAllAssetsByAssetTypeList);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class AssetHibernateDaoImpl implements AssetInterface {
         List<AssetType> assetTypeList = currentSession()
                 .createSQLQuery("select * from asset_types where category_id =" + category.getCategoryId())
                 .addEntity(AssetType.class).list();
-       return  new HashSet(assetTypeList);
+        return new HashSet(assetTypeList);
     }
 
     @Override
@@ -145,9 +145,9 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public void deleteCategory(Category category) {
         currentSession().delete(category);
     }
-    
+
     @Override
-    public Category getCategoryById(int categoryId){
+    public Category getCategoryById(int categoryId) {
         return (Category) currentSession().get(Category.class, categoryId);
     }
 
@@ -155,6 +155,22 @@ public class AssetHibernateDaoImpl implements AssetInterface {
     public Set<Category> getAllCategories() {
         List<Category> getAllCategoriesList = currentSession().createCriteria(Category.class).list();
         return new HashSet<>(getAllCategoriesList);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void addNoteToAsset(int assetId, String note, String category) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("insert into asset_notes(asset_id, note_detail, note_category) values");
+        sb.append("(").append(assetId).append(",").append(note).append(",").append(category).append(")");
+        currentSession().createSQLQuery(sb.toString());
+    }
+
+    @Override
+    public List<String> getAssetNotes(int assetId) {
+        return (List<String>) currentSession()
+                .createSQLQuery("select * from asset_notes where asset_id = " + assetId)
+                .addEntity(String.class).list();
     }
 
 }
