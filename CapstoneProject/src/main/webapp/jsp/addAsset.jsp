@@ -3,107 +3,79 @@
     Created on : Oct 29, 2014, 10:39:11 AM
     Author     : apprentice
 --%>
-
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Asset</title>
+        <script src="../js/validateAddEditAsset.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-<<<<<<< HEAD
-            <form class="addEditAsset form-horizontal" role="form" id="addEditAsset">
-                <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="name">
-                    </div>
-=======
-        <form class="addEditAsset form-horizontal" role="form"  action="submitNewAsset" method="post" id="addEditAsset">
-            <div class="form-group">
-                <label for="input" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
->>>>>>> 3e82e885dabeef4e78cf6e6eb4a9a811c6e62513
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Category</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="category">
-                            <option>Tents</option>
-                            <option>Sleeping Bag</option>
-                            <option>Fishing Pole</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Asset Type</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="assetType">
-                            <option>1-Person Tent</option>
-                            <option>2-Person Tent</option>
-                            <option>3-Person Tent</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Status</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="status">
-                            <option>Available</option>
-                            <option>Checked-Out</option>
-                            <option>Lost</option>
-                            <option>Stolen</option>
-                            <option>Late</option>
-                            <option>Retired</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">Serial #</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="serialNum" placeholder="Scan Serial Number" name="serialNum">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">Image</label>
-                    <div class="col-sm-10">
-                        <input type="file" class="form-control" id="image" name="image"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Damage</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="damage">
-                            <option>none</option>
-                            <option>small</option>
-                            <option>medium</option>
-                            <option>large</option>
-                            <option>obliterated</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">Note</label>
-                    <div class="col-sm-10">
-                        <textArea class="form-control" id="note" name="assetNote">Enter Note Here</textArea>
+            <div class="row">
+                <div class="col-md-6">
+                    <sf:form cssClass="form-horizontal" role="form"  action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="assetTypes" modelAttribute="categories">
+                        <sf:label path="categoryName">Category</sf:label>
+                        <sf:select path="categoryName" cssClass="form-control" name="category">
+                            <sf:option value="tent">Tents</sf:option>
+                            <sf:option value="sleepingBag">Sleeping Bag</sf:option>
+                            <sf:option value="fishingPole">Fishing Pole</sf:option>
+                        </sf:select>
+                        <sf:label path="assetType" cssClass="col-sm-3 control-label">Asset Type</sf:label>
+                        <sf:select path="assetType" cssClass="form-control" name="assetType">
+                            <sf:option value="onePersonTent">1-Person Tent</sf:option>
+                            <sf:option value="twoPersonTent">2-Person Tent</sf:option>
+                            <sf:option value="threePersonTent">3-Person Tent</sf:option>
+                        </sf:select>
+                        <sf:label path="damageStatus" class="col-sm-3 control-label">Status/Damage</sf:label>
+                        <sf:select path="damageStatus" cssClass="form-control" name="status">
+                            <sf:option value="available">Available</sf:option>
+                            <sf:option value="checkedOut">Checked-Out</sf:option>
+                            <sf:option value="lost">Lost</sf:option>
+                            <sf:option value="stolen">Stolen</sf:option>
+                            <sf:option value="late">Late</sf:option>
+                            <sf:option value="retired">Retired</sf:option>
+                            <sf:option value="none">none</sf:option>
+                            <sf:option value="one">Damage: 1</sf:option>
+                            <sf:option value="two">Damage: 2</sf:option>
+                            <sf:option value="three">Damage: 3</sf:option>
+                            <sf:option value="four">Damage: 4</sf:option>
+                            <sf:option value="five">Damage: 5</sf:option>
+                        </sf:select>
+                        <sf:label path="serialNumber" cssClass="col-sm-3 control-label">Serial #</sf:label>
+                        <sf:input path="serialNumber" type="text" cssClass="form-control" id="serialNum" placeholder="Scan Serial Number" name="serialNum"/>
+                        <sf:label path="imagePath" class="col-sm-3 control-label">Image</sf:label>
+                        <sf:input path="imagePath" type="file" cssClass="form-control" id="image" name="image"/>
+                        <sf:label path="noteCategory" cssClass="col-sm-3 control-label">Note Category</sf:label>
+                        <sf:select path="noteCategory" cssClass="form-control" name="status">
+                            <sf:option value="available">Available</sf:option>
+                            <sf:option value="checkedOut">Checked-Out</sf:option>
+                            <sf:option value="lost">Lost</sf:option>
+                            <sf:option value="stolen">Stolen</sf:option>
+                            <sf:option value="late">Late</sf:option>
+                            <sf:option value="retired">Retired</sf:option>
+                            <sf:option value="none">none</sf:option>
+                            <sf:option value="one">Damage: 1</sf:option>
+                            <sf:option value="two">Damage: 2</sf:option>
+                            <sf:option value="three">Damage: 3</sf:option>
+                            <sf:option value="four">Damage: 4</sf:option>
+                            <sf:option value="five">Damage: 5</sf:option>
+                        </sf:select>
+                        <sf:label path="assetNote" cssClass="col-sm-3 control-label">Note</sf:label>
+                        <sf:textarea path="assetNote" cssClass="form-control" name="assetNote" placeholder="Enter Note Here"/>
+                        <input type="submit" value="Add Asset" class="btn btn-primary"/>
+                    </sf:form>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" value="Add Asset" class="btn btn-primary"/>
-                </div>
-            </div>
-        </form>
-         <a class="btn btn-primary" href="index.jsp">Add Asset</a>
+            <a class="btn btn-primary" href="home">Add Asset</a>
 
-        
-        
+
+
             <jsp:include page="include/footer.jsp"/>
         </div>
     </body>
