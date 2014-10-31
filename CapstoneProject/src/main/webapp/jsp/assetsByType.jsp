@@ -1,30 +1,29 @@
 <%-- 
-    Document   : manageAssets
-    Created on : Oct 29, 2014, 10:38:02 AM
+    Document   : assetsByType
+    Created on : Oct 31, 2014, 2:07:25 PM
     Author     : apprentice
 --%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Assets</title>
+        <title>Assets By Types</title>
     </head>
     <body>
-        <div class="container">
-            <jsp:include page="include/header.jsp"/>
-
-
-            <div class="row" style="padding: 0px; margin: 0px">
+        
+        <jsp:include page="include/header.jsp"/>
+        
+        <div class="row" style="padding: 0px; margin: 0px">
                 <div class="col-md-3">
-                    <form role="form" action="manage_assets" method="get">
+                    <form role="form">
                         <div class="form-group">
                             <select name="selectCategory" class="form-control">
-                                <jstl:forEach var="category" items="${categoryList}">
-                                    <option value="${category.categoryName}">${category.categoryName}</option>
-                                </jstl:forEach>
+                                <option value="option1">Search By Category</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                                <option value="option4">Option 4</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -57,7 +56,18 @@
                     </form>
                 </div> 
 
-            <div class="col-md-12"> 
+
+
+            </div>
+
+
+            <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                <div class="col-md-2">
+                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
+                </div>
+            </div>
+        
+        <div class="col-md-12"> 
 
                 <table class="table table-hover">
 
@@ -72,26 +82,15 @@
                             <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
                             <td>${types.name}</td>
                             <td>${types.category.categoryName}</td>
+                            <td></td>
+
                             <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
                                 <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
-
                         </tr>
                     </jstl:forEach>
                 </table>
         </div>
-
-            </div>
-
-
-            <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                <div class="col-md-2">
-                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
-                </div>
-            </div>
-
-            <jsp:include page="modals/assetAddNote.jsp"/>
-            <jsp:include page="include/footer.jsp"/>
-
-        </div>
+                            
+                            <jsp:include page="include/footer.jsp"/>
     </body>
 </html>
