@@ -30,15 +30,19 @@
                         </sf:select>
                         --%>
 
-                    <%-- assetType --%>
-                        <label class="col-sm-3 control-label">Asset Type
-                        <select  class="form-control" name="typeId">
-                            <jstl:forEach var="type" items="${assetTypes}">
-                                <option value="${type.assetTypeId}">${type.name}: ${type.category.categoryName}</option>
-                            </jstl:forEach>
-                        </select>
-                        </label>
-                        <br/>
+                        <%-- assetType --%>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label class="control-label">Asset Type</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select  class="form-control" name="typeId">
+                                    <jstl:forEach var="type" items="${assetTypes}">
+                                        <option value="${type.assetTypeId}">${type.name}: ${type.category.categoryName}</option>
+                                    </jstl:forEach>
+                                </select>
+                            </div>
+                        </div>
 
                         <%--<sf:label path="assetType" cssClass="col-sm-3 control-label">Asset Type</sf:label>
                         <sf:select path="assetType" cssClass="form-control" name="assetType">
@@ -47,28 +51,39 @@
                             </jstl:forEach>
                         </sf:select>
                         
-                    <%-- inStock --%>
+                        <%-- inStock --%>
                         <sf:hidden path="inStock" value="${true}"/>
 
-                    <%-- damageStatus --%>
-                        <sf:label path="damageStatus" class="col-sm-3 control-label">Status/Damage</sf:label>
-                        <sf:select path="damageStatus" cssClass="form-control" name="status">
-                            <sf:option value="none">none</sf:option>
-                            <sf:option value="lost">Lost</sf:option>
-                            <sf:option value="stolen">Stolen</sf:option>
-                            <sf:option value="late">Late</sf:option>
-                            <sf:option value="retired">Retired</sf:option>
-                            <sf:option value="one">Damage: 1</sf:option>
-                            <sf:option value="two">Damage: 2</sf:option>
-                            <sf:option value="three">Damage: 3</sf:option>
-                            <sf:option value="four">Damage: 4</sf:option>
-                            <sf:option value="five">Damage: 5</sf:option>
-                        </sf:select>
+                        <%-- damageStatus --%>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <sf:label path="damageStatus" class="control-label">Status/Damage</sf:label>
+                                </div>
+                                <div class="col-md-9">
+                                <sf:select path="damageStatus" cssClass="form-control" name="status">
+                                    <sf:option value="none">none</sf:option>
+                                    <sf:option value="lost">Lost</sf:option>
+                                    <sf:option value="stolen">Stolen</sf:option>
+                                    <sf:option value="late">Late</sf:option>
+                                    <sf:option value="retired">Retired</sf:option>
+                                    <sf:option value="one">Damage: 1</sf:option>
+                                    <sf:option value="two">Damage: 2</sf:option>
+                                    <sf:option value="three">Damage: 3</sf:option>
+                                    <sf:option value="four">Damage: 4</sf:option>
+                                    <sf:option value="five">Damage: 5</sf:option>
+                                </sf:select>
+                            </div>
+                        </div>
 
-                    <%-- serialNumber --%>
-                        <sf:label path="serialNumber" cssClass="col-sm-3 control-label">Serial #</sf:label>
-                        <sf:input path="serialNumber" type="text" cssClass="form-control" id="serialNum" placeholder="Scan Serial Number" name="serialNum"/>
-
+                        <%-- serialNumber --%>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <sf:label path="serialNumber" cssClass="control-label">Serial #</sf:label>
+                                </div>
+                                <div class="col-md-9">
+                                <sf:input path="serialNumber" type="text" cssClass="form-control" id="serialNum" placeholder="Scan Serial Number" name="serialNum"/>
+                            </div>
+                        </div>
                         <%--
                         imagePath is a field of AssetType, not directly a part of Asset. Adding images should be a part of creating/ editing asset types.
                         AssetType.imagePath has type string ("text" for spring forms). Can't accept type file. Uploading image files should be a separate task on add asset types page.
@@ -100,7 +115,11 @@
                         --%>
 
                         <br/>
-                        <input type="submit" value="Add Asset" class="btn btn-primary"/>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <input type="submit" value="Add Asset" class="btn btn-primary"/>
+                            </div>
+                        </div>
                     </sf:form>
                 </div>
             </div>
