@@ -40,8 +40,9 @@ public class HomeController {
 
     @RequestMapping(value = {"/assets"}, method = RequestMethod.GET)
     public String displayBrowseAssets(Model model, HttpServletRequest request) {
-        Set<AssetType> types = getSelectedAssetTypes(request.getParameter("searchByCategory"));
-        model.addAttribute("types", types);
+        Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
+        model.addAttribute("categoryList", assetDao.getAllCategories());       
+        model.addAttribute("assetTypeList", types);
 
         return "browseAssets";
         /*
@@ -121,6 +122,8 @@ public class HomeController {
 
             model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(typeSelected));
         } catch (NumberFormatException e) {
+            model.addAttribute("assetTypeError", "You FAILED to select a valid asset type. You should be ASHAMED!!!");
+            return request.getRequestURI();
             //FAIL
         }
 
