@@ -3,8 +3,9 @@
     Created on : Oct 29, 2014, 10:38:02 AM
     Author     : apprentice
 --%>
-
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,22 +33,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-3">
-                    <form role="form">
-                        <div class="form-group">
-                            <select name="selectAssetType" class="form-control">
-                                <option value="option1">Search By Asset Type</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
-                            </select>
-                        </div>
 
-                        <div class="form-group">
-                            <input type="submit" value="Search" class="form-control"/>
-                        </div>
-                    </form>
-                </div>
                 <div class="col-md-3">
                     <form role="form">
                         <div class="form-group"> 
@@ -86,85 +72,41 @@
 
 
 
-            <div class="col-md-12">
-                <table class="table table-hover">
+            <div class="col-md-12"> 
+                <jstl:forEach var="asset" items="${assetTypeList}"
+                              <table class="table table-hover">
 
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Asset Type</th>
-                        <th>Satus</th>
-                        <th>Serial Number</th>
-                        <th>Damage</th>
-                        <th>Notes</th>
-                        <th>Actions</th>
-                    </tr>
+                                  <tr>
+                                      <th></th>
+                                      <th>Category</th>
+                                      <th>Asset Type</th>
+                                      <th>Satus</th>
+                                      <th>Serial Number</th>
+                                      <th>Damage</th>
+                                      <th>Notes</th>
+                                      <th>Actions</th>
+                                  </tr>
 
-                    <tr>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Super-Duper Tent</td>
-                        <td>Tent</td>
-                        <td>2-Person</td>
-                        <td>In Store</td>
-                        <td>xyz-123</td>
-                        <td>Slight</td>
-                        <td>Small rip in door- damage from use- non intentional</td>
-                        <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
-                            <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Mud tracked all inside. Now infested with BEES?!</td>
-                    </tr>
-
-
-                    <tr>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Super-Duper Tent</td>
-                        <td>Tent</td>
-                        <td>2-Person</td>
-                        <td>In Store</td>
-                        <td>xyz-123</td>
-                        <td>Slight</td>
-                        <td>Small rip in door- damage from use- non intentional</td>
-                        <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
-                            <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
-
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Mud tracked all inside. Now infested with BEES?!</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>This is a 3<sup>rd</sup> note</td>
-                    </tr>
-                </table>
+                                  <tr>
+                                      <td><img class="image-responsive" src="img/asset/placeholder.jpg" alt="..."></td>
+                                      <td>${asset.assetType.category.categoryName}</td>
+                                      <td>${asset.assetType.name}</td>
+                                      <td>${asset.inStock}</td>
+                                      <td>${asset.serialNumber}</td>
+                                      <td>${asset.damageStatus}</td>
+                                      <td>   
+                                      </td>
+                                      <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
+                                          <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
+                                  </tr>
+                              </table>
+            </jstl:forEach>
 
 
 
-                <jsp:include page="modals/assetAddNote.jsp"/>
-                <jsp:include page="include/footer.jsp"/>
-            </div>
+            <jsp:include page="modals/assetAddNote.jsp"/>
+            <jsp:include page="include/footer.jsp"/>
         </div>
-    </body>
+    </div>
+</body>
 </html>
