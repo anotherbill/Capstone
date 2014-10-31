@@ -159,7 +159,7 @@ public class HomeController {
             typeId = Integer.parseInt(request.getParameter("typeId"));
         } catch (NumberFormatException e) {
             model.addAttribute("updateError", "You FAILED to correctly update the asset. FOR SHAME!!!");
-            return request.getRequestURI();
+            return "redirect:updateAsset";
         }
 
         asset.setAssetType(assetDao.getAssetTypeById(typeId));
