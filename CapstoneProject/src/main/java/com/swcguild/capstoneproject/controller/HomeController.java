@@ -172,7 +172,7 @@ public class HomeController {
         return "redirect:manage_assets";
     }
     
-    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
     public String deleteAsset(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request){
         try{
             assetDao.deleteAsset(asset);
