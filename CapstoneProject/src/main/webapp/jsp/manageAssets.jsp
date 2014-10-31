@@ -56,6 +56,12 @@
                         </div>
                     </form>
                 </div> 
+                
+                <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                <div class="col-md-2">
+                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
+                </div>
+            </div>
 
             <div class="col-md-12"> 
 
@@ -63,17 +69,19 @@
 
                     <tr>
                         <th></th>
-                        <th>Category</th>
                         <th>Asset Type</th>
+                        <th>Category</th>
                         <th>Actions</th>
                     </tr>
+                    <br/><br/>
                     <jstl:forEach var="types" items="${assetTypeList}">
                         <tr>
                             <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
                             <td>${types.name}</td>
                             <td>${types.category.categoryName}</td>
                             <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
-                                <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
+                                <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
+                                <a href="listAssets?typeId=${types.assetTypeId}" class="btn btn-primary">List All Assets of This Type</a></td>
 
                         </tr>
                     </jstl:forEach>

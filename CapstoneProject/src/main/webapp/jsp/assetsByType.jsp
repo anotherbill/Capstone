@@ -12,10 +12,11 @@
         <title>Assets By Types</title>
     </head>
     <body>
-        
-        <jsp:include page="include/header.jsp"/>
-        
-        <div class="row" style="padding: 0px; margin: 0px">
+        <div class="container">
+
+            <jsp:include page="include/header.jsp"/>
+
+            <div class="row" style="padding: 0px; margin: 0px">
                 <div class="col-md-3">
                     <form role="form">
                         <div class="form-group">
@@ -66,8 +67,8 @@
                     <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
                 </div>
             </div>
-        
-        <div class="col-md-12"> 
+
+            <div class="col-md-12"> 
 
                 <table class="table table-hover">
 
@@ -75,22 +76,27 @@
                         <th></th>
                         <th>Category</th>
                         <th>Asset Type</th>
+                        <th>In Stock</th>
+                        <th>Serial Number</th>
+                        <th>Damage Status</th>
                         <th>Actions</th>
                     </tr>
-                    <jstl:forEach var="types" items="${assetTypeList}">
+                    <jstl:forEach var="asset" items="${assetList}">
                         <tr>
                             <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
-                            <td>${types.name}</td>
-                            <td>${types.category.categoryName}</td>
-                            <td></td>
-
+                            <td>${asset.assetType.category.categoryName}</td>
+                            <td>${asset.assetType.name}</td>
+                            <td>${asset.inStock}</td>
+                            <td>${asset.serialNumber}</td>
+                            <td>${asset.damageStatus}</td>
                             <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
                                 <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
                         </tr>
                     </jstl:forEach>
                 </table>
+            </div>
+            <jsp:include page="modals/assetAddNote.jsp"/>
+            <jsp:include page="include/footer.jsp"/>
         </div>
-                            
-                            <jsp:include page="include/footer.jsp"/>
     </body>
 </html>
