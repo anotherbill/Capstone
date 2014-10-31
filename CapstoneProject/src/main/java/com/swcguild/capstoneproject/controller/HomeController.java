@@ -149,6 +149,23 @@ public class HomeController {
 
         return "editAsset";
     }
+
+    @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
+    public String submitAssetUpdate(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request) {
+        int typeId;
+
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            return "editAsset";
+        }
+
+        asset.setAssetType(assetDao.getAssetTypeById(typeId));
+        assetDao.editAsset(asset);
+
+        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
+        return "redirect:manage_assets";
+    }
     
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
