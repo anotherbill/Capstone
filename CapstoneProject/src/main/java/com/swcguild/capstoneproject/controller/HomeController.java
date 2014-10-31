@@ -117,8 +117,10 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
-    public String submitNewAsset(@ModelAttribute("newAsset") Asset asset, Model model, HttpServletRequest request) {
-//        Asset asset = new Asset();
+    public String submitNewAsset(@ModelAttribute("newAsset") Asset newAsset, Model model, HttpServletRequest request) {
+        int typeId;
+        
+//        Asset newAsset = new Asset();
 //        Set<Category> categories = assetDao.getAllCategories();
 //        Set<AssetType> types;
 //        Category selectedCat = null;
@@ -166,14 +168,22 @@ public class HomeController {
 //            assetDao.addAssetType(typeSelected);
 //        }
 //
-//        asset.setAssetType(typeSelected);
-//        asset.setDamageStatus(damage);
-//        asset.setInStock(status.equalsIgnoreCase("available"));
-//        asset.setSerialNumber(serialNum);
-
-        assetDao.addAsset(asset);
+//        newAsset.setAssetType(typeSelected);
+//        newAsset.setDamageStatus(damage);
+//        newAsset.setInStock(status.equalsIgnoreCase("available"));
+//        newAsset.setSerialNumber(serialNum);
         
-        //assetDao.addNoteToAsset(asset.getAssetId(), note, damage);
+        try{
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        }
+        catch(NumberFormatException e){
+            return "addAsset";
+        }
+        
+        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
+        assetDao.addAsset(newAsset);
+        
+        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
         
         return "redirect:manage_assets";
     }
