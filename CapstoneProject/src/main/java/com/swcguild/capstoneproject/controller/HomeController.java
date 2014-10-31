@@ -7,6 +7,7 @@ import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
@@ -164,6 +165,18 @@ public class HomeController {
         assetDao.editAsset(asset);
 
         //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
+        return "redirect:manage_assets";
+    }
+    
+    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.POST)
+    public String deleteAsset(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request){
+        try{
+            assetDao.deleteAsset(asset);
+        }
+        catch(Exception e){
+            model.addAttribute("deletionError", "Oops! Something went wrong when attempting to delete " + asset.getAssetType().getName() + " serial#" + asset.getSerialNumber() + ".");
+            return request.getRequestURI();
+        }
         return "redirect:manage_assets";
     }
     
