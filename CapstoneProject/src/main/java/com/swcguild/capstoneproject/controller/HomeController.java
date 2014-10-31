@@ -45,35 +45,35 @@ public class HomeController {
 
         return "browseAssets";
         /*
-        Set<Category> categories = assetDao.getAllCategories();
-        Set<Asset> assets = new HashSet<>();
-        Category selectedCat = null;
-        AssetType selectedType = null;
+         Set<Category> categories = assetDao.getAllCategories();
+         Set<Asset> assets = new HashSet<>();
+         Category selectedCat = null;
+         AssetType selectedType = null;
 
-        String typeName = request.getParameter("searchByType");
+         String typeName = request.getParameter("searchByType");
         
-        if (typeName != null) {
-            //find desired asset type, if selected, and get assets for asset type
-            for (AssetType type : types) {
-                if (type.getName().equalsIgnoreCase(typeName)) {
-                    selectedType = type;
-                    assets.addAll(assetDao.getAllAssetsByAssetType(selectedType));
-                }
-            }
+         if (typeName != null) {
+         //find desired asset type, if selected, and get assets for asset type
+         for (AssetType type : types) {
+         if (type.getName().equalsIgnoreCase(typeName)) {
+         selectedType = type;
+         assets.addAll(assetDao.getAllAssetsByAssetType(selectedType));
+         }
+         }
 
-            //get all assets if no asset type selected
-            if (typeName.equalsIgnoreCase("All") || selectedCat == null) {
-                assets.addAll(assetDao.getAllAssets());
-            }
+         //get all assets if no asset type selected
+         if (typeName.equalsIgnoreCase("All") || selectedCat == null) {
+         assets.addAll(assetDao.getAllAssets());
+         }
 
-            //if searching by asset type, supply requested set of assets
-            model.addAttribute("assets", assets);
-        } else {
-            //if searching by category, supply requested set of asset types
-            model.addAttribute("types", types);
-        }
+         //if searching by asset type, supply requested set of assets
+         model.addAttribute("assets", assets);
+         } else {
+         //if searching by category, supply requested set of asset types
+         model.addAttribute("types", types);
+         }
         
-        */
+         */
     }
 
     @RequestMapping(value = {"/addAsset"}, method = RequestMethod.GET)
@@ -89,6 +89,7 @@ public class HomeController {
     @RequestMapping(value = {"/manage_assets"}, method = RequestMethod.GET)
     public String displayManageAssets(Model model, HttpServletRequest request) {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("searchByCategory"));
+        model.addAttribute("categoryList", assetDao.getAllCategories());       
         model.addAttribute("assetTypeList", types);
         return "manageAssets";
     }
@@ -108,6 +109,22 @@ public class HomeController {
 
         //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
         return "redirect:manage_assets";
+    }
+
+    @RequestMapping(value = {"/listAssets"}, method = RequestMethod.GET)
+    public String displayAssetLisingForType(Model model, HttpServletRequest request) {
+        int typeId = 0;
+
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+            AssetType typeSelected = assetDao.getAssetTypeById(typeId);
+
+            model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(null));
+        } catch (NumberFormatException e) {
+            //FAIL
+        }
+
+        return "assetsByType";
     }
 
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
