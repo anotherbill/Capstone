@@ -153,6 +153,7 @@ public class HomeController {
 
     @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
     public String submitAssetUpdate(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request) {
+        /*
         int typeId;
 
         try {
@@ -163,6 +164,8 @@ public class HomeController {
         }
 
         asset.setAssetType(assetDao.getAssetTypeById(typeId));
+        */
+        
         assetDao.editAsset(asset);
 
         //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
