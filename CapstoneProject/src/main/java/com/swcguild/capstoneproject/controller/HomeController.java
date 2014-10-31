@@ -88,7 +88,7 @@ public class HomeController {
 
     @RequestMapping(value = {"/manage_assets"}, method = RequestMethod.GET)
     public String displayManageAssets(Model model, HttpServletRequest request) {
-        Set<AssetType> types = getSelectedAssetTypes(request.getParameter("searchByCategory"));
+        Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
         model.addAttribute("categoryList", assetDao.getAllCategories());       
         model.addAttribute("assetTypeList", types);
         return "manageAssets";
@@ -119,7 +119,7 @@ public class HomeController {
             typeId = Integer.parseInt(request.getParameter("typeId"));
             AssetType typeSelected = assetDao.getAssetTypeById(typeId);
 
-            model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(null));
+            model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(typeSelected));
         } catch (NumberFormatException e) {
             //FAIL
         }
