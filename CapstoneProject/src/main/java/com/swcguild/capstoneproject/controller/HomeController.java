@@ -7,6 +7,7 @@ import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
@@ -130,6 +131,59 @@ public class HomeController {
         return "assetsByType";
     }
 
+    @RequestMapping(value = {"/updateAsset"}, method = RequestMethod.GET)
+    public String displayEditAsset(Model model, HttpServletRequest request){
+        int assetId;
+        
+        try{
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+        
+        model.addAttribute("categories", assetDao.getAllCategories());
+        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
+
+        model.addAttribute("asset", assetDao.getAssetById(assetId));
+        }
+        catch(NumberFormatException e){
+            //fail message
+            return request.getRequestURI();
+        }
+
+        return "editAsset";
+    }
+
+    @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
+    public String submitAssetUpdate(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request) {
+        /*
+        int typeId;
+
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            model.addAttribute("updateError", "You FAILED to correctly update the asset. FOR SHAME!!!");
+            return "redirect:updateAsset";
+        }
+
+        asset.setAssetType(assetDao.getAssetTypeById(typeId));
+        */
+        
+        assetDao.editAsset(asset);
+
+        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
+        return "redirect:manage_assets";
+    }
+    
+    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
+    public String deleteAsset(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request){
+        try{
+            assetDao.deleteAsset(asset);
+        }
+        catch(Exception e){
+            model.addAttribute("deletionError", "Oops! Something went wrong when attempting to delete " + asset.getAssetType().getName() + " serial#" + asset.getSerialNumber() + ".");
+            return request.getRequestURI();
+        }
+        return "redirect:manage_assets";
+    }
+    
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
         Set<AssetType> types = new HashSet<>();

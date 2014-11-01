@@ -21,7 +21,9 @@
                 <div class="col-md-3">
                     <form role="form" action="manage_assets" method="get">
                         <div class="form-group">
+                            <label>Search By Category:</label>
                             <select name="selectCategory" class="form-control">
+                                 <option value="all">All</option>
                                 <jstl:forEach var="category" items="${categoryList}">
                                     <option value="${category.categoryName}">${category.categoryName}</option>
                                 </jstl:forEach>
@@ -79,7 +81,7 @@
                             <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
                             <td>${types.name}</td>
                             <td>${types.category.categoryName}</td>
-                            <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
+                            <td><a href="editAsset?" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
                                 <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
                                 <a href="listAssets?typeId=${types.assetTypeId}" class="btn btn-primary">List All Assets of This Type</a></td>
 
