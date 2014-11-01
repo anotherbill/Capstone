@@ -215,7 +215,7 @@ public class HomeController {
         int categoryId = 0;
 
         try {
-            categoryId = Integer.parseInt("categoryId");
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
             assetType.setCategory(assetDao.getCategoryById(categoryId));
             assetDao.editAssetType(assetType);
         } catch (Exception e) {
