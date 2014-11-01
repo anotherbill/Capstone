@@ -192,6 +192,7 @@ public class HomeController {
         try {
             categoryId = Integer.parseInt(request.getParameter("categoryId"));
         } catch (NumberFormatException e) {
+            model.addAttribute("categoryIdError", "Oops! CategoryId should be an integer.");
             return "redirect:addAssetType";
         }
 
@@ -199,6 +200,26 @@ public class HomeController {
         assetDao.addAssetType(newAssetType);
         return "redirect:manage_assets";
     }
+
+    @RequestMapping(value = {"/submitAssetTypeUpdate"}, method = RequestMethod.POST)
+    public String submitAssetTypeUpdate(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request) {
+        assetDao.editAssetType(assetType);
+        return "redirect:manage_assets";
+    }
+    
+    @RequestMapping(value = {"/removeAssetType"}, method = RequestMethod.GET)
+    public String deleteAssetType(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request){
+        try{
+            assetDao.deleteAssetType(assetType);
+        }
+        catch(Exception e){
+            model.addAttribute("deletionError", "Oops! Something went wrong when attempting to delete " + assetType.getName() + ".");
+            return request.getRequestURI();
+        }
+        return "redirect:manage_assets";
+    }
+    
+    
     
     //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
