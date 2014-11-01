@@ -41,7 +41,7 @@ public class HomeController {
     @RequestMapping(value = {"/assets"}, method = RequestMethod.GET)
     public String displayBrowseAssets(Model model, HttpServletRequest request) {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
-        model.addAttribute("categoryList", assetDao.getAllCategories());       
+        model.addAttribute("categoryList", assetDao.getAllCategories());
         model.addAttribute("assetTypeList", types);
 
         return "browseAssets";
@@ -50,7 +50,7 @@ public class HomeController {
     @RequestMapping(value = {"/manage_assets"}, method = RequestMethod.GET)
     public String displayManageAssets(Model model, HttpServletRequest request) {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
-        model.addAttribute("categoryList", assetDao.getAllCategories());       
+        model.addAttribute("categoryList", assetDao.getAllCategories());
         model.addAttribute("assetTypeList", types);
         return "manageAssets";
     }
@@ -85,47 +85,45 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/updateAsset"}, method = RequestMethod.GET)
-    public String displayEditAsset(Model model, HttpServletRequest request){
+    public String displayEditAsset(Model model, HttpServletRequest request) {
         int assetId;
-        
-        try{
-            assetId = Integer.parseInt(request.getParameter("assetId"));
-        
-        //model.addAttribute("categories", assetDao.getAllCategories());
-        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
 
-        model.addAttribute("asset", assetDao.getAssetById(assetId));
-        }
-        catch(NumberFormatException e){
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+
+            //model.addAttribute("categories", assetDao.getAllCategories());
+            model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
+
+            model.addAttribute("asset", assetDao.getAssetById(assetId));
+        } catch (NumberFormatException e) {
             //fail message
             return request.getRequestURI();
         }
 
         return "editAsset";
     }
-    
+
     //AssetType Forms
     @RequestMapping(value = {"/addAssetType"}, method = RequestMethod.GET)
-    public String displayAddAssetType(Model model){
-        model.addAttribute("categoryList", assetDao.getAllCategories());
-        
-        model.addAttribute("newAssetType", new AssetType());
-        
-        return "addAssetType";
-    }
-    
-    @RequestMapping(value = {"/updateAssetType"}, method = RequestMethod.GET)
-    public String displayEditAssetType(Model model, HttpServletRequest request){
-        int assetTypeId;
-        
-        try{
-            assetTypeId = Integer.parseInt(request.getParameter("typeId"));
-        
+    public String displayAddAssetType(Model model) {
         model.addAttribute("categoryList", assetDao.getAllCategories());
 
-        model.addAttribute("assetType", assetDao.getAssetTypeById(assetTypeId));
-        }
-        catch(NumberFormatException e){
+        model.addAttribute("newAssetType", new AssetType());
+
+        return "addAssetType";
+    }
+
+    @RequestMapping(value = {"/updateAssetType"}, method = RequestMethod.GET)
+    public String displayEditAssetType(Model model, HttpServletRequest request) {
+        int assetTypeId;
+
+        try {
+            assetTypeId = Integer.parseInt(request.getParameter("typeId"));
+
+            model.addAttribute("categoryList", assetDao.getAllCategories());
+
+            model.addAttribute("assetType", assetDao.getAssetTypeById(assetTypeId));
+        } catch (NumberFormatException e) {
             //fail message
             return request.getRequestURI();
         }
@@ -154,30 +152,40 @@ public class HomeController {
     @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
     public String submitAssetUpdate(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request) {
         /*
-        int typeId;
+         int typeId;
 
-        try {
-            typeId = Integer.parseInt(request.getParameter("typeId"));
-        } catch (NumberFormatException e) {
-            model.addAttribute("updateError", "You FAILED to correctly update the asset. FOR SHAME!!!");
-            return "redirect:updateAsset";
-        }
+         try {
+         typeId = Integer.parseInt(request.getParameter("typeId"));
+         } catch (NumberFormatException e) {
+         model.addAttribute("updateError", "You FAILED to correctly update the asset. FOR SHAME!!!");
+         return "redirect:updateAsset";
+         }
 
-        asset.setAssetType(assetDao.getAssetTypeById(typeId));
-        */
-        
+         asset.setAssetType(assetDao.getAssetTypeById(typeId));
+         */
+
         assetDao.editAsset(asset);
 
         //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
         return "redirect:manage_assets";
     }
-    
+
     @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
-    public String deleteAsset(@ModelAttribute("asset") Asset asset, Model model, HttpServletRequest request){
-        try{
-            assetDao.deleteAsset(asset);
+    public String deleteAsset(Model model, HttpServletRequest request) {
+        int assetId = 0;
+        Asset asset;
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+        } catch (NumberFormatException e) {
+            //fail
+            return "redirect:manage_assets";
         }
-        catch(Exception e){
+
+        asset = assetDao.getAssetById(assetId);
+
+        try {
+            assetDao.deleteAsset(asset);
+        } catch (Exception e) {
             model.addAttribute("deletionError", "Oops! Something went wrong when attempting to delete " + asset.getAssetType().getName() + " serial#" + asset.getSerialNumber() + ".");
             return request.getRequestURI();
         }
@@ -203,23 +211,36 @@ public class HomeController {
 
     @RequestMapping(value = {"/submitAssetTypeUpdate"}, method = RequestMethod.POST)
     public String submitAssetTypeUpdate(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request) {
-        assetDao.editAssetType(assetType);
+        try {
+            assetDao.editAssetType(assetType);
+        } catch (Exception e) {
+
+        }
         return "redirect:manage_assets";
     }
-    
+
     @RequestMapping(value = {"/removeAssetType"}, method = RequestMethod.GET)
-    public String deleteAssetType(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request){
+    public String deleteAssetType(Model model, HttpServletRequest request) {
+        AssetType assetType;
+        int assetTypeId = 0;
         try{
-            assetDao.deleteAssetType(assetType);
+            assetTypeId = Integer.parseInt(request.getParameter("typeId"));
         }
-        catch(Exception e){
+        catch(NumberFormatException e){
+            
+            return "redirect:manage_assets";
+        }
+        
+        assetType = assetDao.getAssetTypeById(assetTypeId);
+        
+        try {
+            assetDao.deleteAssetType(assetType);
+        } catch (Exception e) {
             model.addAttribute("assetTypeDeletionError", "Oops! Something went wrong when attempting to delete " + assetType.getName() + ".");
         }
         return "redirect:manage_assets";
     }
-    
-    
-    
+
     //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
