@@ -192,7 +192,7 @@ public class HomeController {
         try {
             categoryId = Integer.parseInt(request.getParameter("categoryId"));
         } catch (NumberFormatException e) {
-            return "addAssetType";
+            return "redirect:addAssetType";
         }
 
         newAssetType.setCategory(assetDao.getCategoryById(categoryId));
