@@ -213,8 +213,7 @@ public class HomeController {
             assetDao.deleteAssetType(assetType);
         }
         catch(Exception e){
-            model.addAttribute("deletionError", "Oops! Something went wrong when attempting to delete " + assetType.getName() + ".");
-            return request.getRequestURI();
+            model.addAttribute("assetTypeDeletionError", "Oops! Something went wrong when attempting to delete " + assetType.getName() + ".");
         }
         return "redirect:manage_assets";
     }
