@@ -37,11 +37,13 @@
                             <div class="col-md-9">
                                 <select class="form-control" name="categoryId">
                                     <jstl:forEach var="category" items="${categoryList}">
-                                        <option value="${category.categoryId}">${category.categoryName}</option>
+                                        <option ${category == assetType.category ? 'selected = "selected"' : ''} value="${category.categoryId}">${category.categoryName}</option>
                                     </jstl:forEach>       
                                 </select>
                             </div>
                         </div>
+
+
 
 
                         <div class="form-group">
@@ -58,7 +60,7 @@
                         <br/>
                         <div class="form-group">
                             <div class="col-md-3">
-                                <input type="submit" value="Add Asset Type" class="btn btn-primary"/>
+                                <input type="submit" value="Edit Asset Type" class="btn btn-primary"/>
                             </div>
                         </div>
                     </sf:form>

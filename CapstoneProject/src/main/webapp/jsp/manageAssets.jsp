@@ -19,7 +19,9 @@
             <jsp:include page="include/header.jsp"/>
 
 
-            
+              ${assetTypeDeletionError}
+              ${displayUpdateAssetFormError}
+              ${assetTypeUpdateError}
             <div class="row">
                 
                 <div class="col-md-9">
@@ -87,7 +89,7 @@
 
 
 
-                ${assetTypeDeletionError}
+              
                 
                 <div class="col-md-3" style="padding-bottom: 20px; float: left">
                     <h2 class="text-center">Manage Categories</h2>
