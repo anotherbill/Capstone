@@ -7,7 +7,6 @@ import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
-import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
@@ -46,46 +45,6 @@ public class HomeController {
         model.addAttribute("assetTypeList", types);
 
         return "browseAssets";
-        /*
-         Set<Category> categories = assetDao.getAllCategories();
-         Set<Asset> assets = new HashSet<>();
-         Category selectedCat = null;
-         AssetType selectedType = null;
-
-         String typeName = request.getParameter("searchByType");
-        
-         if (typeName != null) {
-         //find desired asset type, if selected, and get assets for asset type
-         for (AssetType type : types) {
-         if (type.getName().equalsIgnoreCase(typeName)) {
-         selectedType = type;
-         assets.addAll(assetDao.getAllAssetsByAssetType(selectedType));
-         }
-         }
-
-         //get all assets if no asset type selected
-         if (typeName.equalsIgnoreCase("All") || selectedCat == null) {
-         assets.addAll(assetDao.getAllAssets());
-         }
-
-         //if searching by asset type, supply requested set of assets
-         model.addAttribute("assets", assets);
-         } else {
-         //if searching by category, supply requested set of asset types
-         model.addAttribute("types", types);
-         }
-        
-         */
-    }
-
-    @RequestMapping(value = {"/addAsset"}, method = RequestMethod.GET)
-    public String displayAddAsset(Model model) {
-        model.addAttribute("categories", assetDao.getAllCategories());
-        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
-
-        model.addAttribute("newAsset", new Asset());
-
-        return "addAsset";
     }
 
     @RequestMapping(value = {"/manage_assets"}, method = RequestMethod.GET)
@@ -94,23 +53,6 @@ public class HomeController {
         model.addAttribute("categoryList", assetDao.getAllCategories());       
         model.addAttribute("assetTypeList", types);
         return "manageAssets";
-    }
-
-    @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
-    public String submitNewAsset(@ModelAttribute("newAsset") Asset newAsset, Model model, HttpServletRequest request) {
-        int typeId;
-
-        try {
-            typeId = Integer.parseInt(request.getParameter("typeId"));
-        } catch (NumberFormatException e) {
-            return "addAsset";
-        }
-
-        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
-        assetDao.addAsset(newAsset);
-
-        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
-        return "redirect:manage_assets";
     }
 
     @RequestMapping(value = {"/listAssets"}, method = RequestMethod.GET)
@@ -131,6 +73,17 @@ public class HomeController {
         return "assetsByType";
     }
 
+    //Asset Forms
+    @RequestMapping(value = {"/addAsset"}, method = RequestMethod.GET)
+    public String displayAddAsset(Model model) {
+        //model.addAttribute("categories", assetDao.getAllCategories());
+        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
+
+        model.addAttribute("newAsset", new Asset());
+
+        return "addAsset";
+    }
+
     @RequestMapping(value = {"/updateAsset"}, method = RequestMethod.GET)
     public String displayEditAsset(Model model, HttpServletRequest request){
         int assetId;
@@ -138,7 +91,7 @@ public class HomeController {
         try{
             assetId = Integer.parseInt(request.getParameter("assetId"));
         
-        model.addAttribute("categories", assetDao.getAllCategories());
+        //model.addAttribute("categories", assetDao.getAllCategories());
         model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
 
         model.addAttribute("asset", assetDao.getAssetById(assetId));
@@ -149,6 +102,53 @@ public class HomeController {
         }
 
         return "editAsset";
+    }
+    
+    //AssetType Forms
+    @RequestMapping(value = {"/addAssetType"}, method = RequestMethod.GET)
+    public String displayAddAssetType(Model model){
+        model.addAttribute("categoryList", assetDao.getAllCategories());
+        
+        model.addAttribute("newAssetType", new AssetType());
+        
+        return "addAssetType";
+    }
+    
+    @RequestMapping(value = {"/updateAssetType"}, method = RequestMethod.GET)
+    public String displayEditAssetType(Model model, HttpServletRequest request){
+        int assetTypeId;
+        
+        try{
+            assetTypeId = Integer.parseInt(request.getParameter("assetTypeId"));
+        
+        model.addAttribute("categorList", assetDao.getAllCategories());
+
+        model.addAttribute("assetType", assetDao.getAssetTypeById(assetTypeId));
+        }
+        catch(NumberFormatException e){
+            //fail message
+            return request.getRequestURI();
+        }
+
+        return "editAssetType";
+    }
+
+    //Asset CRUD
+    @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
+    public String submitNewAsset(@ModelAttribute("newAsset") Asset newAsset, Model model, HttpServletRequest request) {
+        int typeId;
+
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            return "addAsset";
+        }
+
+        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
+        assetDao.addAsset(newAsset);
+
+        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
+        return "redirect:manage_assets";
     }
 
     @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
@@ -183,7 +183,24 @@ public class HomeController {
         }
         return "redirect:manage_assets";
     }
+
+    //AssetType CRUD
+    @RequestMapping(value = {"/submitNewAssetType"}, method = RequestMethod.POST)
+    public String submitNewAssetType(@ModelAttribute("newAssetType") AssetType newAssetType, Model model, HttpServletRequest request) {
+        int categoryId;
+
+        try {
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        } catch (NumberFormatException e) {
+            return "addAssetType";
+        }
+
+        newAssetType.setCategory(assetDao.getCategoryById(categoryId));
+        assetDao.addAssetType(newAssetType);
+        return "redirect:manage_assets";
+    }
     
+    //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
         Set<AssetType> types = new HashSet<>();
