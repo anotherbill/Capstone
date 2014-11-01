@@ -17,21 +17,6 @@
             <jsp:include page="include/header.jsp"/>
 
             <div class="row" style="padding: 0px; margin: 0px">
-                <div class="col-md-3">
-                    <form role="form">
-                        <div class="form-group">
-                            <select name="selectCategory" class="form-control">
-                                <option value="option1">Search By Category</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Search" class="form-control"/>
-                        </div>
-                    </form>
-                </div>
 
                 <div class="col-md-3">
                     <form role="form">
@@ -46,26 +31,21 @@
                 </div>           
                 <div class="col-md-3">
 
-                    <form role="form">
-                        <div class="form-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
-                                    <label>Add New Asset Type:</label></span></span><input type="text" class="form-control" style="float: right"/><br/><br/>
+                    <div class="col-md-3">
+
+                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                        <div class="col-md-2">
+                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">Add Asset Type</a>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" class="form-control" value="Add Asset Type"/>
+                    </div>
+                
+                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                        <div class="col-md-2">
+                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
                         </div>
-                    </form>
-                </div> 
-
-
-
-            </div>
-
-
-            <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                <div class="col-md-2">
-                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
+                    </div>
                 </div>
+            </div>
             </div>
 
             <div class="col-md-12"> 
