@@ -131,6 +131,24 @@ public class HomeController {
         return "editAssetType";
     }
 
+    //Category Forms
+    
+    @RequestMapping(value = {"/updateCategory"}, method = RequestMethod.GET)
+    public String displayEditCategory(Model model, HttpServletRequest request) {
+        int categoryId;
+
+        try {
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
+
+            model.addAttribute("category", assetDao.getCategoryById(categoryId));
+        } catch (NumberFormatException e) {
+            //fail message
+            return request.getRequestURI();
+        }
+
+        return "editCategory";
+    }
+    
     //Asset CRUD
     @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
     public String submitNewAsset(@ModelAttribute("newAsset") Asset newAsset, Model model, HttpServletRequest request) {
@@ -214,7 +232,7 @@ public class HomeController {
         try {
             assetDao.editAssetType(assetType);
         } catch (Exception e) {
-
+            model.addAttribute("assetTypeUpdateError", "Oops! Something went awry when attempting to update asset type:" + assetType.getName() + ".");
         }
         return "redirect:manage_assets";
     }
@@ -241,6 +259,47 @@ public class HomeController {
         return "redirect:manage_assets";
     }
 
+    //Category CRUD
+    @RequestMapping(value = {"/submitNewCategory"}, method = RequestMethod.POST)
+    public String submitNewAssetType(Model model, HttpServletRequest request) {
+        Category newCat = new Category();
+        newCat.setCategoryName(request.getParameter("categoryName"));
+        assetDao.addCategory(newCat);
+        return "redirect:manage_assets";
+    }
+
+    @RequestMapping(value = {"/submitCategoryUpdate"}, method = RequestMethod.POST)
+    public String submitCategoryUpdate(@ModelAttribute("category") Category category, Model model, HttpServletRequest request) {
+        try {
+            assetDao.editCategory(category);
+        } catch (Exception e) {
+            model.addAttribute("categoryUpdateError", "Oops! Something went awry when attempting to update category: " + category.getCategoryName() + ".");
+        }
+        return "redirect:manage_assets";
+    }
+
+    @RequestMapping(value = {"/removeCategory"}, method = RequestMethod.GET)
+    public String deleteCategory(Model model, HttpServletRequest request) {
+        Category category;
+        int categoryId = 0;
+        try{
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        }
+        catch(NumberFormatException e){
+            
+            return "redirect:manage_assets";
+        }
+        
+        category = assetDao.getCategoryById(categoryId);
+        
+        try {
+            assetDao.deleteCategory(category);
+        } catch (Exception e) {
+            model.addAttribute("categoryDeletionError", "Oops! Something went wrong when attempting to delete category: " + category.getCategoryName() + ".");
+        }
+        return "redirect:manage_assets";
+    }
+    
     //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
