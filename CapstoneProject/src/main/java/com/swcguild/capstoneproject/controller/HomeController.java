@@ -121,7 +121,7 @@ public class HomeController {
         try{
             assetTypeId = Integer.parseInt(request.getParameter("typeId"));
         
-        model.addAttribute("categorList", assetDao.getAllCategories());
+        model.addAttribute("categoryList", assetDao.getAllCategories());
 
         model.addAttribute("assetType", assetDao.getAssetTypeById(assetTypeId));
         }
