@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="input" class="col-sm-2 control-label">Note</label>
                                 <div class="col-sm-10">
-                                    <textArea class="form-control" id="note" name="assetNote">Enter Note Here</textArea>
+                                    <textArea class="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></textArea>
                 </div>
             </div>
             <div class="form-group">
