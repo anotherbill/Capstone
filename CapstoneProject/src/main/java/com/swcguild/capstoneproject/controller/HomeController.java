@@ -89,12 +89,11 @@ public class HomeController {
 
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
-        
-        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
 
-        model.addAttribute("asset", assetDao.getAssetById(assetId));
-            
-            
+            model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
+
+            model.addAttribute("asset", assetDao.getAssetById(assetId));
+
         } catch (Exception e) {
             model.addAttribute("displayUpdateAssetFormError", "Oops! Something went wrong when loading the form. Please try again.");
             return "redirect:listAssets";
@@ -214,17 +213,10 @@ public class HomeController {
     @RequestMapping(value = {"/submitAssetTypeUpdate"}, method = RequestMethod.POST)
     public String submitAssetTypeUpdate(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request) {
         int categoryId = 0;
-        
-        try{
-            categoryId = Integer.parseInt("categoryId");
-        }
-        catch(NumberFormatException e){
-            
-        }
-        
-        assetType.setCategory(assetDao.getCategoryById(categoryId));
-        
+
         try {
+            categoryId = Integer.parseInt("categoryId");
+            assetType.setCategory(assetDao.getCategoryById(categoryId));
             assetDao.editAssetType(assetType);
         } catch (Exception e) {
             model.addAttribute("assetTypeUpdateError", "Oops! Something went awry when attempting to update asset type:" + assetType.getName() + ".");
