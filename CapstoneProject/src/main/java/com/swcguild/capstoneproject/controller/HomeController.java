@@ -213,6 +213,17 @@ public class HomeController {
 
     @RequestMapping(value = {"/submitAssetTypeUpdate"}, method = RequestMethod.POST)
     public String submitAssetTypeUpdate(@ModelAttribute("assetType") AssetType assetType, Model model, HttpServletRequest request) {
+        int categoryId = 0;
+        
+        try{
+            categoryId = Integer.parseInt("categoryId");
+        }
+        catch(NumberFormatException e){
+            
+        }
+        
+        assetType.setCategory(assetDao.getCategoryById(categoryId));
+        
         try {
             assetDao.editAssetType(assetType);
         } catch (Exception e) {
