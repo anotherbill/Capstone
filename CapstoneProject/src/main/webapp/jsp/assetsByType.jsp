@@ -89,7 +89,7 @@
                             <td>${asset.inStock}</td>
                             <td>${asset.serialNumber}</td>
                             <td>${asset.damageStatus}</td>
-                            <td><a href="editAsset.jsp" class="btn btn-warning">Edit</a><br/><br/><a href="deleteAsset" class="btn btn-danger">Delete</a><br/><br/>
+                            <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning">Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger">Delete</a><br/><br/>
                                 <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
                         </tr>
                     </jstl:forEach>
