@@ -36,6 +36,7 @@
     
     <bean id="assetDao" class="com.swcguild.capstoneproject.dao.AssetHibernateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
     <bean id="eventDao" class="com.swcguild.capstoneproject.dao.EventHibernateDaoImpl">

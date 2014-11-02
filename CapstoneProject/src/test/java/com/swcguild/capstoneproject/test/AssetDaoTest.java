@@ -9,6 +9,7 @@ import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import com.swcguild.capstoneproject.model.notes.AssetNote;
 import java.util.List;
 import java.util.Set;
 import org.junit.After;
@@ -179,18 +180,17 @@ public class AssetDaoTest {
         dao.addAsset(a);
         dao.addAsset(c);
         dao.addAsset(d);
-        
+
         Asset toCheck = dao.getAnyAvailableAssetByAssetType(t1);
         assertTrue(toCheck.isInStock());
     }
-    
+
     //What about when you want to get an available asset but there is none?
     @Test
-    public void getAnUnavailableAsset(){
-        
+    public void getAnUnavailableAsset() {
+
     }
-    
-    
+
     @Test
     public void getAllAvailableAssetsTest() {
         dao.addCategory(Tents);
@@ -226,26 +226,42 @@ public class AssetDaoTest {
         dao.addAsset(a);
         dao.addAsset(c);
         dao.addAsset(d);
-        
+
         Set<Asset> assets = dao.getAllAvailableAssetsByAssetType(t1);
-        
+
         assertEquals(assets.size(), 2);
     }
-    
-    @Test 
-    public void changeDamageStatusForAnAssetTest(){
+
+    @Test
+    public void changeDamageStatusForAnAssetTest() {
         dao.addCategory(Tents);
         dao.addAssetType(t1);
         dao.addAsset(a);
         dao.addAsset(c);
         dao.addAsset(d);
-        
+
         Asset changeThisOne = dao.getAssetById(a.getAssetId());
         dao.changeAssetDamageStatus(a, "Damaged");
-        
+
         assertEquals(a.getDamageStatus(), "Damaged");
-        
+
     }
-    
-    
+
+    //Asset notes
+    @Test
+    public void addGetAssetNote() {
+        dao.addCategory(Tents);
+        dao.addAssetType(t1);
+        dao.addAsset(a);
+        
+        String note = "This item is damaged";
+        String category = "Damage";
+        
+        dao.addNoteToAsset(a.getAssetId(), note, category); //THIS WORKS WITH JDBC FINALLY GEEEEEZ
+        List<AssetNote> getNote = dao.getAssetNotes(a.getAssetId());
+        assertEquals(getNote.size(), 1);
+        
+
+    }
+
 }
