@@ -8,11 +8,16 @@ package com.swcguild.capstoneproject.dao;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.UserNote;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +78,43 @@ public class UserHibernateDaoImpl implements UserInterface {
         currentSession().update(user);
     }
 
+
+    private static final String SQL_ADD_USER_NOTE
+            = "insert into user_notes(user_id, note_detail) values (?, ?)";
+    private static final String SQL_GET_USER_NOTES
+            = "select * from user_notes where user_id = ?";
+
+    @Override
+    public void addNoteToUser(String note, int userId) {
+        jdbcTemplate.update(SQL_ADD_USER_NOTE, userId, note);
+    }
+
+    @Override
+    public List<UserNote> getUserNotes(int userId) {
+        return jdbcTemplate.query(SQL_GET_USER_NOTES, new UserNoteMapper(), userId);
+    }
+    
+    private static final class UserNoteMapper implements RowMapper<UserNote>{
+
+        @Override
+        public UserNote mapRow(ResultSet rs, int i) throws SQLException {
+            UserNote u = new UserNote();
+            u.setUserNoteId(rs.getInt("user_note_id"));
+            u.setUserId(rs.getInt("user_id"));
+            u.setNote(rs.getString("note_detail"));
+            String dateStr = rs.getString("note_date");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+            try {
+                u.setNoteDate(formatter.parse(dateStr));
+            } catch (ParseException pe) {
+                System.out.println("OOPS YOU SCREWED UP--your date is WRONG");
+            }
+            return u;
+        }
+        
+    }
+    
+//    HIBERNATE GARBAGE, TREAD WITH CARE    
     
     
 //    @Override
@@ -90,15 +132,5 @@ public class UserHibernateDaoImpl implements UserInterface {
 //                .createSQLQuery("select * from user_notes where user_id = " + userId)
 //                .addEntity(String.class).list();
 //    }
-
-    @Override
-    public void addNoteToUser(String note, int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<UserNote> getUserNotes(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

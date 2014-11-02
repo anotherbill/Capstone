@@ -9,6 +9,10 @@ import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.notes.EventNote;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +20,7 @@ import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -104,14 +109,39 @@ public class EventHibernateDaoImpl implements EventInterface {
 //                .createSQLQuery("select * from event_notes where event_id =  " + eventId)
 //                .addEntity(String.class).list();
 //    }
+    
+    private static final String SQL_ADD_EVENT_NOTE
+            = "insert into event_notes (event_id, note_detail) values (?, ?)";
+    private static final String SQL_GET_ALL_EVENT_NOTES
+            = "select * from event_notes where event_id = ?";
 
     @Override
     public void addNoteToEvent(String note, int eventId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbcTemplate.update(SQL_ADD_EVENT_NOTE, eventId, note);
     }
 
     @Override
     public List<EventNote> getEventNote(int eventId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jdbcTemplate.query(SQL_GET_ALL_EVENT_NOTES, new EventNoteMapper(), eventId);
+    }
+    
+    private static final class EventNoteMapper implements RowMapper<EventNote>{
+
+        @Override
+        public EventNote mapRow(ResultSet rs, int i) throws SQLException {
+            EventNote e = new EventNote();
+            e.setEventNoteId(rs.getInt("event_note_id"));
+            e.setEventId(rs.getInt("event_id"));
+            e.setNote(rs.getString("note_detail"));
+            String dateStr = rs.getString("note_date");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+            try {
+                e.setNoteDate(formatter.parse(dateStr));
+            } catch (ParseException pe) {
+                System.out.println("OOPS YOU SCREWED UP--your date is WRONG");
+            }
+            return e;
+        }
+        
     }
 }
