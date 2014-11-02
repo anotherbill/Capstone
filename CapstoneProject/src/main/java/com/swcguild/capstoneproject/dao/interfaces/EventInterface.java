@@ -7,6 +7,7 @@ package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
+import com.swcguild.capstoneproject.model.notes.EventNote;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,6 @@ public interface EventInterface {
 
     public void addNoteToEvent(String note, int eventId);
 
-    public List<String> getEventNote(int eventId);
+    public List<EventNote> getEventNote(int eventId);
 
 }
