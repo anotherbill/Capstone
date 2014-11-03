@@ -20,8 +20,14 @@
 
 
               ${assetTypeDeletionError}
-              ${displayUpdateAssetFormError}
               ${assetTypeUpdateError}
+              ${assetTypeError}
+              ${assetTypeDeletionError}
+              ${categoryUpdateError}
+              ${categoryDeletionError}
+              ${displayUpdateAssetFormError}
+              
+              
             <div class="row">
                 
                 <div class="col-md-9">

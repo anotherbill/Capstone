@@ -19,6 +19,7 @@
 
             <div class="row">
                 <div class="col-md-6">
+                    ${categoryIdError}
                     <sf:form cssClass="form-horizontal" role="form" action="submitNewAssetType" method="post" modelAttribute="newAssetType">
                         <div class="form-group">
                             <div class="col-md-3">
