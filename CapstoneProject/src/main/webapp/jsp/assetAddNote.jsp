@@ -58,38 +58,39 @@
                 </table>
             </div>
 
-                    <form class="form-horizontal" action="assetAddNote" method="post" role="form">
+                    <sf:form class="form-horizontal" action="assetAddNote" method="post" role="form" modelAttribute="assetNote">
                         <div class="form-group">
-                            <label for="input" class="col-sm-2 control-label">Note</label>
+                            <sf:label path="note" class="col-sm-2 control-label">Note</sf:label>
                             <div class="col-sm-10">
-                                <textArea class="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></textarea>
+                                <sf:textarea path="note" cssClass="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></sf:textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-3">
-                                <label class="control-label">Status/Damage</label>
+                                <sf:label path="category" cssClass="control-label">Note Category</sf:label>
                                 </div>
                                 <div class="col-md-9">
-                                <select class="form-control" name="status">
-                                    <option value="none">none</option>
-                                    <option value="lost">Lost</option>
-                                    <option value="stolen">Stolen</option>
-                                    <option value="late">Late</option>
-                                    <option value="retired">Retired</option>
-                                    <option value="one">Damage: 1</option>
-                                    <option value="two">Damage: 2</option>
-                                    <option value="three">Damage: 3</option>
-                                    <option value="four">Damage: 4</option>
-                                    <option value="five">Damage: 5</option>
-                                </select>
+                                <sf:select path="category" cssClass="form-control" name="category">
+                                    <sf:option value="none">none</sf:option>
+                                    <sf:option value="lost">Lost</sf:option>
+                                    <sf:option value="stolen">Stolen</sf:option>
+                                    <sf:option value="late">Late</sf:option>
+                                    <sf:option value="retired">Retired</sf:option>
+                                    <sf:option value="one">Damage: 1</sf:option>
+                                    <sf:option value="two">Damage: 2</sf:option>
+                                    <sf:option value="three">Damage: 3</sf:option>
+                                    <sf:option value="four">Damage: 4</sf:option>
+                                    <sf:option value="five">Damage: 5</sf:option>
+                                </sf:select>
                             </div>
                         </div>
+                                <sf:hidden path="assetId"/>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" class="btn btn-primary" value="Add Note"/>
                             </div>
                         </div>
-                    </form>
+                    </sf:form>
                 </div>
             </div>
 
