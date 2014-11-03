@@ -17,13 +17,16 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-2">
-                    <a href="#userAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
-                    <a href="#editUserModal" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal">Edit User</a>
+            <div class="container">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-2">
+                        <a href="#userAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
+                        <a href="#editUserModal" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal">Edit User</a>
+                    </div>
                 </div>
             </div>
-
+            
+            
             <div class="col-md-8">
                 <table class="table table-hover">
 

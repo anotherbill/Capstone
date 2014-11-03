@@ -41,9 +41,8 @@
                     <sf:label path="goodStanding" cssClass="col-sm-2 control-label">Standing</sf:label>
                         <div class="col-sm-10">
                         <sf:select path="goodStanding" name="standing">
-                            <sf:option value="good">Good</sf:option>
-                            <sf:option value="iffy">Iffy</sf:option>
-                            <sf:option value="bad">Bad</sf:option>
+                            <sf:option value="true">True</sf:option>
+                            <sf:option value="false">False</sf:option>
                         </sf:select>
                     </div>
                 </div>
@@ -52,13 +51,13 @@
                     <sf:label path="enabled" cssClass="col-sm-2 control-label">Enabled</sf:label>
                         <div class="col-sm-10">
                         <sf:select path="enabled" name="enabled">
-                            <sf:option value="true">Yes</sf:option>
-                            <sf:option value="false">No</sf:option>
+                            <sf:option value="1">Yes</sf:option>
+                            <sf:option value="0">No</sf:option>
                         </sf:select>
                     </div>
                 </div>
 
-                <sf:hidden path="userId" value="userId"/>
+                <sf:hidden path="userId" value="${user.userId}"/>
 
                 <sf:label path="events" cssClass="col-sm-2 control-label">Events</sf:label>
 

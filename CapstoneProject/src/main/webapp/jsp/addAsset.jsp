@@ -12,7 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Asset</title>
+        
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="bootstrapvalidator-0.5.2/dist/css/bootstrapValidator.min.css"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
+        <script src="js/validateAddEditEvent.js" type="text/javascript"></script>
         <script src="js/validateAddEditAsset.js" type="text/javascript"></script>
+        <script src="js/validateAddEditUser.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -68,7 +78,7 @@
                                 <sf:label path="serialNumber" cssClass="control-label">Serial #</sf:label>
                                 </div>
                                 <div class="col-md-9">
-                                <sf:input path="serialNumber" type="text" cssClass="form-control" id="serialNum" placeholder="Scan Serial Number" name="serialNum"/>
+                                <sf:input path="serialNumber" type="text" cssClass="form-control" id="serialNum" placeholder="Scan Serial Number"/>
                             </div>
                         </div>
                         <%--
@@ -133,7 +143,7 @@
             },
              inStock: {
             },
-            serialNum: {
+            serialNumber: {
                 message: 'The serial number is not valid',
                 validators: {
                     notEmpty: {

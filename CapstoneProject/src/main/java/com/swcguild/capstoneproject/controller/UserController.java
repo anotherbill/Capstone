@@ -58,4 +58,22 @@ public class UserController {
         return "redirect:viewAllUsers";
     }
     
+    @RequestMapping(value="/viewUserInfo", method = RequestMethod.GET)
+    public String viewUserInfo(Model model){
+        return "viewUserInfo";
+    }
+    
+    @RequestMapping(value="/editUser", method = RequestMethod.GET)
+    public String viewEditUserPage(@RequestParam("userId") int userId, Model model){
+        User userToEdit = userDao.getUserByUserId(userId);
+        model.addAttribute("user", userToEdit);
+        return "editUser";
+    }
+    
+    @RequestMapping(value="/submitEditUser", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") User user, Model model){
+        userDao.editUser(user);
+        return "redirect:viewAllUsers";
+    }
+    
 }

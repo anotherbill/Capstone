@@ -34,20 +34,20 @@
                 <div class="col-md-9">
 
                 <div class="col-md-3">
-                    <sf:form role="form" method="get" action="manage_assets">
+                    <form role="form" method="get" action="manage_assets">
                         <div class="form-group">
-                            <sf:label path="name">Search By Category:</sf:label>
-                            <sf:select path="name" name="selectCategory" cssClass="form-control">
-                                <sf:option value="all">All</sf:option>
+                            <label>Search By Category:</label>
+                            <select name="selectCategory" class="form-control">
+                                <option value="all">All</option>
                                 <jstl:forEach var="category" items="${categoryList}">
-                                    <sf:option value="${category.categoryName}">${category.categoryName}</sf:option>
+                                    <option value="${category.categoryName}">${category.categoryName}</option>
                                 </jstl:forEach>
-                            </sf:select>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Search" class="form-control"/>
                         </div>
-                    </sf:form>
+                    </form>
                 </div>
                 <div class="col-md-3">
 
@@ -100,22 +100,22 @@
                 
                 <div class="col-md-3" style="padding-bottom: 20px; float: left">
                     <h2 class="text-center">Manage Categories</h2>
-                    <form role="form" action="submitNewCategory" method="post">
+                    <sf:form role="form" action="submitNewCategory" method="post" modelAttribute="category">
                         <div class="form-group"> 
                             <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
-                                    <label>Add New Category:</label></span></span><input type="text" class="form-control" style="float: right" name="categoryName"/><br/><br/>
+                                    <sf:label path="categoryName">Add New Category:</sf:label></span></span><sf:input path="categoryName" type="text" class="form-control" style="float: right" name="categoryName"/><br/><br/>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="form-control" value="Add Category"/>
                         </div> 
-                    </form>
+                    </sf:form>
 
 
                     <jstl:forEach var="category" items="${categoryList}">
                         <p style="padding-bottom: 15px">${category.categoryName}
                             <a href="updateCategory?categoryId=${category.categoryId}" class="btn btn-warning btn-sm" style="float:right; margin-left: 10px">Edit</a>
                             <a href="removeCategory?categoryId=${category.categoryId}" class="btn btn-danger btn-sm" style="float:right">Delete</a></p>
-                        </jstl:forEach>
+                     </jstl:forEach>
                 </div>
 
 
