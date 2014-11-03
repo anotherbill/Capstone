@@ -6,14 +6,11 @@
 package com.swcguild.capstoneproject.test;
 
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
-import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.UserNote;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -143,5 +140,19 @@ public class UserInterfaceTest {
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertEquals(newPw, fromStorage.getPassword());
         
+    }
+    //Asset notes
+    @Test
+    public void addGetUserNote() {
+        userDao.addUser(u1);
+        
+        
+        String note = "This user is destructive";
+        
+        userDao.addNoteToUser( note,u1.getUserId()); //THIS WORKS WITH JDBC FINALLY GEEEEEZ
+        List<UserNote> getNote = userDao.getUserNotes(u1.getUserId());
+        assertEquals(getNote.size(), 1);
+        
+
     }
 }
