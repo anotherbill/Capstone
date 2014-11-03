@@ -39,8 +39,8 @@
                                         <br><b>Standing:</b> <span>${user.goodStanding}</span>
                                         <br>
                                     </p>
-                                    <a  href="viewUserInfo.jsp" class="btn btn-warning">Additional Info</a><br><br>
-                                    <a href="editUser" class="btn btn-primary" role="button">Edit</a>  <a href="deleteUser?userId=${user.userId}" class="btn btn-danger" role="button" data-toggle="modal">Delete</a><br/><br/>
+                                    <a  href="viewUserInfo" class="btn btn-warning">Additional Info</a><br><br>
+                                    <a href="editUser?userId=${user.userId}" class="btn btn-primary" role="button">Edit</a>  <a href="deleteUser?userId=${user.userId}" class="btn btn-danger" role="button" data-toggle="modal">Delete</a><br/><br/>
                                     <a href="userAddNote" class="btn btn-success glyphicon glyphicon-plus">Add Note</a>
                                 </div>
                             </div>
