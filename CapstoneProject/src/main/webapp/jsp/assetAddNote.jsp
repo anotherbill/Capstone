@@ -34,7 +34,7 @@
                         <th>Damage Status</th>
                         <th>Notes</th>
                     </tr>
-                    <jstl:forEach var="asset" items="${assetAddNote}">
+
                         <tr>
                             <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
                             <td>${asset.assetType.category.categoryName}</td>
@@ -54,7 +54,7 @@
                                     <td></td>
                                 </tr>
                             </jstl:forEach>
-                    </jstl:forEach>
+
                 </table>
             </div>
 

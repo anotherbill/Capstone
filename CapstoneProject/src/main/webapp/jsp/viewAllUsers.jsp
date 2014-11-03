@@ -18,7 +18,7 @@
             <jsp:include page="include/header.jsp"/>
 
             <div class="row" style="padding: 0px; margin: 0px; margin-bottom: 30px">
-                <a class="btn btn-primary glyphicon glyphicon-plus" href="addUser" data-toggle="modal">Add User</a>
+                <a class="btn btn-primary glyphicon glyphicon-plus" href="addUser">Add User</a>
             </div>
             
             

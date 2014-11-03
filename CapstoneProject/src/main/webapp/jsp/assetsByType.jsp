@@ -62,6 +62,7 @@
                             <td>${asset.serialNumber}</td>
                             <td>${asset.damageStatus}</td>
                             <jstl:forEach var="assetNote" items="${assetNotes}">
+                                
                                 <td>${assetNote.note}</td>
                                 <tr/>
                                 <tr>
@@ -74,7 +75,7 @@
                                 </tr>
                             </jstl:forEach>
                             <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning">Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger">Delete</a><br/><br/>
-                                <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
+                                <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a></td>
                         </tr>
                     </jstl:forEach>
                 </table>

@@ -17,23 +17,23 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-            <sf:form action="addUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="newUser">
+            <sf:form action="addUser" method="post" cssClass="form-horizontal" modelAttribute="newUser">
                 <div class="form-group">
                     <sf:label path="name" cssClass="col-sm-2 control-label">Name</sf:label>
                         <div class="col-sm-10">
-                        <sf:input path="name" type="text" cssClass="form-control" id="name" placeholder="Name" name="name"/>
+                        <sf:input path="name" type="text" cssClass="form-control" name="name"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <sf:label path="userName" cssClass="col-sm-2 control-label">Username</sf:label>
                         <div class="col-sm-10">
-                        <sf:input path="userName" type="text" cssClass="form-control" id="user" placeholder="Username" name="userName"/>
+                        <sf:input path="userName" type="text" cssClass="form-control" name="userName"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <sf:label path="password" cssClass="col-sm-2 control-label">Password</sf:label>
                         <div class="col-sm-10">
-                        <sf:input path="password" type="password" cssClass="form-control" id="location" placeholder="password" name="password"/>
+                        <sf:input path="password" type="password" cssClass="form-control" name="password"/>
                     </div>
                 </div>
                 <div class="form-group">
