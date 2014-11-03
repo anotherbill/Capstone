@@ -7,6 +7,7 @@ import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import com.swcguild.capstoneproject.model.notes.AssetNote;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
@@ -148,6 +149,47 @@ public class HomeController {
         return "editCategory";
     }
 
+    
+    //AssetNote Form
+    @RequestMapping(value = {"/assetAddNote"}, method = RequestMethod.GET)
+    public String displayAddAssetNote(Model model, HttpServletRequest request) {
+        int assetId = 0;
+        AssetNote newNote = new AssetNote();
+
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+            //request.setAttribute("assetId", assetId);
+            newNote.setAssetId(assetId);
+            model.addAttribute("assetNote", newNote);
+        }
+        catch(Exception e){
+            return "redirect:manage_assets";
+        }
+        
+        return "assetAddNote";
+    }
+    
+    //AssetNoteCRUD
+    @RequestMapping(value = {"/submitNewAssetNote"}, method = RequestMethod.POST)
+    public String submitNewAssetNote(@ModelAttribute("assetNote") AssetNote newAssetNote, Model model, HttpServletRequest request) {
+        int assetId;
+        //Asset asset;
+
+        try {
+            //assetId = Integer.parseInt(request.getParameter("assetId"));
+     
+            //asset = assetDao.getAssetById(assetId);
+            //newAssetNote.setAssetId(assetId);
+            assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
+        } catch (Exception e) {
+            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
+            return "redirect:assetAddNote";
+        }
+
+        return "redirect:manage_assets";
+    }
+    
+    
     //Asset CRUD
     @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
     public String submitNewAsset(@ModelAttribute("newAsset") Asset newAsset, Model model, HttpServletRequest request) {
