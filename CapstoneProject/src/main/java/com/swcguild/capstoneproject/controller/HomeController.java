@@ -171,12 +171,14 @@ public class HomeController {
     public String displayAddAssetNote(Model model, HttpServletRequest request) {
         int assetId = 0;
         AssetNote newNote = new AssetNote();
-
+        Asset asset;
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
             //request.setAttribute("assetId", assetId);
             newNote.setAssetId(assetId);
+            asset=assetDao.getAssetById(assetId);
             model.addAttribute("assetNote", newNote);
+            model.addAttribute("asset", asset);
         }
         catch(Exception e){
             return "redirect:manage_assets";
