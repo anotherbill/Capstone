@@ -179,6 +179,7 @@ public class HomeController {
             asset=assetDao.getAssetById(assetId);
             model.addAttribute("assetNote", newNote);
             model.addAttribute("asset", asset);
+            model.addAttribute("assetNoteList", assetDao.getAssetNotes(assetId));
         }
         catch(Exception e){
             return "redirect:manage_assets";
