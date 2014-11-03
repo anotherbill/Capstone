@@ -187,8 +187,8 @@ public class AssetDaoTest {
 
     //What about when you want to get an available asset but there is none?
     @Test
-    public void getAnUnavailableAsset() {
-
+    public void getAnUnavailableAssetTest() {
+        
     }
 
     @Test

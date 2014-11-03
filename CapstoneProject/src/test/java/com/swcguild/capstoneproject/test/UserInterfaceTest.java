@@ -47,32 +47,31 @@ public class UserInterfaceTest {
     }
 
     @Before
-    public void setUp() throws SQLException, FileNotFoundException{
+    public void setUp() throws SQLException, FileNotFoundException {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("test-applicationContext.xml");
         userDao = ctx.getBean("userDao", UserInterface.class);
-        
+
         jdbcT = ctx.getBean("jdbcTemplate", JdbcTemplate.class);
         jdbcT.execute("delete from assets_events");
         jdbcT.execute("delete from events");
         jdbcT.execute("delete from users");
-        
+
         //events = new HashSet<>();
         //events.add(new Event());
-        
         u1 = new User();
         u1.setUserName("testMan1");
         u1.setPassword("thePass0rd");
         u1.setGoodStanding(true);
         u1.setEnabled(1);
         u1.setName("John Doe");
-        
+
         u2 = new User();
         u2.setUserName("testMan2");
         u2.setPassword("thePass3rd");
         u2.setGoodStanding(true);
         u2.setEnabled(1);
         u2.setName("John Smith");
-        
+
         u3 = new User();
         u3.setUserName("testLady1");
         u3.setPassword("thePass1rd");
@@ -90,69 +89,66 @@ public class UserInterfaceTest {
     public void addGetDeleteUpdateUserTest() {
         User fromStorage;
         boolean failure = false;
-        
+
         //successfully add and retrieve users
         userDao.addUser(u1);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertEquals(u1, fromStorage);
-        
+
         userDao.addUser(u2);
         fromStorage = userDao.getUserByUserId(u2.getUserId());
         assertEquals(u2, fromStorage);
-        
+
         //delete user and confirm removal
         userDao.deleteUser(u1);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertTrue(null == fromStorage);
-        
+
         //update user and confirm changes
         u3.setUserId(u2.getUserId());
         userDao.editUser(u3);
         fromStorage = userDao.getUserByUserId(u2.getUserId());
         assertEquals(u3, fromStorage);
-        
+
         //attempt update of non-exstant user and confirm failure
-        try{
+        try {
             userDao.editUser(u1);
             failure = false;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             failure = true;
         }
         assertTrue(failure);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertTrue(null == fromStorage);
     }
-    
+
     @Test
-    public void resetupdatePasswordTest(){
+    public void resetupdatePasswordTest() {
         User fromStorage;
         String resetPw;
         String newPw = "new0";
-        
+
         userDao.addUser(u1);
         userDao.resetPassword(u1);
         resetPw = u1.getUserName();
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertEquals(resetPw, fromStorage.getPassword());
-        
+
         userDao.changeUserPassword(u1, newPw);
         fromStorage = userDao.getUserByUserId(u1.getUserId());
         assertEquals(newPw, fromStorage.getPassword());
-        
+
     }
-    //Asset notes
+
     @Test
     public void addGetUserNote() {
         userDao.addUser(u1);
-        
-        
-        String note = "This user is destructive";
-        
-        userDao.addNoteToUser( note,u1.getUserId()); //THIS WORKS WITH JDBC FINALLY GEEEEEZ
+
+        String note = "One item was damaged";
+
+        userDao.addNoteToUser(note, u1.getUserId()); //THIS WORKS WITH JDBC FINALLY GEEEEEZ
         List<UserNote> getNote = userDao.getUserNotes(u1.getUserId());
         assertEquals(getNote.size(), 1);
-        
 
     }
 }

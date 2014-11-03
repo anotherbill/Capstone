@@ -16,7 +16,6 @@ import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.EventNote;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.junit.After;
@@ -182,14 +181,11 @@ public class EventDaoTest {
         userDao.addUser(u1);
         eventDao.addEvent(e1);
 
-        String note = "This Event  has a note";
-        eventDao.addNoteToEvent(note, e1.getEventId());
-        List<EventNote> getNote = eventDao.getEventNote(e1.getEventId());
-//        for (int i = 0; i < getNote.size(); i++) {
-//            System.out.println(getNote.get(i).getNote() + "-- " + getNote.get(i).getNoteDate() );
-//        }
-        assertEquals(getNote.size(), 1);
+        String note = "One item was damaged";
 
+        eventDao.addNoteToEvent(note, e1.getEventId()); //THIS WORKS WITH JDBC FINALLY GEEEEEZ
+        List<EventNote> getNote = eventDao.getEventNote(e1.getEventId());
+        assertEquals(getNote.size(), 1);
     }
 
 }
