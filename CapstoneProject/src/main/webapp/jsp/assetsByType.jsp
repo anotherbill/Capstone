@@ -17,18 +17,9 @@
             <jsp:include page="include/header.jsp"/>
 
             <div class="row" style="padding: 0px; margin: 0px">
+                
 
-                <div class="col-md-3">
-                    <form role="form">
-                        <div class="form-group"> 
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
-                                    <label>Add New Category:</label></span></span><input type="text" class="form-control" style="float: right"/><br/><br/>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="form-control" value="Add Category"/>
-                        </div> 
-                    </form>
-                </div>           
+               
                 <div class="col-md-3">
 
                     <div class="col-md-3">
@@ -59,6 +50,7 @@
                         <th>In Stock</th>
                         <th>Serial Number</th>
                         <th>Damage Status</th>
+                        <th>Notes</th>
                         <th>Actions</th>
                     </tr>
                     <jstl:forEach var="asset" items="${assetList}">
@@ -69,8 +61,20 @@
                             <td>${asset.inStock}</td>
                             <td>${asset.serialNumber}</td>
                             <td>${asset.damageStatus}</td>
+                            <jstl:forEach var="assetNote" items="${assetNotes}">
+                                <td>${assetNote.note}</td>
+                                <tr/>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </jstl:forEach>
                             <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning">Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger">Delete</a><br/><br/>
-                                <a href="#assetAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
+                                <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a></td>
                         </tr>
                     </jstl:forEach>
                 </table>

@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Asset</title>
-        <script src="../js/validateAddEditAsset.js" type="text/javascript"></script>
+        <script src="js/validateAddEditAsset.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -22,13 +22,6 @@
                 <div class="col-md-6">
                     <sf:form cssClass="form-horizontal" role="form" action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="newAsset">
 
-                        <%--   
-                        <sf:select path="categoryName" cssClass="form-control" name="category">
-                            <sf:option value="tent">Tents</sf:option>
-                            <sf:option value="sleepingBag">Sleeping Bag</sf:option>
-                            <sf:option value="fishingPole">Fishing Pole</sf:option>
-                        </sf:select>
-                        --%>
 
                         <%-- assetType --%>
                         <div class="form-group">
@@ -44,15 +37,9 @@
                             </div>
                         </div>
 
-                        <%--<sf:label path="assetType" cssClass="col-sm-3 control-label">Asset Type</sf:label>
-                        <sf:select path="assetType" cssClass="form-control" name="assetType">
-                            <jstl:forEach var="type" items="${assetTypes}">
-                                <sf:option value="${type}">${type.name}: ${type.category.categoryName}</sf:option>
-                            </jstl:forEach>
-                        </sf:select>
-                        
+
                         <%-- inStock --%>
-                        <sf:hidden path="inStock" value="${true}"/>
+                        <sf:hidden path="inStock" value="${true}" name="inStock"/>
 
                         <%-- damageStatus --%>
                         <div class="form-group">
@@ -60,7 +47,7 @@
                                 <sf:label path="damageStatus" class="control-label">Status/Damage</sf:label>
                                 </div>
                                 <div class="col-md-9">
-                                <sf:select path="damageStatus" cssClass="form-control" name="status">
+                                <sf:select path="damageStatus" cssClass="form-control" name="damageStatus">
                                     <sf:option value="none">none</sf:option>
                                     <sf:option value="lost">Lost</sf:option>
                                     <sf:option value="stolen">Stolen</sf:option>

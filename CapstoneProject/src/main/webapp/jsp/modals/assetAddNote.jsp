@@ -20,7 +20,7 @@
                         <h4 class="modal-title" id="myModalLabel">Add Note</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" action="assetAddNote" method="get" role="form">
                             <div class="form-group">
                                 <label for="input" class="col-sm-2 control-label">Note</label>
                                 <div class="col-sm-10">

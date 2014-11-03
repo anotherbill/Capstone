@@ -22,13 +22,7 @@
                 <div class="col-md-6">
                     <sf:form cssClass="form-horizontal" role="form" action="submitAssetUpdate" method="post" id="addEditAsset" modelAttribute="asset">
 
-                        <%--   
-                        <sf:select path="categoryName" cssClass="form-control" name="category">
-                            <sf:option value="tent">Tents</sf:option>
-                            <sf:option value="sleepingBag">Sleeping Bag</sf:option>
-                            <sf:option value="fishingPole">Fishing Pole</sf:option>
-                        </sf:select>
-                        --%>
+
 
                         <%-- assetType --%>
 
@@ -44,7 +38,7 @@
                                 <sf:label path="damageStatus" cssClass="control-label">Status/Damage</sf:label>
                                 </div>
                                 <div class="col-md-9">
-                                <sf:select path="damageStatus" cssClass="form-control">
+                                <sf:select path="damageStatus" cssClass="form-control">  
                                     <sf:option value="none">none</sf:option>
                                     <sf:option value="lost">Lost</sf:option>
                                     <sf:option value="stolen">Stolen</sf:option>
@@ -58,6 +52,7 @@
                                 </sf:select>
                             </div>
                         </div>
+                                
                                 
                                 <div class="form-group">
                             <div class="col-md-3">
@@ -83,6 +78,7 @@
                         </div>
 
                         <sf:hidden path="assetId"/>
+                        <input type="hidden" value="asset.assetTypeId"/>
 
                         <br/>
                         <div class="form-group">
