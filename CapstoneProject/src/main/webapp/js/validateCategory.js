@@ -1,5 +1,5 @@
  $(document).ready(function() {
-    $('#addEditAsset').bootstrapValidator({
+    $('#addEditCategory').bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -7,31 +7,23 @@
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            typeId: {
-            },
-            damageStatus: {
-            },
-             inStock: {
-            },
-            serialNum: {
+            name: {
                 message: 'The serial number is not valid',
                 validators: {
                     notEmpty: {
                         message: 'The serial number is required and cannot be empty'
                     },
                     stringLength: {
-                        min: 6,
+                        min: 2,
                         max: 30,
-                        message: 'The serial number must be more than 6 and less than 30 characters long'
+                        message: 'The serial number must be more than 2 and less than 30 characters long'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_]+$/,
-                        message: 'The serial number can only consist of alphabetical, number and underscore'
+                        message: 'The category name can only consist of alphabetical, number and underscore'
                     }
                 }
             }
-            
-            
         }
     });
 });

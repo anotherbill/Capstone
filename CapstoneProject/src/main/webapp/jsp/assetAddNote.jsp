@@ -58,7 +58,7 @@
                 </table>
             </div>
 
-                    <sf:form class="form-horizontal" action="assetAddNote" method="post" role="form" modelAttribute="assetNote">
+                    <sf:form class="form-horizontal" action="submitNewAssetNote" method="post" role="form" modelAttribute="assetNote">
                         <div class="form-group">
                             <sf:label path="note" class="col-sm-2 control-label">Note</sf:label>
                             <div class="col-sm-10">
