@@ -79,7 +79,7 @@ public class HomeController {
         int assetId;
         
         try {
-            assetId = Integer.parseInt(request.getParameter("typeId"));
+            assetId = Integer.parseInt(request.getParameter("assetId"));
             //Asset asset = assetDao.getAssetById(assetId);
 
             model.addAttribute("assetNotes", assetDao.getAssetNotes(assetId));
