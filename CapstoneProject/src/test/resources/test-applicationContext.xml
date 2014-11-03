@@ -32,14 +32,17 @@
     
     <bean id="userDao" class="com.swcguild.capstoneproject.dao.UserHibernateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
     <bean id="assetDao" class="com.swcguild.capstoneproject.dao.AssetHibernateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
     <bean id="eventDao" class="com.swcguild.capstoneproject.dao.EventHibernateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     
     <bean id="jdbcTemplate"

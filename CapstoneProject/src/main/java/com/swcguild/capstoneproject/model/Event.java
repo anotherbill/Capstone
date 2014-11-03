@@ -19,37 +19,45 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author apprentice
  */
 @Entity
-@Table(name="events")
+@Table(name = "events")
 public class Event {
+
     @Id
     @GeneratedValue
-    @Column(name="event_id")
+    @Column(name = "event_id")
     private int eventId;
-    
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="user_id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user; //get everything about the user through Hibernate
-    
-    @Column(name="event_name")
+
+    @Column(name = "event_name")
+    @Size(min = 3, max = 30, message = "The event name must be between 3 and 30 characters")
     private String eventName;
-    
-    @Column(name="check_out_date")
+
+    @Column(name = "check_out_date")
+    @DateTimeFormat(pattern = "yyyy-MM-DD")
     private Date checkOutDate;
-    
-    @Column(name="due_date")
+
+    @Column(name = "due_date")
+    @DateTimeFormat(pattern = "yyyy-MM-DD")
     private Date dueDate;
-    
-    @ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.ALL})
-    @JoinTable(name="assets_events", joinColumns ={@JoinColumn(name="event_id")}, inverseJoinColumns={@JoinColumn(name="asset_id")})
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "assets_events", joinColumns = {
+        @JoinColumn(name = "event_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "asset_id")})
     private Set<Asset> assets; //we can do this through Hibernate
-    
-    @Column(name="is_open")
+
+    @Column(name = "is_open")
     private boolean open;
 
     public boolean isOpen() {
@@ -146,6 +154,4 @@ public class Event {
         return true;
     }
 
-    
-   
 }

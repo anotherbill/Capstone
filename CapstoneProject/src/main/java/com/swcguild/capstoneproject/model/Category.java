@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Category {
     private int categoryId;
     
     @Column(name="category_name")
+    @Size(min =2, max=20, message="The category name must be between and and 20 characters")
     private String categoryName;
 
     public int getCategoryId() {

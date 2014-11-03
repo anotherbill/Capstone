@@ -22,13 +22,6 @@
                 <div class="col-md-6">
                     <sf:form cssClass="form-horizontal" role="form" action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="newAsset">
 
-                        <%--   
-                        <sf:select path="categoryName" cssClass="form-control" name="category">
-                            <sf:option value="tent">Tents</sf:option>
-                            <sf:option value="sleepingBag">Sleeping Bag</sf:option>
-                            <sf:option value="fishingPole">Fishing Pole</sf:option>
-                        </sf:select>
-                        --%>
 
                         <%-- assetType --%>
                         <div class="form-group">

@@ -8,6 +8,7 @@ package com.swcguild.capstoneproject.dao.interfaces;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import com.swcguild.capstoneproject.model.notes.AssetNote;
 import java.util.List;
 import java.util.Set;
 
@@ -68,5 +69,5 @@ public interface AssetInterface {
     //notes
     public void addNoteToAsset(int assetId, String note, String category);
 
-    public List<String> getAssetNotes(int assetId);
+    public List<AssetNote> getAssetNotes(int assetId);
 }

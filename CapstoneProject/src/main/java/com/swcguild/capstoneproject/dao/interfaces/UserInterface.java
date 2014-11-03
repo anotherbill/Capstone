@@ -6,6 +6,7 @@
 package com.swcguild.capstoneproject.dao.interfaces;
 
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.UserNote;
 import java.util.List;
 
 /**
@@ -28,5 +29,5 @@ public interface UserInterface {
 
     public void addNoteToUser(String note, int userId);
 
-    public List<String> getUserNotes(int userId);
+    public List<UserNote> getUserNotes(int userId);
 }
