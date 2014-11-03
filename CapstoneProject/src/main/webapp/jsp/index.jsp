@@ -21,6 +21,7 @@
         <div class="container">
         
         <jsp:include page="include/header.jsp"/>
+        <div class="container">
         
         <div class="row" style="padding: 0px; margin: 0px; margin-bottom: 30px">
             <a class="btn btn-primary glyphicon glyphicon-plus" href="addEventStepOne.jsp">Add Event</a>
@@ -101,11 +102,11 @@
             </div>
 
         </div>
-        
-        <jsp:include page="modals/eventAddNote.jsp"/>
+        </div>
+
         <jsp:include page="modals/manageMyEvents.jsp"/>
-        <jsp:include page="modals/viewEventInfo.jsp"/>
         <jsp:include page="include/footer.jsp"/>
+
         </div>
 
     </body>
