@@ -8,6 +8,7 @@ package com.swcguild.capstoneproject.dao.interfaces;
 import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.UserNote;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -22,6 +23,8 @@ public interface UserInterface {
     public void deleteUser(User user);
 
     public User getUserByUserId(int userId);
+    
+    public Set<User> getAllUsers();
 
     public void resetPassword(User user);
 

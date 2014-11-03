@@ -11,6 +11,7 @@ import com.swcguild.capstoneproject.model.notes.UserNote;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -150,5 +151,18 @@ public class UserInterfaceTest {
         List<UserNote> getNote = userDao.getUserNotes(u1.getUserId());
         assertEquals(getNote.size(), 1);
 
+    }
+    
+    @Test
+    public void getAllUsers(){
+        userDao.addUser(u1);
+        userDao.addUser(u2);
+        
+        Set<User> userList = userDao.getAllUsers();
+        
+        assertEquals(userList.size(), 2);
+        assertTrue(userList.contains(u1));
+        assertTrue(userList.contains(u2));
+        
     }
 }
