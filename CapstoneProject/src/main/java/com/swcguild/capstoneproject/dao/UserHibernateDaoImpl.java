@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -76,6 +78,12 @@ public class UserHibernateDaoImpl implements UserInterface {
     public void changeUserPassword(User user, String password) { //This probably has some kind of database hashing security along with it
         user.setPassword(password);
         currentSession().update(user);
+    }
+    
+    @Override
+    public Set<User> getAllUsers(){
+        List<User> userList = currentSession().createCriteria(User.class).list();
+        return new HashSet<>(userList);
     }
 
 

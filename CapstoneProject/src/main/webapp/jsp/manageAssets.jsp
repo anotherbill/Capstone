@@ -34,20 +34,20 @@
                 <div class="col-md-9">
 
                 <div class="col-md-3">
-                    <form role="form" method="get" action="manage_assets">
+                    <sf:form role="form" method="get" action="manage_assets">
                         <div class="form-group">
-                            <label>Search By Category:</label>
-                            <select name="selectCategory" class="form-control">
-                                <option value="all">All</option>
+                            <sf:label path="name">Search By Category:</sf:label>
+                            <sf:select path="name" name="selectCategory" cssClass="form-control">
+                                <sf:option value="all">All</sf:option>
                                 <jstl:forEach var="category" items="${categoryList}">
-                                    <option value="${category.categoryName}">${category.categoryName}</option>
+                                    <sf:option value="${category.categoryName}">${category.categoryName}</sf:option>
                                 </jstl:forEach>
-                            </select>
+                            </sf:select>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Search" class="form-control"/>
                         </div>
-                    </form>
+                    </sf:form>
                 </div>
                 <div class="col-md-3">
 

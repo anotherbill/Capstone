@@ -18,7 +18,7 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-            <sf:form action="editUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="user">
+            <sf:form action="submitEditUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="user">
                 <div class="form-group">
                     <sf:label path="name" cssClass="col-sm-2 control-label">Name</sf:label>
                         <div class="col-sm-10">

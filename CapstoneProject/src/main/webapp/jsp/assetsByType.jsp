@@ -17,26 +17,26 @@
             <jsp:include page="include/header.jsp"/>
 
             <div class="row" style="padding: 0px; margin: 0px">
-                
 
-               
+
+
                 <div class="col-md-3">
 
                     <div class="col-md-3">
 
-                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                        <div class="col-md-2">
-                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">Add Asset Type</a>
+                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                            <div class="col-md-2">
+                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                        <div class="col-md-2">
-                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
+
+                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                            <div class="col-md-2">
+                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">  Add Asset</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
             <div class="col-md-12"> 
@@ -50,34 +50,24 @@
                         <th>In Stock</th>
                         <th>Serial Number</th>
                         <th>Damage Status</th>
-                        <th>Notes</th>
                         <th>Actions</th>
                     </tr>
-                    <jstl:forEach var="asset" items="${assetList}">
-                        <tr>
-                            <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
-                            <td>${asset.assetType.category.categoryName}</td>
-                            <td>${asset.assetType.name}</td>
-                            <td>${asset.inStock}</td>
-                            <td>${asset.serialNumber}</td>
-                            <td>${asset.damageStatus}</td>
-                            <jstl:forEach var="assetNote" items="${assetNotes}">
-                                
-                                <td>${assetNote.note}</td>
-                                <tr/>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </jstl:forEach>
-                            <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning">Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger">Delete</a><br/><br/>
-                                <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a></td>
+                   <%--  <jstl:forEach var="assetNote" items="${assetNotes}"> --%>
+                        <jstl:forEach var="asset" items="${assetList}"> --%>
+                            <tr>
+                                <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
+                                <td>${asset.assetType.category.categoryName}</td>
+                                <td>${asset.assetType.name}</td>
+                                <td>${asset.inStock}</td>
+                                <td>${asset.serialNumber}</td>
+                                <td>${asset.damageStatus}</td>
+
+                       <%--  </jstl:forEach>--%>
+                        <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning glyphicon glyphicon-pencil">  Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger glyphicon glyphicon-minus">  Delete</a><br/><br/>
+                            <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus"> Add Note</a><br/><br/>
+                            <a href="listAssetNotes?assetId=${asset.assetId}" class="btn btn-primary glyphicon glyphicon-list-alt">  View Asset Notes</a></td>
                         </tr>
-                    </jstl:forEach>
+                   </jstl:forEach>
                 </table>
             </div>
             <jsp:include page="modals/assetAddNote.jsp"/>

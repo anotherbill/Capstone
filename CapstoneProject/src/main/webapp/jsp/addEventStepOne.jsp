@@ -3,7 +3,9 @@
     Created on : Oct 29, 2014, 11:04:57 AM
     Author     : apprentice
 --%>
-
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,7 +27,12 @@
                 <div class="form-group">
                     <label for="inout" class="col-sm-2 control-label">UserName</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="user" placeholder="UserName" name="userName"/>
+                        <!--                        <input type="text" class="form-control" id="user" placeholder="UserName" name="userName"/>-->
+                        <select class="col-sm-2 control-label">
+                            <jstl:forEach var="user" items="${userList}">
+                                <option value="${user.userId}">${user.userName}</option>
+                            </jstl:forEach>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

@@ -16,8 +16,10 @@
     <body>
         <div class="container">
             <jsp:include page="include/header.jsp"/>
+            <div class="container">
 
-            <sf:form action="submitAddUser" method="post" cssClass="form-horizontal" modelAttribute="newUser">
+                <div class="col-md-6">
+            <sf:form action="submitNewUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="newUser">
                 <div class="form-group">
                     <sf:label path="name" cssClass="col-sm-2 control-label">Name</sf:label>
                         <div class="col-sm-10">
@@ -52,6 +54,8 @@
                     </div>
                 </div>
             </sf:form>
+                </div>
+            </div>
 
             <jsp:include page="include/footer.jsp"/>
         </div>
