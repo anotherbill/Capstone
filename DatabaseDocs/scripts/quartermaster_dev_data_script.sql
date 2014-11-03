@@ -3,12 +3,10 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 27, 2014 at 10:18 AM
+-- Generation Time: Oct 27, 2014 at 03:13 PM
 -- Server version: 5.5.40-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.4
 
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -20,25 +18,55 @@ SET time_zone = "+00:00";
 --
 -- Database: `quartermaster_dev`
 --
+drop database if exists `quartermaster_dev`;
 CREATE DATABASE IF NOT EXISTS `quartermaster_dev` DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci;
 USE `quartermaster_dev`;
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `assets`
 --
 
-DROP TABLE IF EXISTS `assets`;
-CREATE TABLE `assets` (
+CREATE TABLE IF NOT EXISTS `assets` (
   `asset_id` int(11) NOT NULL AUTO_INCREMENT,
   `asset_type_id` int(11) NOT NULL,
   `serial_number` varchar(20) COLLATE latin1_general_ci DEFAULT NULL,
-  `in_stock` bit NOT NULL DEFAULT 1,
+  `in_stock` bit(1) NOT NULL DEFAULT b'1',
   `damage_loss_theft` varchar(20) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`asset_id`),
   KEY `asset_type_id` (`asset_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `assets`
+--
+
+INSERT INTO `assets` (`asset_id`, `asset_type_id`, `serial_number`, `in_stock`, `damage_loss_theft`) VALUES
+(1, 1, '1111', b'1', 'none'),
+(2, 1, '2222', b'1', 'none'),
+(3, 2, '11112', b'1', 'none'),
+(4, 2, '11113', b'1', 'none'),
+(5, 2, '11114', b'1', 'none'),
+(6, 3, '33331', b'1', 'none'),
+(7, 3, '33332', b'1', 'none'),
+(8, 3, '33333', b'1', 'none'),
+(9, 4, '4441', b'1', 'none'),
+(10, 4, '4442', b'1', 'none'),
+(11, 4, '4443', b'1', 'none'),
+(12, 5, '551', b'1', 'none'),
+(13, 5, '552', b'1', 'none'),
+(14, 5, '553', b'1', 'none'),
+(15, 5, '554', b'1', 'none'),
+(16, 6, '61', b'1', 'none'),
+(17, 6, '62', b'1', 'none'),
+(18, 6, '63', b'1', 'none'),
+(19, 7, '7', b'1', 'none'),
+(20, 8, '81', b'1', 'none'),
+(21, 8, '82', b'1', 'none'),
+(22, 8, '83', b'1', 'none'),
+(23, 8, '84', b'1', 'none'),
+(24, 8, '85', b'1', 'none'),
+(25, 8, '86', b'1', 'none');
 
 -- --------------------------------------------------------
 
@@ -46,8 +74,7 @@ CREATE TABLE `assets` (
 -- Table structure for table `assets_events`
 --
 
-DROP TABLE IF EXISTS `assets_events`;
-CREATE TABLE `assets_events` (
+CREATE TABLE IF NOT EXISTS `assets_events` (
   `asset_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `return_date` date DEFAULT NULL,
@@ -55,14 +82,26 @@ CREATE TABLE `assets_events` (
   KEY `event_id` (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
+--
+-- Dumping data for table `assets_events`
+--
+DELETE FROM `assets_events`;
+INSERT INTO `assets_events` (`asset_id`, `event_id`, `return_date`) VALUES
+(1, 1, NULL),
+(9, 3, NULL),
+(10, 4, '2014-10-29'),
+(11, 6, NULL),
+(13, 5, NULL),
+(15, 6, NULL),
+(17, 4, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `asset_notes`
 --
 
-DROP TABLE IF EXISTS `asset_notes`;
-CREATE TABLE `asset_notes` (
+CREATE TABLE IF NOT EXISTS `asset_notes` (
   `asset_note_id` int(11) NOT NULL AUTO_INCREMENT,
   `asset_id` int(11) NOT NULL,
   `note_detail` varchar(255) COLLATE latin1_general_ci NOT NULL,
@@ -70,7 +109,28 @@ CREATE TABLE `asset_notes` (
   `note_category` varchar(20) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`asset_note_id`),
   KEY `asset_id` (`asset_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `asset_notes`
+--
+DELETE FROM `asset_notes`;
+INSERT INTO `asset_notes` (`asset_note_id`, `asset_id`, `note_detail`, `note_category`) VALUES
+(1, 1, 'asset id 1 note', ''),
+(2, 2, 'asset id 2 note', ''),
+(3, 3, 'asset id 3 note', ''),
+(4, 4, 'asset id 4 note', ''),
+(5, 5, 'asset id 5 note', ''),
+(6, 6, 'asset id 6 note', ''),
+(7, 7, 'asset id 7 note', ''),
+(8, 1, 'asset id 1 note 2', ''),
+(9, 2, 'asset id 2 note2', ''),
+(10, 3, 'asset id 3 note2', ''),
+(11, 4, 'asset id 4 note 2', ''),
+(12, 5, 'asset id 5 note 2', ''),
+(13, 6, 'asset id 6 note 2', ''),
+(14, 7, 'asset id 7 note 2', ''),
+(15, 8, 'asset id 8 note 2', '');
 
 -- --------------------------------------------------------
 
@@ -78,15 +138,28 @@ CREATE TABLE `asset_notes` (
 -- Table structure for table `asset_types`
 --
 
-DROP TABLE IF EXISTS `asset_types`;
-CREATE TABLE `asset_types` (
+CREATE TABLE IF NOT EXISTS `asset_types` (
   `asset_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `category_id` int(11) NOT NULL,
   `image_path` varchar(35) COLLATE latin1_general_ci DEFAULT NULL,
   PRIMARY KEY (`asset_type_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `asset_types`
+--
+DELETE FROM `asset_types`;
+INSERT INTO `asset_types` (`asset_type_id`, `name`, `category_id`, `image_path`) VALUES
+(1, 'tent', 2, ''),
+(2, 'basketballs', 6, ''),
+(3, 'sleeping bags', 8, ''),
+(4, 'large tarp', 2, ''),
+(5, 'small tarp', 2, ''),
+(6, 'Stakes(20 pack)', 2, ''),
+(7, 'large dutch oven', 1, ''),
+(8, 'small dutch oven', 1, '');
 
 -- --------------------------------------------------------
 
@@ -94,8 +167,7 @@ CREATE TABLE `asset_types` (
 -- Table structure for table `authorities`
 --
 
-DROP TABLE IF EXISTS `authorities`;
-CREATE TABLE `authorities` (
+CREATE TABLE IF NOT EXISTS `authorities` (
   `username` varchar(40) COLLATE latin1_general_ci NOT NULL,
   `authority` varchar(40) COLLATE latin1_general_ci NOT NULL,
   KEY `username` (`username`)
@@ -107,30 +179,56 @@ CREATE TABLE `authorities` (
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
+CREATE TABLE IF NOT EXISTS `categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(20) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `categories`
+--
+DELETE FROM `categories`;
+INSERT INTO `categories` (`category_id`, `category_name`) VALUES
+(1, 'cookware'),
+(2, 'shelter'),
+(3, 'lighting'),
+(4, 'watersports'),
+(5, 'games'),
+(6, 'sports equipment'),
+(7, 'winter sports'),
+(8, 'bedding'),
+(9, 'tables'),
+(10, 'chairs');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `events`
 --
-
-DROP TABLE IF EXISTS `events`;
-CREATE TABLE `events` (
+CREATE TABLE IF NOT EXISTS `events` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `event_name` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `check_out_date` date NOT NULL,
   `due_date` date NOT NULL,
-  `is_open` bit NOT NULL DEFAULT 1,
+  `is_open` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`event_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `events`
+--
+DELETE FROM `events`;
+INSERT INTO `events` (`event_id`, `user_id`, `event_name`, `check_out_date`, `due_date`, `is_open`) VALUES
+(1, 3, 'Boy Scout Summer Campout', '2014-10-25', '2014-10-25', b'1'),
+(2, 4, 'Men''s Softball Canoe trip', '2014-10-25', '2014-10-25', b'1'),
+(3, 5, 'Ymca summer adventure', '2014-10-25', '2014-10-25', b'1'),
+(4, 6, 'Charity Church Bible Camp', '2014-10-25', '2014-10-25', b'1'),
+(5, 7, 'Girl scouts camping trip', '2014-10-24', '2014-10-25', b'1'),
+(6, 8, 'Software Craftsmanship Guild W', '2014-10-24', '2014-10-25', b'1'),
+(7, 8, 'Software Craftsmanship Guild c', '2014-10-24', '2014-10-25', b'1');
 
 -- --------------------------------------------------------
 
@@ -138,15 +236,25 @@ CREATE TABLE `events` (
 -- Table structure for table `event_notes`
 --
 
-DROP TABLE IF EXISTS `event_notes`;
-CREATE TABLE `event_notes` (
+CREATE TABLE IF NOT EXISTS `event_notes` (
   `event_note_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `note_detail` varchar(255) COLLATE latin1_general_ci NOT NULL,
   `note_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`event_note_id`),
   KEY `event_id` (`event_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `event_notes`
+--
+DELETE FROM `event_notes`;
+INSERT INTO `event_notes` (`event_note_id`, `event_id`, `note_detail`) VALUES
+(1, 1, 'Boy Scout Campout note'),
+(2, 2, 'Canoe Trip note'),
+(3, 3, 'YMCA Summer Adventure Note'),
+(4, 4, 'Bible Camp Note'),
+(5, 5, 'Camping trip');
 
 -- --------------------------------------------------------
 
@@ -154,18 +262,35 @@ CREATE TABLE `event_notes` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) COLLATE latin1_general_ci NOT NULL,
   `password` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `enabled` bit NOT NULL DEFAULT 1,
+  `enabled` bit(1) NOT NULL DEFAULT b'1',
   `name` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `good_standing` bit NOT NULL DEFAULT 1,
+  `good_standing` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `users`
+--
+DELETE FROM `users`;
+INSERT INTO `users` (`user_id`, `username`, `password`, `enabled`, `name`, `good_standing`) VALUES
+(3, 'bill', '', b'1', '1', b'1'),
+(4, 'stuart', '', b'1', '1', b'1'),
+(5, 'colin', '', b'1', '1', b'1'),
+(6, 'jennifer', '', b'1', '1', b'1'),
+(7, 'eugene', '', b'1', '1', b'1'),
+(8, 'rachel', '', b'1', '1', b'1'),
+(9, 'kevin', '', b'1', '0', b'1'),
+(10, 'natalie', '', b'1', '0', b'1'),
+(11, 'brian', '', b'1', '0', b'1'),
+(12, 'jakob', '', b'1', '0', b'1'),
+(13, 'josephine', '', b'1', '0', b'1'),
+(14, 'shawn', '', b'1', '0', b'1');
 
 -- --------------------------------------------------------
 
@@ -173,15 +298,30 @@ CREATE TABLE `users` (
 -- Table structure for table `user_notes`
 --
 
-DROP TABLE IF EXISTS `user_notes`;
-CREATE TABLE `user_notes` (
+CREATE TABLE IF NOT EXISTS `user_notes` (
   `user_note_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `note_detail` varchar(255) COLLATE latin1_general_ci NOT NULL,
   `note_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_note_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `user_notes`
+--
+DELETE FROM `user_notes`;
+INSERT INTO `user_notes` (`user_note_id`, `user_id`, `note_detail`) VALUES
+(1, 5, 'User ID 5 note'),
+(2, 3, 'User ID 3 note'),
+(3, 3, 'User ID 3 note'),
+(4, 4, 'User ID 4 note'),
+(5, 5, 'User ID 5 note'),
+(6, 6, 'User ID 6 note'),
+(7, 7, 'User ID 7 note'),
+(8, 8, 'User ID 8 note'),
+(9, 9, 'User ID 9 note'),
+(10, 10, 'User ID 1 note');
 
 --
 -- Constraints for dumped tables
@@ -235,7 +375,6 @@ ALTER TABLE `event_notes`
 --
 ALTER TABLE `user_notes`
   ADD CONSTRAINT `user_id_notefk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
