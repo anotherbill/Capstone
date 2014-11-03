@@ -12,11 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping({"/"})
@@ -54,6 +57,7 @@ public class HomeController {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
         model.addAttribute("categoryList", assetDao.getAllCategories());
         model.addAttribute("assetTypeList", types);
+        model.addAttribute("category", new Category());
         return "manageAssets";
     }
 
@@ -220,12 +224,12 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
-    public String deleteAsset(Model model, HttpServletRequest request
+    public String deleteAsset(Model model, HttpServletRequest request, @RequestParam("assetId") int assetId
     ) {
-        int assetId = 0;
+        //int assetId = 0;
         Asset asset;
         try {
-            assetId = Integer.parseInt(request.getParameter("assetId"));
+            //assetId = Integer.parseInt(request.getParameter("assetId"));
             asset = assetDao.getAssetById(assetId);
 
             assetDao.deleteAsset(asset);
@@ -287,26 +291,34 @@ public class HomeController {
 
     //Category CRUD
     @RequestMapping(value = {"/submitNewCategory"}, method = RequestMethod.POST)
-    public String submitNewAssetType(Model model, HttpServletRequest request) {
-        Category newCat = new Category();
-        try {
-            newCat.setCategoryName(request.getParameter("categoryName"));
-            assetDao.addCategory(newCat);
-        } catch (Exception e) {
-            request.setAttribute("newCategorySubmissionError", "Oops! Something went wrong when submitting new category. Please try again.");
+    public String submitNewAssetType(@Valid Category category, BindingResult result, Model model, HttpServletRequest request) {
+        if(result.hasErrors()){
+            return "redirect:manage_assets";
         }
+        
+//        Category newCat = new Category();
+//        try {
+//            newCat.setCategoryName(request.getParameter("categoryName"));
+            assetDao.addCategory(category);
+//        } catch (Exception e) {
+//            request.setAttribute("newCategorySubmissionError", "Oops! Something went wrong when submitting new category. Please try again.");
+//        }
 
         return "redirect:manage_assets";
     }
 
     @RequestMapping(value = {"/submitCategoryUpdate"}, method = RequestMethod.POST)
-    public String submitCategoryUpdate(@ModelAttribute("category") Category category, Model model, HttpServletRequest request
+    public String submitCategoryUpdate(@Valid Category category, BindingResult result, Model model, HttpServletRequest request
     ) {
-        try {
-            assetDao.editCategory(category);
-        } catch (Exception e) {
-            request.setAttribute("categoryUpdateError", "Oops! Something went wrong when updating asset. Please try again.");
+        if(result.hasErrors()){
+            return "redirect:manage_assets";
         }
+        
+//        try {
+            assetDao.editCategory(category);
+//        } catch (Exception e) {
+//            request.setAttribute("categoryUpdateError", "Oops! Something went wrong when updating asset. Please try again.");
+//        }
         return "redirect:manage_assets";
     }
 
@@ -329,24 +341,42 @@ public class HomeController {
     
     //AssetNoteCRUD
     @RequestMapping(value = {"/submitNewAssetNote"}, method = RequestMethod.POST)
-    public String submitNewAssetNote(@ModelAttribute("assetNote") AssetNote newAssetNote, Model model, HttpServletRequest request) {
-        int assetId;
-        //Asset asset;
-
-        try {
-            //assetId = Integer.parseInt(request.getParameter("assetId"));
-     
-            //asset = assetDao.getAssetById(assetId);
-            //newAssetNote.setAssetId(assetId);
-            assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
-        } catch (Exception e) {
-            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
+    public String submitNewAssetNote(@Valid AssetNote newAssetNote, BindingResult result, Model model, HttpServletRequest request) {
+        if(result.hasErrors()){
             return "redirect:assetAddNote";
         }
+        
+//        try {
+            assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
+//        } catch (Exception e) {
+//            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
+//            return "redirect:assetAddNote";
+//        }
 
         return "redirect:manage_assets";
     }
+    
+    
+//    @RequestMapping(value = {"/submitNewAssetNote"}, method = RequestMethod.POST)
+//    public String submitNewAssetNote(@ModelAttribute("assetNote") AssetNote newAssetNote, Model model, HttpServletRequest request) {
+//        int assetId;
+//        //Asset asset;
+//
+//        try {
+//            //assetId = Integer.parseInt(request.getParameter("assetId"));
+//     
+//            //asset = assetDao.getAssetById(assetId);
+//            //newAssetNote.setAssetId(assetId);
+//            assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
+//        } catch (Exception e) {
+//            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
+//            return "redirect:assetAddNote";
+//        }
+//
+//        return "redirect:manage_assets";
+//    }
 
+    
     //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
