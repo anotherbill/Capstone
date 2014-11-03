@@ -80,8 +80,8 @@ public class HomeController {
         
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
-            //Asset asset = assetDao.getAssetById(assetId);
-
+            Asset asset = assetDao.getAssetById(assetId);
+            model.addAttribute("asset", asset);
             model.addAttribute("assetNotes", assetDao.getAssetNotes(assetId));
         } catch (Exception e) {
             model.addAttribute("listAssetNotesError", "Oops! Something went wrong when attempting to list notes for the selected asset.");
