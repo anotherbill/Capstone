@@ -19,54 +19,61 @@
             <jsp:include page="include/header.jsp"/>
 
             <div class="row">
-                <div class="col-md-6">
-         
-            <div class="col-md-12"> 
+                
 
-                <table class="table table-hover">
+                    <div class="col-md-12"> 
 
-                    <tr>
-                        <th></th>
-                        <th>Category</th>
-                        <th>Asset Type</th>
-                        <th>In Stock</th>
-                        <th>Serial Number</th>
-                        <th>Damage Status</th>
-                        <th>Notes</th>
-                    </tr>
+                        <table class="table table-hover">
 
-                        <tr>
-                            <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
-                            <td>${asset.assetType.category.categoryName}</td>
-                            <td>${asset.assetType.name}</td>
-                            <td>${asset.inStock}</td>
-                            <td>${asset.serialNumber}</td>
-                            <td>${asset.damageStatus}</td>
-                            <jstl:forEach var="assetNote" items="${assetNotes}">
-                                <td>${assetNote.note}</td>
-                                <tr/>
+                            <tr>
+                                <th></th>
+                                <th>Category</th>
+                                <th>Asset Type</th>
+                                <th>In Stock</th>
+                                <th>Serial Number</th>
+                                <th>Damage Status</th>
+                            </tr>
+
+                            <tr>
+                                <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
+                                <td>${asset.assetType.category.categoryName}</td>
+                                <td>${asset.assetType.name}</td>
+                                <td>${asset.inStock}</td>
+                                <td>${asset.serialNumber}</td>
+                                <td>${asset.damageStatus}</td>
+                        </table>
+                    </div>
+                    <div class="col-md-12"> 
+
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Notes</th>
+                            </tr>
+                            <jstl:forEach var="assetNote" items="${assetNoteList}"> 
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>${assetNote.note}</td>
                                 </tr>
                             </jstl:forEach>
+                                
+                        </table>
+                        <hr/>
+                    </div>
+                        
 
-                </table>
-            </div>
+                    ${newAssetNoteSubmissionError}
+                    <div class="col-md-8">
 
                     <sf:form class="form-horizontal" action="submitNewAssetNote" method="post" role="form" modelAttribute="assetNote">
-                        <div class="form-group">
-                            <sf:label path="note" class="col-sm-2 control-label">Note</sf:label>
-                            <div class="col-sm-10">
-                                <sf:textarea path="note" cssClass="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></sf:textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group" style="padding-left: 0px; margin-left: 0px">
                             <div class="col-md-3">
+                                <sf:label path="note" cssClass="control-label">Note</sf:label>
+                                </div>
+                                <div class="col-sm-9">
+                                <sf:textarea path="note" cssClass="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></sf:textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" style="padding-left: 0px; margin-left: 0px">
+                                <div class="col-md-3">
                                 <sf:label path="category" cssClass="control-label">Note Category</sf:label>
                                 </div>
                                 <div class="col-md-9">
@@ -84,7 +91,7 @@
                                 </sf:select>
                             </div>
                         </div>
-                                <sf:hidden path="assetId"/>
+                        <sf:hidden path="assetId"/>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" class="btn btn-primary" value="Add Note"/>
@@ -93,6 +100,7 @@
                     </sf:form>
                 </div>
             </div>
+            
 
 
             <jsp:include page="include/footer.jsp"/>
