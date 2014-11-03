@@ -62,14 +62,14 @@
                         <li class="dropdown">
                             <a href="#users" class="dropdown-toggle" data-toggle="dropdown">Users <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="viewAllUsers.jsp">View All Users</a>
+                                <li><a href="viewAllUsers">View All Users</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="../reports.html" class="dropdown-toggle" data-toggle="dropdown">Reports <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="viewReports.jsp">View All Reports</a>
+                                <li><a href="viewReports">View All Reports</a>
                                 </li>
                             </ul>
                         </li>

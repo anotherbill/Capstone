@@ -3,7 +3,9 @@
     Created on : Oct 29, 2014, 2:59:39 PM
     Author     : apprentice
 --%>
-
+<%@taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,89 +32,68 @@
                         <th>Name</th>
                         <th>Username</th>
                         <th>Stading</th>
-                        <th></th>
-                        <th>Events</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Status</th>
-                        <th>View Event Assets</th>
+                        <th>Enabled</th>
+                        <th>Events/Assets</th>
                     </tr>
                     <tr>
                         <td>User X</td>
                         <td>xxxuserxxx</td>
                         <td>good</td>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Camping</td>
-                        <td>10/22/2014</td>
-                        <td>10/31/2014</td>
-                        <td>Open</td>
-                        <td><a href="#viewEventAssetsModal" class="btn btn-warning" role="button" data-toggle="modal">View Event's Assests</a></td>
-                    </tr>
+                        <td>yes</td>
+                        <jstl:forEach var="event" items="${events}">
+                            <td>
+                                <div class="col-md-12"> 
 
+                                    <table class="table table-hover">
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Camping</td>
-                        <td>10/22/2014</td>
-                        <td>10/31/2014</td>
-                        <td>Open</td>
-                        <td><a href="#viewEventAssetsModal" class="btn btn-warning" role="button" data-toggle="modal">View Event's Assests</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Hiking</td>
-                        <td>10/22/2015</td>
-                        <td>10/31/2015</td>
-                        <td>Open</td>
-                        <td><a href="#viewEventAssetsModal" class="btn btn-warning" role="button" data-toggle="modal">View Event's Assests</a></td>
-                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Event Name</th>
+                                            <th>check Out Date</th>
+                                            <th>Due Date</th>
+                                            <th>Assets</th>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
+                                            <td>${event.eventName}</td>
+                                            <td>${event.checkOutDate}</td>
+                                            <td>${event.dueDate}</td>
+                                            <jstl:forEach var="assets" items="${eventAssets}">
+                                                <td>${event.assets}</td>
 
+                                            <tr/>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><img class="image-responsive" src="../img/asset/placeholder.jpg" alt="..."></td>
-                        <td>Camping</td>
-                        <td>10/22/2014</td>
-                        <td>10/31/2014</td>
-                        <td>Open</td>
-                        <td><a href="#viewEventAssetsModal" class="btn btn-warning" role="button" data-toggle="modal">View Event's Assests</a></td>
-                    </tr>
+                                        </jstl:forEach>
+                                    </table>
 
-                </table>
+                                </div>
+                            </td>
+                        </jstl:forEach>
+
+                    <div class="col-md-8">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>User Notes</th>
+                            </tr>
+                            <tr>
+                                <jstl:forEach var="userNotes" items="${userNotes}">
+                                    <td>${userNotes.note}</td>
+                                </jstl:forEach>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <jsp:include page="modals/viewEventAssets.jsp"/>
+                    <jsp:include page="modals/addUserNote.jsp"/>
+                    <jsp:include page="modals/editUser.jsp"/>
+                    <jsp:include page="include/footer.jsp"/>
             </div>
-
-            <div class="col-md-8">
-                <table class="table table-hover">
-                    <tr>
-                        <th>User Notes</th>
-                    </tr>
-                    <tr>
-                        <td>Consistantly returning things late, but insists on paying extra fee</td>
-                    </tr>
-                    <tr>
-                        <td>Broke a fishing rod in half</td>
-                    </tr>
-                    <tr>
-                        <td>Lost a sleeping bag</td>
-                    </tr>
-                    <tr>
-                        <td>returned lost sleeping bag</td>
-                    </tr>
-                </table>
-            </div>
-
-            <jsp:include page="modals/viewEventAssets.jsp"/>
-            <jsp:include page="modals/addUserNote.jsp"/>
-            <jsp:include page="modals/editUser.jsp"/>
-            <jsp:include page="include/footer.jsp"/>
-        </div>
     </body>
 </html>
