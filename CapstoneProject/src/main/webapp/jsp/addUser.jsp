@@ -40,9 +40,8 @@
                     <sf:label path="goodStanding" cssClass="col-sm-2 control-label">Standing</sf:label>
                         <div class="col-sm-10">
                         <sf:select path="goodStanding" name="standing">
-                            <sf:option value="good">Good</sf:option>
-                            <sf:option value="iffy">Iffy</sf:option>
-                            <sf:option value="bad">Bad</sf:option>
+                            <sf:option value="true">True</sf:option>
+                            <sf:option value="false">False</sf:option>
                         </sf:select>
                     </div>
                 </div>
