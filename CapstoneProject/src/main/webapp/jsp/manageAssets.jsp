@@ -83,7 +83,7 @@
                         <br/><br/>
                         <jstl:forEach var="types" items="${assetTypeList}">
                             <tr>
-                                <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
+                                <td><img class="image-responsive" src="${types.imagePath}" alt="..." style="height: 200px; width: 200px"></td>
                                 <td>${types.name}</td>
                                 <td>${types.category.categoryName}</td>
                                 <td><a href="updateAssetType?typeId=${types.assetTypeId}" class="btn btn-warning">Edit Asset Type</a><br/><br/>

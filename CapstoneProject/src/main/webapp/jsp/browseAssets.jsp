@@ -24,6 +24,7 @@
                     <form role="form" action="assets" method="get">
                         <div class="form-group">
                             <select name="selectCategory" class="form-control">
+                                <option value="">All</option>
                                 <jstl:forEach var="category" items="${categoryList}">
                                     <option value="${category.categoryName}">${category.categoryName}</option>
                                 </jstl:forEach>
@@ -43,7 +44,7 @@
 
                     <div class="col-md-3 col-sm-6 col-xs-12" >
                         <div class="thumbnail">
-                            <img class="img-responsive" src="${types.imagePath}" alt="...">
+                            <img class="img-responsive" src="${types.imagePath}" alt="..." style="height: 200px; width: 200px">
                             <!--add the generated img tag here-->
                             <div class="caption">
                                 <p>${types.name}</p>
