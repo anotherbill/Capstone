@@ -152,11 +152,11 @@
                                 },
                                 stringLength: {
                                     min: 5,
-                                    max: 30,
-                                    message: 'The serial number must be more than 5 and less than 30 characters long'
+                                    max: 20,
+                                    message: 'The serial number must be more than 5 and less than 20 characters long'
                                 },
                                 regexp: {
-                                    regexp: /^[0-9+]*$/,
+                                    regexp: /^[a-zA-Z0-9+]*$/,
                                     message: 'The serial number can only consist of numbers'
                                 }
                             }
