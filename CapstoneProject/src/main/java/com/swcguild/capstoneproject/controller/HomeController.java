@@ -62,18 +62,18 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/listAssets"}, method = RequestMethod.GET)
-    public String displayAssetListingForType(Model model, HttpServletRequest request) {
-        int typeId = 0;
-
-        try {
-            typeId = Integer.parseInt(request.getParameter("typeId"));
-            AssetType typeSelected = assetDao.getAssetTypeById(typeId);
-
-            model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(typeSelected));
-        } catch (Exception e) {
-            model.addAttribute("assetTypeError", "Oops! Something went wrong when attempting to list assets of the selected type. Please make sure you selected a valid asset type.");
-            return "redirect:manage_assets";
-        }
+    public String displayAssetListingForType(@ModelAttribute("typeId") int typeId, Model model, HttpServletRequest request) {
+//        int typeId = 0;
+//
+//        try {
+//            typeId = Integer.parseInt(request.getParameter("typeId"));
+        AssetType typeSelected = assetDao.getAssetTypeById(typeId);
+//
+        model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(typeSelected));
+//        } catch (Exception e) {
+//            model.addAttribute("assetTypeError", "Oops! Something went wrong when attempting to list assets of the selected type. Please make sure you selected a valid asset type.");
+//            return "redirect:manage_assets";
+//        }
 
         return "assetsByType";
     }
@@ -195,37 +195,33 @@ public class HomeController {
     @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
     public String submitNewAsset(@Valid Asset newAsset, BindingResult result, Model model, @RequestParam("typeId") int typeId, HttpServletRequest request) {
         if (result.hasErrors()) {
-            return "redirect:manage_assets";
+            return "redirect:addAsset";
         }
-//        int typeId;
-//
-//        try {
-//            typeId = Integer.parseInt(request.getParameter("typeId"));
-            newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
-//        } catch (Exception e) {
-//            request.setAttribute("newAssetSubmissionError", "Oops! Something went wrong when submitting new asset. Please try again.");
-//            return "redirect:addAsset";
-//        }
+
+        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
 
         assetDao.addAsset(newAsset);
-
-        //assetDao.addNoteToAsset(newAsset.getAssetId(), note, damage);
-        return "redirect:manage_assets";
+        
+        model.addAttribute("typeId", typeId);
+        return "redirect:listAssets";
     }
 
     @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
     public String submitAssetUpdate(@Valid Asset asset, BindingResult result, Model model, HttpServletRequest request) {
-        if (result.hasErrors()) {
-            return "redirect:manage_assets";
-        }
-//        try {
-            assetDao.editAsset(asset);
-//        } catch (Exception e) {
-//            request.setAttribute("assetUpdateSubmissionError", "Oops! Something went wrong when updating asset. Please try again.");
-//            return "redirect:updateAsset";
-//        }
+        //get assetTypeId associated with asset
+        //asset type not passed as part of asset on model
+        int typeId = assetDao.getAssetById(asset.getAssetId()).getAssetType().getAssetTypeId();
 
-        return "redirect:manage_assets";
+        model.addAttribute("typeId", typeId);
+
+        if (result.hasErrors()) {
+            
+                return "redirect:updateAsset";
+        }
+
+        assetDao.editAsset(asset);
+
+        return "redirect:listAssets";
     }
 
     @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
@@ -258,10 +254,6 @@ public class HomeController {
 //
         newAssetType.setCategory(assetDao.getCategoryById(categoryId));
         assetDao.addAssetType(newAssetType);
-//        } catch (Exception e) {
-//            request.setAttribute("newAssetTypeSubmissionError", "Oops! Something went wrong when submitting new asset type. Please try again.");
-//            return "redirect:addAssetType";
-//        }
         return "redirect:manage_assets";
     }
 
@@ -271,15 +263,8 @@ public class HomeController {
         if (result.hasErrors()) {
             return "redirect:manage_assets";
         }
-//        int categoryId = 0;
-//
-//        try {
-//            categoryId = Integer.parseInt(request.getParameter("categoryId"));
         assetType.setCategory(assetDao.getCategoryById(categoryId));
         assetDao.editAssetType(assetType);
-//        } catch (Exception e) {
-//            request.setAttribute("assetTypeUpdateError", "Oops! Something went wrong when updating asset type. Please try again.");
-//        }
         return "redirect:manage_assets";
     }
 
@@ -353,38 +338,20 @@ public class HomeController {
     //AssetNoteCRUD
     @RequestMapping(value = {"/submitNewAssetNote"}, method = RequestMethod.POST)
     public String submitNewAssetNote(@Valid AssetNote newAssetNote, BindingResult result, Model model, HttpServletRequest request) {
+        int typeId;
+        int assetId;
         if (result.hasErrors()) {
             return "redirect:assetAddNote";
         }
+        
+        assetId=newAssetNote.getAssetId();
+        typeId = assetDao.getAssetById(assetId).getAssetType().getAssetTypeId();
 
-//        try {
         assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
-//        } catch (Exception e) {
-//            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
-//            return "redirect:assetAddNote";
-//        }
-
-        return "redirect:manage_assets";
+        model.addAttribute("typeId", typeId);
+        return "redirect:listAssets";
     }
 
-//    @RequestMapping(value = {"/submitNewAssetNote"}, method = RequestMethod.POST)
-//    public String submitNewAssetNote(@ModelAttribute("assetNote") AssetNote newAssetNote, Model model, HttpServletRequest request) {
-//        int assetId;
-//        //Asset asset;
-//
-//        try {
-//            //assetId = Integer.parseInt(request.getParameter("assetId"));
-//     
-//            //asset = assetDao.getAssetById(assetId);
-//            //newAssetNote.setAssetId(assetId);
-//            assetDao.addNoteToAsset(newAssetNote.getAssetId(), newAssetNote.getNote(), newAssetNote.getCategory());
-//        } catch (Exception e) {
-//            request.setAttribute("newAssetNoteSubmissionError", "Oops! Something went wrong when submitting note. Please try again.");
-//            return "redirect:assetAddNote";
-//        }
-//
-//        return "redirect:manage_assets";
-//    }
     //Helper Methods
     private Set<AssetType> getSelectedAssetTypes(String categoryName) {
         Set<Category> categories = assetDao.getAllCategories();
