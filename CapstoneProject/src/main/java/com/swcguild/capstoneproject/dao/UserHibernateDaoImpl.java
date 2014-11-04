@@ -122,6 +122,11 @@ public class UserHibernateDaoImpl implements UserInterface {
         
     }
     
+    
+    
+   public void createUserAuthorities(User user, String authority){
+       
+   } 
 //    HIBERNATE GARBAGE, TREAD WITH CARE    
     
     

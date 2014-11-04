@@ -35,9 +35,10 @@
                                 <img class="img-responsive" data-src="holder.js/242x200" alt="...">
                                 <!--add the generated img tag here-->
                                 <div class="caption">
-                                    <h4><span>Username: ${user.name}</span> </h4>
+                                    <h4><span>${user.name}</span> </h4>
 
-                                    <p>                        
+                                    <p>   
+                                        <br><b>Username:</b> <span>${user.userName}</span>
                                         <br><b>Enabled:</b> <span>${user.enabled}</span>
                                         <br><b>Standing:</b> <span>${user.goodStanding}</span>
                                         <br>
