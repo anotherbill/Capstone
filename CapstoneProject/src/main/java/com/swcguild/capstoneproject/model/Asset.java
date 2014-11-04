@@ -37,9 +37,9 @@ public class Asset {
     private boolean inStock;
     
     @Column(name="serial_number")
-    //@Size(min = 2, max =11, message="The serial number must be between 2 and 11 characters")
-    @Digits(integer = 20, fraction = 0, message="The serial number must be a whole number no longer than 20 digits")
-    private int serialNumber;
+    @Size( max =20, message="The serial number must be between 0 and 20 characters")
+    //@Digits(integer = 20, fraction = 0, message="The serial number must be a whole number no longer than 20 digits")
+    private String serialNumber;
     
     @Column(name="damage_loss_theft")
     @Size(min = 1, max =20, message="The damage must be between 1 and 20 characters")
@@ -75,11 +75,11 @@ public class Asset {
         this.inStock = inStock;
     }
 
-    public int getSerialNumber() {
+    public String getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(int serialNumber) {
+    public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
 
@@ -93,11 +93,11 @@ public class Asset {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.assetId;
-        hash = 67 * hash + (this.inStock ? 1 : 0);
-        hash = 67 * hash + this.serialNumber;
-        hash = 67 * hash + Objects.hashCode(this.damageStatus);
+        int hash = 7;
+        hash = 19 * hash + this.assetId;
+        hash = 19 * hash + (this.inStock ? 1 : 0);
+        hash = 19 * hash + Objects.hashCode(this.serialNumber);
+        hash = 19 * hash + Objects.hashCode(this.damageStatus);
         return hash;
     }
 
@@ -116,7 +116,7 @@ public class Asset {
         if (this.inStock != other.inStock) {
             return false;
         }
-        if (this.serialNumber != other.serialNumber) {
+        if (!Objects.equals(this.serialNumber, other.serialNumber)) {
             return false;
         }
         if (!Objects.equals(this.damageStatus, other.damageStatus)) {
@@ -124,6 +124,8 @@ public class Asset {
         }
         return true;
     }
+
+    
 
     
 
