@@ -56,8 +56,8 @@
                                 <select name="securityRole" class="form-control">
                                     <option value="user">User</option>
                                     <option value="retail">Retail</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Admin">Admin</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="admin">Admin</option>
                                 </select>
                             </div>
                         </div>

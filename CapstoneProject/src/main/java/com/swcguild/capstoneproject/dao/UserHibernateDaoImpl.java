@@ -79,18 +79,21 @@ public class UserHibernateDaoImpl implements UserInterface {
         user.setPassword(password);
         currentSession().update(user);
     }
-    
+
     @Override
-    public Set<User> getAllUsers(){
+    public Set<User> getAllUsers() {
         List<User> userList = currentSession().createCriteria(User.class).list();
         return new HashSet<>(userList);
     }
-
 
     private static final String SQL_ADD_USER_NOTE
             = "insert into user_notes(user_id, note_detail) values (?, ?)";
     private static final String SQL_GET_USER_NOTES
             = "select * from user_notes where user_id = ?";
+    private static final String SQL_INSERT_USER_AUTHORITIES
+            = "insert into authorities(username, authority) values (?, ?)";
+    private static final String SQL_ENABLE_USER
+            = "update users set enabled = 1 where user_id = ?";
 
     @Override
     public void addNoteToUser(String note, int userId) {
@@ -101,8 +104,8 @@ public class UserHibernateDaoImpl implements UserInterface {
     public List<UserNote> getUserNotes(int userId) {
         return jdbcTemplate.query(SQL_GET_USER_NOTES, new UserNoteMapper(), userId);
     }
-    
-    private static final class UserNoteMapper implements RowMapper<UserNote>{
+
+    private static final class UserNoteMapper implements RowMapper<UserNote> {
 
         @Override
         public UserNote mapRow(ResultSet rs, int i) throws SQLException {
@@ -119,17 +122,43 @@ public class UserHibernateDaoImpl implements UserInterface {
             }
             return u;
         }
-        
+
     }
-    
-    
-    
-   public void createUserAuthorities(User user, String authority){
-       
-   } 
+
+    @Override
+    public void createUserAuthorities(User user, String authority) {
+        String userName = user.getUserName();
+        switch (authority) {
+            case "admin": {
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_ADMIN");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_MANAGER");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_RETAIL");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_USER");
+                jdbcTemplate.update(SQL_ENABLE_USER, user.getUserId());
+            }
+            break;
+            case "manager": {
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_MANAGER");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_RETAIL");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_USER");
+                jdbcTemplate.update(SQL_ENABLE_USER, user.getUserId());
+            }
+            break;
+            case "retail": {
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_RETAIL");
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_USER");
+                jdbcTemplate.update(SQL_ENABLE_USER, user.getUserId());
+            }
+            break;
+            case "user":{
+                jdbcTemplate.update(SQL_INSERT_USER_AUTHORITIES, userName, "ROLE_USER");
+                jdbcTemplate.update(SQL_ENABLE_USER, user.getUserId());
+            }
+            break;
+        }
+    }
 //    HIBERNATE GARBAGE, TREAD WITH CARE    
-    
-    
+
 //    @Override
 //    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 //    public void addNoteToUser(String note, int userId) {
@@ -145,5 +174,4 @@ public class UserHibernateDaoImpl implements UserInterface {
 //                .createSQLQuery("select * from user_notes where user_id = " + userId)
 //                .addEntity(String.class).list();
 //    }
-
 }

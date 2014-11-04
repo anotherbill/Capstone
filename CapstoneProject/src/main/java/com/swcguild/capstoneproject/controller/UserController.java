@@ -48,7 +48,6 @@ public class UserController {
     @RequestMapping(value="/submitNewUser", method = RequestMethod.POST)
     public String addNewUserToDatabase(@ModelAttribute("newUser") User newUser, Model model, HttpServletRequest request){
         userDao.addUser(newUser);
-        
         String authority = request.getParameter("securityRole");
         userDao.createUserAuthorities(newUser, authority);
         return "redirect:viewAllUsers";
