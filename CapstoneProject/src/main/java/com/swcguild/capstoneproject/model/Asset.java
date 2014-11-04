@@ -37,8 +37,7 @@ public class Asset {
     private boolean inStock;
     
     @Column(name="serial_number")
-    @Size( max =20, message="The serial number must be between 0 and 20 characters")
-    //@Digits(integer = 20, fraction = 0, message="The serial number must be a whole number no longer than 20 digits")
+    @Size(min =0, max =20, message="The serial number must be between 0 and 20 characters")
     private String serialNumber;
     
     @Column(name="damage_loss_theft")
