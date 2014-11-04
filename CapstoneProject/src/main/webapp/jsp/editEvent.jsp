@@ -112,7 +112,7 @@
                                             <td>${asset.serialNumber}</td>
                                             <td>
                                                 <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-success glyphicon glyphicon-plus">Remove From Event</a>
+                                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
                                             </td>
                                         </jstl:forEach>
                                     </tr>

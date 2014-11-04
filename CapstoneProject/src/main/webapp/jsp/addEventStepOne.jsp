@@ -17,25 +17,24 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-            <form class="addEditEvent form-horizontal" role="form" name="editAddEvent" id="editEventModal">
+            <form class="form-horizontal" action="submitAddEventStepOne" role="form" name="editAddEvent">
                 <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">Event Name</label>
+                    <label class="col-sm-2 control-label">Event Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="nameUser"/>
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="eventName"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inout" class="col-sm-2 control-label">UserName</label>
+                    <label class="col-sm-2 control-label">UserName</label>
                     <div class="col-sm-10">
-                        <!--                        <input type="text" class="form-control" id="user" placeholder="UserName" name="userName"/>-->
-                        <select class="col-sm-2 control-label">
+                        <select class="col-sm-2 control-label" name="userName">
                             <jstl:forEach var="user" items="${userList}">
                                 <option value="${user.userId}">${user.userName}</option>
                             </jstl:forEach>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
+<!--                <div class="form-group">
                     <label for="input" class="col-sm-2 control-label">Location</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="location" placeholder="Location" name="location"/>
@@ -46,31 +45,31 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="size" placeholder="How many are in your party" name="size"/>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">StartDate</label>
+                    <label class="col-sm-2 control-label">StartDate</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" id="startDate" name="startDate"/>
+                        <input type="date" class="form-control" id="startDate" name="checkOutDate"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="input" class="col-sm-2 control-label">End Date</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" id="endDate" name="endDate"/>
+                        <input type="date" class="form-control" id="endDate" name="dueDate"/>
                     </div>
                 </div>
-                <div class="form-group">
+<!--                <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Image</label>
                     <div class="col-sm-10">
                         <input type="file" class="form-control" name="image"/>
                     </div>
-                </div>
-                <div class="form-group">
+                </div>-->
+<!--                <div class="form-group">
                     <label for="input" class="col-sm-2 control-label">Note</label>
                     <div class="col-sm-10">
                         <textArea class="form-control" id="note" name="note">Enter Note Here</textArea>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
@@ -81,7 +80,7 @@
         
         
         
-        <a class="btn btn-primary glyphicon glyphicon-chevron-right" href="addEventStepTwo.jsp" >Next</a>
+<!--        <a class="btn btn-primary glyphicon glyphicon-chevron-right" href="addEventStepTwo.jsp" >Next</a>-->
         
         
         
