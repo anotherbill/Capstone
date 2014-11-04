@@ -45,7 +45,7 @@
                                     </p>
                                     <a  href="viewUserInfo?userId=${user.userId}" class="btn btn-warning">Additional Info</a><br><br>
                                     <a href="editUser?userId=${user.userId}" class="btn btn-primary" role="button">Edit</a>  <a href="deleteUser?userId=${user.userId}" class="btn btn-danger" role="button" data-toggle="modal">Delete</a><br/><br/>
-                                    <a href="userAddNote?assetId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a>
+                                    <a href="userAddNote?userId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a>
                                 </div>
                             </div>
                         </div>

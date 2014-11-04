@@ -7,6 +7,8 @@ package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.UserNote;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +63,9 @@ public class UserController {
     }
     
     @RequestMapping(value="/viewUserInfo", method = RequestMethod.GET)
-    public String viewUserInfo(Model model){
+    public String viewUserInfo(@RequestParam("userId") int userId, Model model){
+        List<UserNote> userNotes = userDao.getUserNotes(userId);
+        model.addAttribute("userNotes", userNotes);
         return "viewUserInfo";
     }
     
