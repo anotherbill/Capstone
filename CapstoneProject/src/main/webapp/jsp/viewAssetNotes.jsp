@@ -50,7 +50,7 @@
                     </tr>
                     <jstl:forEach var="assetNote" items="${assetNotes}"> 
                         <tr>
-                            <td>${assetNote.note}</td>
+                            <td>${assetNote.noteDate}: ${assetNote.category}: ${assetNote.note}</td>
                         </tr>
                     </jstl:forEach>
                 </table>

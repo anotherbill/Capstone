@@ -12,6 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Info</title>
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -20,8 +23,8 @@
             <div class="container">
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-2">
-                        <a href="#userAddNote" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
-                        <a href="#editUserModal" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal">Edit User</a>
+                        <a href="userAddNote?userId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
+                        <a href="editUser?userId=${user.userId}" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal">Edit User</a>
                     </div>
                 </div>
             </div>
@@ -39,10 +42,10 @@
                         <th>Events/Assets</th>
                     </tr>
                     <tr>
-                        <td>User X</td>
-                        <td>xxxuserxxx</td>
-                        <td>good</td>
-                        <td>yes</td>
+                        <td>${user.name}</td>
+                        <td>${user.userName}</td>
+                        <td>${user.standing}</td>
+                        <td>${user.enabled}</td>
                         <jstl:forEach var="event" items="${events}">
                             <td>
                                 <div class="col-md-12"> 
@@ -93,9 +96,7 @@
                         </table>
                     </div>
 
-                    <jsp:include page="modals/viewEventAssets.jsp"/>
-                    <jsp:include page="modals/addUserNote.jsp"/>
-                    <jsp:include page="modals/editUser.jsp"/>
+
                     <jsp:include page="include/footer.jsp"/>
             </div>
     </body>
