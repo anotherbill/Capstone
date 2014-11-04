@@ -12,10 +12,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Asset</title>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="bootstrapvalidator-0.5.2/dist/css/bootstrapValidator.min.css"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
             <jsp:include page="include/header.jsp"/>
+            <div class="container">
 
             ${updateError}
             <div class="row">
@@ -52,9 +60,9 @@
                                 </sf:select>
                             </div>
                         </div>
-                                
-                                
-                                <div class="form-group">
+
+
+                        <div class="form-group">
                             <div class="col-md-3">
                                 <sf:label path="inStock" cssClass="control-label">In Stock</sf:label>
                                 </div>
@@ -63,7 +71,7 @@
                                     <sf:option value="true">In Stock</sf:option>
                                     <sf:option value="false">Out of Stock</sf:option>
                                 </sf:select>
-                                
+
 
                             </div>
                         </div>
@@ -89,9 +97,49 @@
                     </sf:form>
                 </div>
             </div>
-
+            </div>
 
             <jsp:include page="include/footer.jsp"/>
         </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#addEditAsset').bootstrapValidator({
+                    message: 'This value is not valid',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        typeId: {
+                        },
+                        damageStatus: {
+                        },
+                        inStock: {
+                        },
+                        serialNumber: {
+                            message: 'The serial number is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The serial number is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 30,
+                                    message: 'The serial number must be more than 5 and less than 30 characters long'
+                                },
+                                regexp: {
+                                    regexp: /[0-9]+/,
+                                    message: 'The serial number can only consist of numbers'
+                                }
+                            }
+                        }
+
+
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

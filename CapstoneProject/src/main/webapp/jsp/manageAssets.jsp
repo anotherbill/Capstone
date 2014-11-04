@@ -13,56 +13,63 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage Assets</title>
-        <script src="js/validateCategory.js" type="text/javascript"></script>
+
+<!--        <link rel="stylesheet" href="bootstrapvalidator-0.5.2/dist/css/bootstrapValidator.min.css"/>-->
+
+
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
             <jsp:include page="include/header.jsp"/>
+            <div class="container">
 
 
-              ${assetTypeDeletionError}
-              ${assetTypeUpdateError}
-              ${assetTypeError}
-              ${assetTypeDeletionError}
-              ${categoryUpdateError}
-              ${categoryDeletionError}
-              ${displayUpdateAssetFormError}
-              
-              
+            ${assetTypeDeletionError}
+            ${assetTypeUpdateError}
+            ${assetTypeError}
+            ${assetTypeDeletionError}
+            ${categoryUpdateError}
+            ${categoryDeletionError}
+            ${displayUpdateAssetFormError}
+
+
             <div class="row">
-                
+
                 <div class="col-md-9">
 
-                <div class="col-md-3">
-                    <form role="form" method="get" action="manage_assets">
-                        <div class="form-group">
-                            <label>Search By Category:</label>
-                            <select name="selectCategory" class="form-control">
-                                <option value="all">All</option>
-                                <jstl:forEach var="category" items="${categoryList}">
-                                    <option value="${category.categoryName}">${category.categoryName}</option>
-                                </jstl:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Search" class="form-control"/>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-3">
+                    <div class="col-md-3">
+                        <form role="form" method="get" action="manage_assets">
+                            <div class="form-group">
+                                <label>Search By Category:</label>
+                                <select name="selectCategory" class="form-control">
+                                    <option value="all">All</option>
+                                    <jstl:forEach var="category" items="${categoryList}">
+                                        <option value="${category.categoryName}">${category.categoryName}</option>
+                                    </jstl:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Search" class="form-control"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
 
-                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                        <div class="col-md-2">
-                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">Add Asset Type</a>
+                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                            <div class="col-md-2">
+                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
+                            <div class="col-md-2">
+                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">  Add Asset</a>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                        <div class="col-md-2">
-                            <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">Add Asset</a>
-                        </div>
-                    </div>
-                </div>
 
 
                     <table class="table table-hover">
@@ -86,28 +93,20 @@
                             </tr>
                         </jstl:forEach>
                     </table>
-                
+
                 </div>
-              
 
 
-
-
-
-
-
-              
-                
                 <div class="col-md-3" style="padding-bottom: 20px; float: left">
                     <h2 class="text-center">Manage Categories</h2>
-                    <sf:form role="form" action="submitNewCategory" method="post" modelAttribute="category">
+                    <sf:form role="form" action="submitNewCategory" id="manageCategories" method="post" modelAttribute="category">
                         <div class="form-group"> 
                             <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
                                     <sf:label path="categoryName">Add New Category:</sf:label></span></span><sf:input path="categoryName" type="text" class="form-control" style="float: right" name="categoryName"/><br/><br/>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="form-control" value="Add Category"/>
-                        </div> 
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="form-control" value="Add Category"/>
+                            </div> 
                     </sf:form>
 
 
@@ -115,20 +114,49 @@
                         <p style="padding-bottom: 15px">${category.categoryName}
                             <a href="updateCategory?categoryId=${category.categoryId}" class="btn btn-warning btn-sm" style="float:right; margin-left: 10px">Edit</a>
                             <a href="removeCategory?categoryId=${category.categoryId}" class="btn btn-danger btn-sm" style="float:right">Delete</a></p>
-                     </jstl:forEach>
+                        </jstl:forEach>
                 </div>
 
 
 
+                <jsp:include page="include/footer.jsp"/>
 
-
-           
-
-
-            <jsp:include page="include/footer.jsp"/>
-
+            </div>
         </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#manageCategories').bootstrapValidator({
+                    message: 'This value is not valid',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        categoryName: {
+                            message: 'The category name is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The category is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 2,
+                                    max: 30,
+                                    message: 'The category must be more than 2 and less than 30 characters long'
+                                },
+                                regexp: {
+                                    regexp: /^[a-zA-Z ]+$/,
+                                    message: 'The serial number can only consist of letters and spaces'
+                                }
+                            }
+                        }
+
+
+                    }
+                });
+            });
+        </script>
 
     </body>
 </html>

@@ -10,6 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Assets By Types</title>
+        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -52,8 +55,8 @@
                         <th>Damage Status</th>
                         <th>Actions</th>
                     </tr>
-                   <%--  <jstl:forEach var="assetNote" items="${assetNotes}"> --%>
-                        <jstl:forEach var="asset" items="${assetList}"> --%>
+              
+                        <jstl:forEach var="asset" items="${assetList}"> 
                             <tr>
                                 <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
                                 <td>${asset.assetType.category.categoryName}</td>
@@ -62,7 +65,6 @@
                                 <td>${asset.serialNumber}</td>
                                 <td>${asset.damageStatus}</td>
 
-                       <%--  </jstl:forEach>--%>
                         <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning glyphicon glyphicon-pencil">  Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger glyphicon glyphicon-minus">  Delete</a><br/><br/>
                             <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus"> Add Note</a><br/><br/>
                             <a href="listAssetNotes?assetId=${asset.assetId}" class="btn btn-primary glyphicon glyphicon-list-alt">  View Asset Notes</a></td>
