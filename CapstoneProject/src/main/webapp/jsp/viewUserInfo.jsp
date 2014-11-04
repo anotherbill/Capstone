@@ -23,13 +23,13 @@
             <div class="container">
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-2">
-                        <a href="userAddNote?userId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a><br/><br/>
-                        <a href="editUser?userId=${user.userId}" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal">Edit User</a>
+                        <a href="userAddNote?userId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a><br/><br/>
+                        <a href="editUser?userId=${user.userId}" class="btn btn-primary glyphicon glyphicon-plus">Edit User</a>
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <div class="col-md-8">
                 <table class="table table-hover">
 
@@ -37,14 +37,14 @@
 
                         <th>Name</th>
                         <th>Username</th>
-                        <th>Stading</th>
+                        <th>GoodStanding</th>
                         <th>Enabled</th>
                         <th>Events/Assets</th>
                     </tr>
                     <tr>
                         <td>${user.name}</td>
                         <td>${user.userName}</td>
-                        <td>${user.standing}</td>
+                        <td>${user.goodStanding}</td>
                         <td>${user.enabled}</td>
                         <jstl:forEach var="event" items="${events}">
                             <td>
@@ -85,13 +85,13 @@
                     <div class="col-md-8">
                         <table class="table table-hover">
                             <tr>
-                                <th>User Notes</th>
+                                <th>Notes</th>
                             </tr>
-                            <tr>
-                                <jstl:forEach var="userNotes" items="${userNotes}">
-                                    <td>${userNotes.note}</td>
-                                </jstl:forEach>
-                            </tr>
+                            <jstl:forEach var="userNote" items="${userNoteList}"> 
+                                <tr>
+                                    <td>${userNote.noteDate}: ${userNote.note}</td>
+                                </tr>
+                            </jstl:forEach>
 
                         </table>
                     </div>

@@ -22,10 +22,12 @@
         <jsp:include page="include/header.jsp"/>
         <div class="container">
             <div class="row">
-
-
+                <div class="container">
+                    <a href="viewUserInfo?userId=${user.userId}" class="btn btn-default">< Back</a><br>
+                </div>
+                
                 <div class="col-md-12"> 
-
+                    <br>
                     <table class="table table-hover">
 
                         <tr>
@@ -38,7 +40,7 @@
                         <tr>
                             <td>${user.name}</td>
                             <td>${user.userName}</td>
-                            <td>${user.standing}</td>
+                            <td>${user.goodStanding}</td>
                             <td>${user.enabled}</td>
                     </table>
                 </div>
@@ -48,7 +50,7 @@
                         <tr>
                             <th>Notes</th>
                         </tr>
-                        <jstl:forEach var="assetNote" items="${userNoteList}"> 
+                        <jstl:forEach var="userNote" items="${userNoteList}"> 
                             <tr>
                                 <td>${userNote.noteDate}: ${userNote.note}</td>
                             </tr>
@@ -71,25 +73,7 @@
                                 <sf:textarea path="note" cssClass="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></sf:textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                <sf:label path="category" cssClass="control-label">Note Category</sf:label>
-                                </div>
-                                <div class="col-md-9">
-                                <sf:select path="category" cssClass="form-control" name="category">
-                                    <sf:option value="none">none</sf:option>
-                                    <sf:option value="lost">Lost</sf:option>
-                                    <sf:option value="stolen">Stolen</sf:option>
-                                    <sf:option value="late">Late</sf:option>
-                                    <sf:option value="retired">Retired</sf:option>
-                                    <sf:option value="one">Damage: 1</sf:option>
-                                    <sf:option value="two">Damage: 2</sf:option>
-                                    <sf:option value="three">Damage: 3</sf:option>
-                                    <sf:option value="four">Damage: 4</sf:option>
-                                    <sf:option value="five">Damage: 5</sf:option>
-                                </sf:select>
-                            </div>
-                        </div>
+
                         <sf:hidden path="userId"/>
                         <div class="form-group">
                             <div class="col-sm-10">
@@ -97,6 +81,7 @@
                             </div>
                         </div>
                     </sf:form>
+                    <a href="viewUserInfo?userId=${user.userId}" class="btn btn-default">< Back</a>
                 </div>
             </div>
 

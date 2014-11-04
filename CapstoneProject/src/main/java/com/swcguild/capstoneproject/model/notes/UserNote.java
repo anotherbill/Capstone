@@ -68,11 +68,11 @@ public class UserNote {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + this.userNoteId;
-        hash = 71 * hash + this.userId;
-        hash = 71 * hash + Objects.hashCode(this.note);
-        hash = 71 * hash + Objects.hashCode(this.noteDate);
+        int hash = 7;
+        hash = 41 * hash + this.userNoteId;
+        hash = 41 * hash + this.userId;
+        hash = 41 * hash + Objects.hashCode(this.note);
+        hash = 41 * hash + Objects.hashCode(this.noteDate);
         return hash;
     }
 
@@ -99,6 +99,8 @@ public class UserNote {
         }
         return true;
     }
+
+  
     
     
 }
