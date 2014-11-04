@@ -147,13 +147,10 @@
                         serialNumber: {
                             message: 'The serial number is not valid',
                             validators: {
-                                notEmpty: {
-                                    message: 'The serial number is required and cannot be empty'
-                                },
                                 stringLength: {
-                                    min: 5,
+                                    min: 0,
                                     max: 20,
-                                    message: 'The serial number must be more than 5 and less than 20 characters long'
+                                    message: 'The serial number must be less than 20 characters long'
                                 },
                                 regexp: {
                                     regexp: /^[a-zA-Z0-9+]*$/,

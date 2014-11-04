@@ -22,7 +22,7 @@
             <div class="container">
 
                 <div class="col-md-6">
-            <sf:form action="submitNewUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="newUser">
+            <sf:form action="submitNewUser" id="addEditUser" method="post" cssClass="form-horizontal" role="form" modelAttribute="newUser">
                 <div class="form-group">
                     <sf:label path="name" cssClass="col-sm-2 control-label">Name</sf:label>
                         <div class="col-sm-10">
@@ -62,5 +62,75 @@
 
             <jsp:include page="include/footer.jsp"/>
         </div>
+        
+        <script>
+            $(document).ready(function () {
+                $('#addEditUser').bootstrapValidator({
+                    message: 'This value is not valid',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        name: {
+                            message: 'The name is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The name is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 20,
+                                    message: 'The name must be more than 5 and less than 20 characters long'
+                                },
+                                regexp: {
+                                    regexp: /^[a-zA-Z ]*$/,
+                                    message: 'The serial number can only consist of letters and spaces'
+                                }
+                            }
+                        },
+                        userName: {
+                            message: 'The user name is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The user name is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 20,
+                                    message: 'The name must be more than 5 and less than 20 characters long'
+                                },
+                                regexp: {
+                                    regexp: /^[a-zA-Z0-9]+*$/,
+                                    message: 'The serial number can only consist of letters and spaces'
+                                }
+                            }
+                        },
+                        password: {
+                        },
+                        standing: {
+                            message: 'The serial number is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The serial number is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 20,
+                                    message: 'The serial number must be more than 5 and less than 20 characters long'
+                                },
+                                regexp: {
+                                    regexp: /^[a-zA-Z0-9+]*$/,
+                                    message: 'The serial number can only consist of numbers'
+                                }
+                            }
+                        }
+
+
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
