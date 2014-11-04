@@ -38,9 +38,11 @@
                                     <label class="control-label">Asset Type</label>
                                 </div>
                                 <div class="col-md-9">
+                                    
                                     <select  class="form-control" name="typeId">
+                                        <option value=""></option>
                                         <jstl:forEach var="type" items="${assetTypes}">
-                                            <option value="${type.assetTypeId}">${type.name}: ${type.category.categoryName}</option>
+                                            <option value="${type.assetTypeId}">${type.name}</option>     
                                         </jstl:forEach>
                                     </select>
                                 </div>
@@ -139,7 +141,13 @@
                     },
                     fields: {
                         typeId: {
-                        },
+                            message: 'The category is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The category is required and cannot be empty'
+                                }
+                        }
+                    },
                         damageStatus: {
                         },
                         inStock: {
