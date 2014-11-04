@@ -73,19 +73,19 @@ public class AssetDaoTest {
 
         a = new Asset();
         a.setAssetType(t1);
-        a.setSerialNumber(111);
+        a.setSerialNumber("111");
         a.setInStock(true);
         a.setDamageStatus("");
 
         c = new Asset();
         c.setAssetType(t1);
-        c.setSerialNumber(222);
+        c.setSerialNumber("222");
         c.setInStock(false);
         c.setDamageStatus("Damaged");
 
         d = new Asset();
         d.setAssetType(t1);
-        d.setSerialNumber(333);
+        d.setSerialNumber("333");
         d.setInStock(true);
         d.setDamageStatus("");
 

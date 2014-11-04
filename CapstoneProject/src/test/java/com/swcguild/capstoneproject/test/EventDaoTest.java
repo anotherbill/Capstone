@@ -88,13 +88,13 @@ public class EventDaoTest {
         a1 = new Asset();
         a1.setAssetType(at1);
         a1.setInStock(true);
-        a1.setSerialNumber(456);
+        a1.setSerialNumber("456");
         a1.setDamageStatus("Good");
 
         a2 = new Asset();
         a2.setAssetType(at1);
         a2.setInStock(true);
-        a2.setSerialNumber(789);
+        a2.setSerialNumber("789");
         a2.setDamageStatus("Bad");
 
         assetDao.addAsset(a1);
