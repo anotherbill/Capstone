@@ -27,6 +27,7 @@ public class HomeController {
 
     private static final String BAD_CATEGORY_ERROR_MESSAGE = "Oops! Invalid category ID. Must supply category ID as an integer. Category ID must refer to an existing category.";
     private static final String BAD_ASSET_TYPE_ERROR_MESSAGE = "Oops! Invalid asset type ID. Must supply asset type ID as an integer. Asset type ID must refer to an existing asset type.";
+    private static final String BAD_ASSET_ERROR_MESSAGE = "Oops! Invalid asset ID. Must supply asset ID as an integer. Asset ID must refer to an existing asset.";
 
     private AssetInterface assetDao;
 
@@ -55,11 +56,14 @@ public class HomeController {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
 
         //error messages
-        String badCategoryError = request.getParameter("badCategoryError");
-        model.addAttribute("badCategoryError", badCategoryError);
+        //String badCategoryError = request.getParameter("badCategoryError");
+        model.addAttribute("badCategoryError", request.getParameter("badCategoryError"));
 
-        String badAssetTypeError = request.getParameter("badAssetTypeError");
-        model.addAttribute("badAssetTypeError", badAssetTypeError);
+        //String badAssetTypeError = request.getParameter("badAssetTypeError");
+        model.addAttribute("badAssetTypeError", request.getParameter("badAssetTypeError"));
+
+        //String badAssetError = request.getParameter("badAssetError");
+        model.addAttribute("badAssetError", request.getParameter("badAssetError"));
 
         //populating display
         model.addAttribute("categoryList", assetDao.getAllCategories());
@@ -69,10 +73,25 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/listAssets"}, method = RequestMethod.GET)
-    public String displayAssetListingForType(@ModelAttribute("typeId") int typeId, Model model, HttpServletRequest request) {
-        AssetType typeSelected = assetDao.getAssetTypeById(typeId);
+    public String displayAssetListingForType( Model model, HttpServletRequest request) {
+        int typeId;
+        AssetType assetType;
+        
+        try{
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        }
+        catch(NumberFormatException e){
+            typeId = 0;
+        }
+        
+        assetType = assetDao.getAssetTypeById(typeId);
 
-        model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(typeSelected));
+        if(assetType == null){
+            model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+        
+        model.addAttribute("assetList", assetDao.getAllAssetsByAssetType(assetType));
 
         return "assetsByType";
     }
@@ -83,22 +102,34 @@ public class HomeController {
 
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
-            Asset asset = assetDao.getAssetById(assetId);
-            model.addAttribute("asset", asset);
-            model.addAttribute("assetNotes", assetDao.getAssetNotes(assetId));
         } catch (Exception e) {
-            model.addAttribute("listAssetNotesError", "Oops! Something went wrong when attempting to list notes for the selected asset.");
+            assetId = 0;
+
+        }
+        
+        Asset asset = assetDao.getAssetById(assetId);
+
+        if (asset == null) {
+            request.setAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
             return "redirect:manage_assets";
         }
+
+        model.addAttribute("asset", asset);
+        model.addAttribute("assetNotes", assetDao.getAssetNotes(assetId));
 
         return "viewAssetNotes";
     }
 
     //Asset Forms
     @RequestMapping(value = {"/addAsset"}, method = RequestMethod.GET)
-    public String displayAddAsset(Model model) {
+    public String displayAddAsset(Model model, HttpServletRequest request) {
+        //error message
+        model.addAttribute("badAssetTypeError", request.getParameter("badAssetTypeError"));
+        
+        //populate drop-down
         model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
 
+        //supply empty asset
         model.addAttribute("newAsset", new Asset());
 
         return "addAsset";
@@ -106,30 +137,94 @@ public class HomeController {
 
     @RequestMapping(value = {"/updateAsset"}, method = RequestMethod.GET)
     public String displayEditAsset(Model model, HttpServletRequest request) {
-        int assetId = 0;
+        int assetId;
 
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
 
-            model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
-
-            model.addAttribute("asset", assetDao.getAssetById(assetId));
-
         } catch (Exception e) {
-            request.setAttribute("displayUpdateAssetFormError", "Oops! Something went wrong when loading the form. Please try again.");
-            //model.addAttribute("displayUpdateAssetFormError", "Oops! Something went wrong when loading the form. Please try again.");
+            request.setAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
             return "redirect:manage_assets";
         }
 
+        model.addAttribute("assetTypes", assetDao.getAllAssetTypes());
+
+        model.addAttribute("asset", assetDao.getAssetById(assetId));
+
         return "editAsset";
+    }
+
+    //Asset CRUD
+    @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
+    public String submitNewAsset(@Valid Asset newAsset, BindingResult result, Model model, HttpServletRequest request) {
+        int typeId;
+        boolean nullType;
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            typeId = 0;
+        }
+
+        nullType = assetDao.getAssetTypeById(typeId) == null;
+        if (result.hasErrors() || nullType) {
+            if (nullType) {
+                model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            }
+            return "redirect:addAsset";
+        }
+
+        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
+
+        assetDao.addAsset(newAsset);
+
+        model.addAttribute("typeId", typeId);
+        return "redirect:listAssets";
+    }
+
+    @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
+    public String submitAssetUpdate(@Valid Asset asset, BindingResult result, Model model, HttpServletRequest request) {
+        //get assetTypeId associated with asset
+        //asset type not passed as part of asset on model
+        int typeId = assetDao.getAssetById(asset.getAssetId()).getAssetType().getAssetTypeId();
+        model.addAttribute("typeId", typeId);
+
+        if (result.hasErrors()) {
+            return "redirect:updateAsset";
+        }
+
+        assetDao.editAsset(asset);
+
+        return "redirect:listAssets";
+    }
+
+    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
+    public String deleteAsset(Model model, HttpServletRequest request) {
+        int assetId;
+        Asset asset;
+
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+        } catch (NumberFormatException e) {
+            assetId = 0;
+        }
+
+        asset = assetDao.getAssetById(assetId);
+
+        if (asset == null) {
+            request.setAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+
+        assetDao.deleteAsset(asset);
+        return "redirect:manage_assets";
     }
 
     //AssetType Forms
     @RequestMapping(value = {"/addAssetType"}, method = RequestMethod.GET)
     public String displayAddAssetType(Model model, HttpServletRequest request) {
         //error message
-        String badCategoryError = request.getParameter("badCategoryError");
-        model.addAttribute("badCategoryError", badCategoryError);
+        //String badCategoryError = request.getParameter("badCategoryError");
+        model.addAttribute("badCategoryError", request.getParameter("badCategoryError"));
 
         //populating drop-down menu
         model.addAttribute("categoryList", assetDao.getAllCategories());
@@ -144,8 +239,8 @@ public class HomeController {
     public String displayEditAssetType(Model model, HttpServletRequest request) {
         int assetTypeId;
         //error message
-        String badCategoryError = request.getParameter("badCategoryError");
-        model.addAttribute("badCategoryError", badCategoryError);
+        //String badCategoryError = request.getParameter("badCategoryError");
+        model.addAttribute("badCategoryError", request.getParameter("badCategoryError"));
 
         //get asset type id
         try {
@@ -164,106 +259,21 @@ public class HomeController {
         return "editAssetType";
     }
 
-    //Category Forms
-    @RequestMapping(value = {"/updateCategory"}, method = RequestMethod.GET)
-    public String displayEditCategory(Model model, HttpServletRequest request) {
-        int categoryId;
-
-        try {
-            categoryId = Integer.parseInt(request.getParameter("categoryId"));
-
-            model.addAttribute("category", assetDao.getCategoryById(categoryId));
-        } catch (NumberFormatException e) {
-            request.setAttribute("displayUpdateCategoryFormError", "Oops! Something went wrong when loading the form. Please try again.");
-            return "redirect:manage_assets";
-        }
-
-        return "editCategory";
-    }
-
-    //AssetNote Form
-    @RequestMapping(value = {"/assetAddNote"}, method = RequestMethod.GET)
-    public String displayAddAssetNote(Model model, HttpServletRequest request) {
-        int assetId = 0;
-        AssetNote newNote = new AssetNote();
-        Asset asset;
-        try {
-            assetId = Integer.parseInt(request.getParameter("assetId"));
-            //request.setAttribute("assetId", assetId);
-            newNote.setAssetId(assetId);
-            asset = assetDao.getAssetById(assetId);
-            model.addAttribute("assetNote", newNote);
-            model.addAttribute("asset", asset);
-            model.addAttribute("assetNoteList", assetDao.getAssetNotes(assetId));
-        } catch (Exception e) {
-            return "redirect:manage_assets";
-        }
-
-        return "assetAddNote";
-    }
-
-    //Asset CRUD
-    @RequestMapping(value = {"/submitNewAsset"}, method = RequestMethod.POST)
-    public String submitNewAsset(@Valid Asset newAsset, BindingResult result, Model model, @RequestParam("typeId") int typeId, HttpServletRequest request) {
-        if (result.hasErrors()) {
-            return "redirect:addAsset";
-        }
-
-        newAsset.setAssetType(assetDao.getAssetTypeById(typeId));
-
-        assetDao.addAsset(newAsset);
-
-        model.addAttribute("typeId", typeId);
-        return "redirect:listAssets";
-    }
-
-    @RequestMapping(value = {"/submitAssetUpdate"}, method = RequestMethod.POST)
-    public String submitAssetUpdate(@Valid Asset asset, BindingResult result, Model model, HttpServletRequest request) {
-        //get assetTypeId associated with asset
-        //asset type not passed as part of asset on model
-        int typeId = assetDao.getAssetById(asset.getAssetId()).getAssetType().getAssetTypeId();
-
-        model.addAttribute("typeId", typeId);
-
-        if (result.hasErrors()) {
-
-            return "redirect:updateAsset";
-        }
-
-        assetDao.editAsset(asset);
-
-        return "redirect:listAssets";
-    }
-
-    @RequestMapping(value = {"/removeAsset"}, method = RequestMethod.GET)
-    public String deleteAsset(Model model, HttpServletRequest request, @RequestParam("assetId") int assetId
-    ) {
-        //int assetId = 0;
-        Asset asset;
-        try {
-            //assetId = Integer.parseInt(request.getParameter("assetId"));
-            asset = assetDao.getAssetById(assetId);
-
-            assetDao.deleteAsset(asset);
-        } catch (Exception e) {
-            request.setAttribute("assetDeletionError", "Oops! Something went wrong when attempting to delete asset.");
-        }
-        return "redirect:manage_assets";
-    }
-
     //AssetType CRUD
     @RequestMapping(value = {"/submitNewAssetType"}, method = RequestMethod.POST)
     public String submitNewAssetType(@Valid AssetType newAssetType, BindingResult result, Model model, HttpServletRequest request
     ) {
         int categoryId;
+        boolean nullCategory;
         try {
             categoryId = Integer.parseInt(request.getParameter("categoryId"));
         } catch (NumberFormatException e) {
             categoryId = 0;
         }
 
-        if (result.hasErrors() || assetDao.getCategoryById(categoryId) == null) {
-            if (true) {
+        nullCategory = assetDao.getCategoryById(categoryId) == null;
+        if (result.hasErrors() || nullCategory) {
+            if (nullCategory) {
                 model.addAttribute("badCategoryError", BAD_CATEGORY_ERROR_MESSAGE);
             }
 
@@ -279,14 +289,16 @@ public class HomeController {
     public String submitAssetTypeUpdate(@Valid AssetType assetType, BindingResult result, Model model, HttpServletRequest request
     ) {
         int categoryId;
+        boolean nullCategory;
         try {
             categoryId = Integer.parseInt(request.getParameter("categoryId"));
         } catch (NumberFormatException e) {
             categoryId = 0;
         }
 
-        if (result.hasErrors() || assetDao.getCategoryById(categoryId) == null) {
-            if (true) {
+        nullCategory = assetDao.getCategoryById(categoryId) == null;
+        if (result.hasErrors() || nullCategory) {
+            if (nullCategory) {
                 model.addAttribute("badCategoryError", BAD_CATEGORY_ERROR_MESSAGE);
             }
 
@@ -303,17 +315,40 @@ public class HomeController {
     public String deleteAssetType(Model model, HttpServletRequest request
     ) {
         AssetType assetType;
-        int assetTypeId = 0;
+        int assetTypeId;
         try {
             assetTypeId = Integer.parseInt(request.getParameter("typeId"));
-
-            assetType = assetDao.getAssetTypeById(assetTypeId);
-
-            assetDao.deleteAssetType(assetType);
-        } catch (Exception e) {
-            request.setAttribute("assetTypeDeletionError", "Oops! Something went wrong when attempting to delete asset type.");
+        } catch (NumberFormatException e) {
+            assetTypeId = 0;
         }
+
+        assetType = assetDao.getAssetTypeById(assetTypeId);
+
+        if (assetType == null) {
+            request.setAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+
+        assetDao.deleteAssetType(assetType);
+
         return "redirect:manage_assets";
+    }
+
+    //Category Form
+    @RequestMapping(value = {"/updateCategory"}, method = RequestMethod.GET)
+    public String displayEditCategory(Model model, HttpServletRequest request) {
+        int categoryId;
+
+        try {
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        } catch (NumberFormatException e) {
+            model.addAttribute("badCategoryError", BAD_CATEGORY_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+
+        model.addAttribute("category", assetDao.getCategoryById(categoryId));
+
+        return "editCategory";
     }
 
     //Category CRUD
@@ -335,11 +370,7 @@ public class HomeController {
             return "redirect:manage_assets";
         }
 
-//        try {
         assetDao.editCategory(category);
-//        } catch (Exception e) {
-//            request.setAttribute("categoryUpdateError", "Oops! Something went wrong when updating asset. Please try again.");
-//        }
         return "redirect:manage_assets";
     }
 
@@ -347,17 +378,49 @@ public class HomeController {
     public String deleteCategory(Model model, HttpServletRequest request
     ) {
         Category category;
-        int categoryId = 0;
+        int categoryId;
         try {
             categoryId = Integer.parseInt(request.getParameter("categoryId"));
-
-            category = assetDao.getCategoryById(categoryId);
-
-            assetDao.deleteCategory(category);
-        } catch (Exception e) {
-            request.setAttribute("categoryDeletionError", "Oops! Something went wrong when attempting to delete asset.");
+        } catch (NumberFormatException e) {
+            categoryId = 0;
         }
+
+        category = assetDao.getCategoryById(categoryId);
+
+        if (category == null) {
+            model.addAttribute("badCategoryError", BAD_CATEGORY_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+
+        assetDao.deleteCategory(category);
         return "redirect:manage_assets";
+    }
+
+    //AssetNote Form
+    @RequestMapping(value = {"/assetAddNote"}, method = RequestMethod.GET)
+    public String displayAddAssetNote(Model model, HttpServletRequest request) {
+        int assetId;
+        AssetNote newNote = new AssetNote();
+        Asset asset;
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+        } catch (Exception e) {
+            assetId = 0;
+        }
+
+        asset = assetDao.getAssetById(assetId);
+
+        if (asset == null) {
+            request.setAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+
+        newNote.setAssetId(assetId);
+        model.addAttribute("assetNote", newNote);
+        model.addAttribute("asset", asset);
+        model.addAttribute("assetNoteList", assetDao.getAssetNotes(assetId));
+
+        return "assetAddNote";
     }
 
     //AssetNoteCRUD
