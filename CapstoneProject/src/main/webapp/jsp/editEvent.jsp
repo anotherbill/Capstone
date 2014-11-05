@@ -38,11 +38,9 @@
                                     <tr>
                                         <th>Event</th>
                                         <th>UserName</th>
-                                        <th>Location</th>
-                                        <th>Size</th>
                                         <th>Start Date</th>
                                         <th>Due Date</th>
-                                        <th>Status</th>
+                                        <th>Open</th>
                                     </tr>
                                     <tr>
                                         <td>${event.eventName}<br/><br/>
@@ -90,7 +88,7 @@
                             </div>
 
                         </div>
-                        <sf:form>
+                        </sf:form>
 
                             <div class="col-md-12">
                                 <table class="table table-hover">

@@ -44,6 +44,9 @@
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <bean id="chartsDao" class="com.swcguild.capstoneproject.googlecharts.GoogleChartDBImpl">
+            <property name="jdbcTemplate" ref="jdbcTemplate" />
+        </bean>
     
 <!--    <bean id="noteDao" class="com.swcguild.capstoneproject.dao.NoteDbImpl">
         <property name="sessionFactory" ref="sessionFactory"/>

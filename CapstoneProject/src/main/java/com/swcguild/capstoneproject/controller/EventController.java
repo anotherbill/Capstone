@@ -81,12 +81,46 @@ public class EventController {
         model.addAttribute("assetTypeList", assetTypeList);
 
         return "addEventStepTwo";
-        
+
     }
 
     @RequestMapping(value = "addEventStepTwo", method = RequestMethod.GET)
     public String createEventStepTwo(Model model, @RequestParam("eventId") int eventId) {
         return "addEventStepTwo?eventId=" + eventId;
     }
+
+    @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
+    public String closeEvent(Model model, @RequestParam("eventId") int eventId) {
+        Event eventToClose = eventDao.getEventByEventId(eventId);
+        eventDao.closeEvent(eventToClose);
+        return "redirect:index";
+    }
+
+    @RequestMapping(value = "/openEvent", method = RequestMethod.GET)
+    public String openEvent(Model model, @RequestParam("eventId") int eventId) {
+        Event eventToOpen = eventDao.getEventByEventId(eventId);
+        eventDao.openEvent(eventToOpen);
+        return "redirect:index";
+    }
+
+    @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
+    public String showEditEventPage(Model model, @RequestParam("eventId") int eventId){
+       Event eventToEdit = eventDao.getEventByEventId(eventId);
+
+        eventDao.addEvent(eventToEdit);
+        model.addAttribute("event", eventToEdit);
+
+        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(eventToEdit);
+        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+
+        Set<Category> categoryList = assetDao.getAllCategories();
+        model.addAttribute("categoryList", categoryList);
+
+        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
+        model.addAttribute("assetTypeList", assetTypeList);
+        
+        return "editEvent";
+    }
+    
 
 }

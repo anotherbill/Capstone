@@ -19,10 +19,10 @@ id="WebApp_ID" version="2.5">
           <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
   </servlet>
   
-  <error-page>
+<!--  <error-page>
       <location>/error</location>
   </error-page>
-  
+  -->
   <servlet-mapping>
         <servlet-name>spring-dispatcher</servlet-name>
         <url-pattern>/</url-pattern>

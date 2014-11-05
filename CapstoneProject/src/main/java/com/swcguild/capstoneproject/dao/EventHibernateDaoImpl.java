@@ -89,7 +89,13 @@ public class EventHibernateDaoImpl implements EventInterface {
 
     @Override
     public void closeEvent(Event event) {
+        //currentSession().createSQLQuery("update events set is_open = 0 where event_id = " + event.getEventId());
         event.setOpen(false);
+    }
+    
+    @Override
+    public void openEvent(Event event){
+        event.setOpen(true);
     }
 
 

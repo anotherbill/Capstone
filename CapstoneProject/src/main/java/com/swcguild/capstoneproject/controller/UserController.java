@@ -105,4 +105,8 @@ public class UserController {
         return "redirect:userAddNote?userId=" + userNote.getUserId();
     }
     
+    @RequestMapping(value="/reports", method = RequestMethod.GET)
+    public String getReports(Model model){
+        return "jQueryChart";
+    }
 }
