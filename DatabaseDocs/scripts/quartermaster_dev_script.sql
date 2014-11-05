@@ -51,7 +51,7 @@ CREATE TABLE `assets_events` (
   `asset_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `return_date` date DEFAULT NULL,
-  `damage_loss_theft` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `damage_loss_theft` varchar(20) COLLATE latin1_general_ci NULL,
   PRIMARY KEY (`asset_id`,`event_id`),
   KEY `event_id` (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
