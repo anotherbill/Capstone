@@ -71,6 +71,7 @@
                                         <sf:option value="four">Damage: 4</sf:option>
                                         <sf:option value="five">Damage: 5</sf:option>
                                     </sf:select>
+                                        <sf:errors path="damageStatus" cssclass="error"></sf:errors><br/>
                                 </div>
                             </div>
 
@@ -81,6 +82,7 @@
                                     </div>
                                     <div class="col-md-9">
                                     <sf:input path="serialNumber" type="text" class="form-control" id="serialNumber" name="serialNumber"/>
+                                    <sf:errors path="serialNumber" cssclass="error"></sf:errors><br/>
                                 </div>
                             </div>
                             

@@ -106,7 +106,8 @@
                         <div class="form-group"> 
                             <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
                                     <sf:label path="categoryName">Add New Category:</sf:label></span></span><sf:input path="categoryName" type="text" class="form-control" style="float: right" name="categoryName"/><br/><br/>
-                            </div>
+                                    <sf:errors path="categoryName" cssclass="error"></sf:errors><br/>
+                        </div>
                             <div class="form-group">
                                 <input type="submit" class="form-control" value="Add Category"/>
                             </div> 
