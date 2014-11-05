@@ -20,6 +20,9 @@
         <div class="container">
             
             <div class="col-md-12">
+                
+                <a href="manageEventAssets" class="btn btn-primary" role="button">Return to All Asset Types</a>
+                
                 <table class="table table-hover">
 
                     <tr>
@@ -51,7 +54,7 @@
         
         
         
-        <%-- PLACEHOLDER BEGIN --%>
+        <%-- PLACEHOLDER BEGIN 
         <div class="container">
             <div class="row">
                 <h2 class="text-center" style="padding-bottom: 25px">Available Assets</h2>
@@ -185,7 +188,7 @@
                 </table>
             </div>
         </div>
-        <%-- PLACEHOLDER END --%>
+       PLACEHOLDER END --%>
 
     </body>
 </html>

@@ -56,12 +56,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                            <div class="col-md-2">
+                            <div class="col-md-12">
                                 <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
+                                <%--<a class="btn btn-danger" role="button" href="viewRetiredAssets" style="margin-left: 20px">View Retired Assets</a>--%>
                             </div>
+                            
                         </div>
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
@@ -69,6 +71,7 @@
                                 <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">  Add Asset</a>
                             </div>
                         </div>
+                        
                     </div>
 
 
