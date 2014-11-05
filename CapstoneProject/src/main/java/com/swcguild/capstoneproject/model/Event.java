@@ -44,11 +44,11 @@ public class Event {
     private String eventName;
 
     @Column(name = "check_out_date")
-    @DateTimeFormat(pattern = "yyyy-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkOutDate;
 
     @Column(name = "due_date")
-    @DateTimeFormat(pattern = "yyyy-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})

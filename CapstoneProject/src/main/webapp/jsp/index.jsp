@@ -22,7 +22,7 @@
             <div class="container">
 
                 <div class="row" style="padding: 0px; margin: 0px; margin-bottom: 30px">
-                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addEventStepOne.jsp">Add Event</a>
+                    <a class="btn btn-primary glyphicon glyphicon-plus" href="addEvent">Add Event</a>
                 </div>
                 
                 
