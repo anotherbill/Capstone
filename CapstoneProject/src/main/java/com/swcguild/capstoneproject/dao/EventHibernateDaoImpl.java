@@ -134,7 +134,7 @@ public class EventHibernateDaoImpl implements EventInterface {
             e.setEventId(rs.getInt("event_id"));
             e.setNote(rs.getString("note_detail"));
             String dateStr = rs.getString("note_date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 e.setNoteDate(formatter.parse(dateStr));
             } catch (ParseException pe) {

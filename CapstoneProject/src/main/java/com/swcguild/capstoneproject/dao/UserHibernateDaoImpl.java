@@ -114,7 +114,7 @@ public class UserHibernateDaoImpl implements UserInterface {
             u.setUserId(rs.getInt("user_id"));
             u.setNote(rs.getString("note_detail"));
             String dateStr = rs.getString("note_date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 u.setNoteDate(formatter.parse(dateStr));
             } catch (ParseException pe) {
