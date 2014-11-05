@@ -31,6 +31,7 @@
                                 </div>
                                 <div class="col-md-9">
                                 <sf:input type="text" path="name" name="name" cssClass="form-control"/>
+                                <sf:errors path="name" cssclass="error"></sf:errors><br/>
                             </div>
                         </div>
 
@@ -56,6 +57,7 @@
                                 </div>
                                 <div class="col-md-9">
                                 <sf:input type="text" path="imagePath" cssClass="form-control"/>
+                                <sf:errors path="imagePath" cssclass="error"></sf:errors><br/>
                             </div>
                         </div>
 

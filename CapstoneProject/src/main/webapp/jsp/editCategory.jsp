@@ -29,6 +29,7 @@
                                 </div>
                                 <div class="col-md-9">
                                 <sf:input type="text" path="categoryName" cssClass="form-control"/>
+                                <sf:errors path="categoryName" cssclass="error"></sf:errors><br/>
                             </div>
                         </div>
                         <sf:hidden path="categoryId"/>
