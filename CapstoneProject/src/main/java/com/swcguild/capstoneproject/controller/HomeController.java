@@ -42,7 +42,7 @@ public class HomeController {
 
     
 
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/home", "/index"}, method = RequestMethod.GET)
     public String home(Model model) {
         Set<Event> eventList = eventDao.getAllEvents();
         model.addAttribute("eventList", eventList);

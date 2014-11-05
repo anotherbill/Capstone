@@ -105,7 +105,21 @@ public class EventController {
 
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
     public String showEditEventPage(Model model, @RequestParam("eventId") int eventId){
-        return null;
+       Event eventToEdit = eventDao.getEventByEventId(eventId);
+
+        eventDao.addEvent(eventToEdit);
+        model.addAttribute("event", eventToEdit);
+
+        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(eventToEdit);
+        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+
+        Set<Category> categoryList = assetDao.getAllCategories();
+        model.addAttribute("categoryList", categoryList);
+
+        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
+        model.addAttribute("assetTypeList", assetTypeList);
+        
+        return "editEvent";
     }
     
 

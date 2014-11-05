@@ -34,7 +34,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>Stading</th>
+                        <th>Standing</th>
                         <th>Events</th>
                         <th>Start Date</th>
                         <th>End Date</th>
