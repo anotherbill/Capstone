@@ -64,7 +64,7 @@
                                         <sf:option value="lost">Lost</sf:option>
                                         <sf:option value="stolen">Stolen</sf:option>
                                         <sf:option value="late">Late</sf:option>
-                                        <sf:option value="retired">Retired</sf:option>
+                                        <%--<sf:option value="retired">Retired</sf:option>--%>
                                         <sf:option value="one">Damage: 1</sf:option>
                                         <sf:option value="two">Damage: 2</sf:option>
                                         <sf:option value="three">Damage: 3</sf:option>

@@ -97,7 +97,7 @@
                                 },
                                 regexp: {
                                     regexp: /^[a-zA-Z ]/,
-                                    message: 'The name can only consist of numbers'
+                                    message: 'The name can only consist of letters'
                                 }
                             }
                         },
