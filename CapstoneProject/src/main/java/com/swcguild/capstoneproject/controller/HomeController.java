@@ -2,11 +2,10 @@ package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
-import com.swcguild.capstoneproject.dao.interfaces.ReportInterface;
-import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
+import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.notes.AssetNote;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,14 +28,24 @@ public class HomeController {
     private static final String BAD_ASSET_TYPE_ERROR_MESSAGE = "Oops! Invalid asset type ID. Must supply asset type ID as an integer. Asset type ID must refer to an existing asset type.";
 
     private AssetInterface assetDao;
-
+    private EventInterface eventDao;
+    
+    @Inject
+    public void setEventDao(EventInterface eventDao) {
+        this.eventDao = eventDao;
+    }
+    
     @Inject
     public HomeController(AssetInterface assetDao) {
         this.assetDao = assetDao;
     }
 
+    
+
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String home() {
+    public String home(Model model) {
+        Set<Event> eventList = eventDao.getAllEvents();
+        model.addAttribute("eventList", eventList);
         return "index";
     }
 
