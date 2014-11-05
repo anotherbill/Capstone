@@ -3,7 +3,7 @@
     Created on : Nov 5, 2014, 2:47:04 PM
     Author     : apprentice
 --%>
-
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,22 +32,20 @@
                 <table class="table table-hover">
 
                     <tr>
-                        <th>Name</th>
+                        <th>Event Name</th>
                         <th>Username</th>
                         <th>Standing</th>
-                        <th>Events</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
                     </tr>
                     <tr>
-                        <td>User X</td>
-                        <td>xxxuserxxx</td>
-                        <td>good</td>
-                        <td>Camping</td>
-                        <td>10/22/2014</td>
-                        <td>10/31/2014</td>
-                        <td>Open</td>
+                        <td>${event.eventName}</td>
+                        <td>${event.user.userName}</td>
+                        <td>${event.user.goodStanding}</td>
+                        <td>${event.checkOutDate}</td>
+                        <td>${event.dueDate}</td>
+                        <td>${event.open}</td>
                     </tr>
                 </table>
                 <hr/>
@@ -64,7 +62,7 @@
                         <th>Actions</th>
                     </tr>
                     <tr>
-                    <jstl:forEach var="assets" items="${assetCheckedOutList}">
+                    <jstl:forEach var="assets" items="${event.assets}">
                         <td>${asset.assetType.name}</td>
                         <td>${asset.assetType.category.categoryName}</td>
                         <td>${asset.inStock}</td>

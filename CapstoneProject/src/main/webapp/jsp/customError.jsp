@@ -31,13 +31,8 @@
            
             <h1 class="text-center">An error has occurred...</h1>
             
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-3">
-            <img class="image-responsive" style="margin: 0 auto" src="img/error_image.jpg"/>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
+
+            <img class="image-responsive center-block" style="margin: 0 auto" src="img/error_image.jpg"/>
 
             <h3 class="text-center">${errorMessage}</h3>
         </div>
