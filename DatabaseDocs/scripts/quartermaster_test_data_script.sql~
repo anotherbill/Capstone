@@ -356,7 +356,7 @@ ALTER TABLE `asset_types`
 -- Constraints for table `authorities`
 --
 ALTER TABLE `authorities`
-  ADD CONSTRAINT `username_authorityfk` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
+  ADD CONSTRAINT `username_authorityfk` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `events`
