@@ -44,10 +44,21 @@
                         <div class="form-group">
                             <sf:label path="goodStanding" cssClass="col-sm-2 control-label">Standing</sf:label>
                                 <div class="col-sm-10">
-                                <sf:select path="goodStanding" name="standing">
+                                <sf:select path="goodStanding" name="standing" cssClass="form-control">
                                     <sf:option value="true">True</sf:option>
                                     <sf:option value="false">False</sf:option>
                                 </sf:select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Role</label>
+                            <div class="col-sm-10">
+                                <select name="securityRole" class="form-control">
+                                    <option value="user">User</option>
+                                    <option value="retail">Retail</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="admin">Admin</option>
+                                </select>
                             </div>
                         </div>
 
@@ -86,40 +97,40 @@
                                 },
                                 regexp: {
                                     regexp: /^[a-zA-Z ]/,
-                                    message: 'The name can only consist of numbers'
+                                    message: 'The name can only consist of letters'
                                 }
                             }
-                    },
-                    userName: {
-                        message: 'The user name is not valid',
-                        validators: {
-                            notEmpty: {
-                                message: 'The user name is required and cannot be empty'
-                            },
-                            stringLength: {
-                                min: 3,
-                                max: 20,
-                                message: 'The user name must be more than 3 and less than 20 characters long'
-                            },
-                           regexp: {
+                        },
+                        userName: {
+                            message: 'The user name is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The user name is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 3,
+                                    max: 20,
+                                    message: 'The user name must be more than 3 and less than 20 characters long'
+                                },
+                                regexp: {
                                     regexp: /^[a-zA-Z0-9+]*$/,
                                     message: 'The user name can only consist of numbers'
                                 }
-                        }
-                    },
-                    password: {
-                        message: 'The user name is not valid',
-                        validators: {
-                            notEmpty: {
-                                message: 'The user name is required and cannot be empty'
-                            },
-                            stringLength: {
-                                min: 5,
-                                max: 20,
-                                message: 'The name must be more than 5 and less than 20 characters long'
                             }
-                        }
-                    },
+                        },
+                        password: {
+                            message: 'The user name is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The user name is required and cannot be empty'
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 20,
+                                    message: 'The name must be more than 5 and less than 20 characters long'
+                                }
+                            }
+                        },
                         standing: {
                         }
                     }

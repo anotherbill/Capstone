@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <sf:label path="goodStanding" cssClass="col-sm-2 control-label">Standing</sf:label>
                         <div class="col-sm-10">
-                        <sf:select path="goodStanding" name="standing">
+                        <sf:select path="goodStanding" name="standing" cssClass="form-control">
                             <sf:option value="true">True</sf:option>
                             <sf:option value="false">False</sf:option>
                         </sf:select>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <sf:label path="enabled" cssClass="col-sm-2 control-label">Enabled</sf:label>
                         <div class="col-sm-10">
-                        <sf:select path="enabled" name="enabled">
+                        <sf:select path="enabled" name="enabled" cssClass="form-control">
                             <sf:option value="1">Yes</sf:option>
                             <sf:option value="0">No</sf:option>
                         </sf:select>
@@ -99,7 +99,7 @@
                 </jstl:forEach>
 
 
-
+                <br><br>
                 <div class="form-group">
                     <div class="col-sm-3">
                         <input type="submit" class="form-control btn btn-primary" value="Edit User"/>

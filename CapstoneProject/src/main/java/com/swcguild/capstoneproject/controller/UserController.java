@@ -7,6 +7,8 @@ package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.UserNote;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +50,8 @@ public class UserController {
     @RequestMapping(value="/submitNewUser", method = RequestMethod.POST)
     public String addNewUserToDatabase(@ModelAttribute("newUser") User newUser, Model model, HttpServletRequest request){
         userDao.addUser(newUser);
+        String authority = request.getParameter("securityRole");
+        userDao.createUserAuthorities(newUser, authority);
         return "redirect:viewAllUsers";
     }
     
@@ -59,7 +63,13 @@ public class UserController {
     }
     
     @RequestMapping(value="/viewUserInfo", method = RequestMethod.GET)
-    public String viewUserInfo(Model model){
+    public String viewUserInfo(@RequestParam("userId") int userId, Model model){
+        List<UserNote> userNotes = userDao.getUserNotes(userId);
+        model.addAttribute("userNoteList", userNotes);
+        
+        User user = userDao.getUserByUserId(userId);
+        model.addAttribute("user", user);
+        
         return "viewUserInfo";
     }
     
@@ -74,6 +84,25 @@ public class UserController {
     public String updateUser(@ModelAttribute("user") User user, Model model){
         userDao.editUser(user);
         return "redirect:viewAllUsers";
+    }
+    
+    @RequestMapping(value="/userAddNote", method = RequestMethod.GET)
+    public String displayUserAddNotePage(@RequestParam("userId") int userId, Model model){
+        UserNote userNote = new UserNote();
+        User user = userDao.getUserByUserId(userId);
+        model.addAttribute("user", user);
+        userNote.setUserId(userId);
+        model.addAttribute(userNote);
+        List<UserNote> userNotes = userDao.getUserNotes(userId);
+        model.addAttribute("userNoteList", userNotes);
+        
+        return "userAddNote";
+    }
+    
+    @RequestMapping(value="/submitNewAssetNote", method = RequestMethod.POST)
+    public String writeUserNoteToDatabase(@ModelAttribute("userNote") UserNote userNote, Model model){
+        userDao.addNoteToUser(userNote.getNote(), userNote.getUserId());
+        return "redirect:userAddNote?userId=" + userNote.getUserId();
     }
     
 }

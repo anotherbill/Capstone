@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : addAsset
     Created on : Oct 29, 2014, 10:39:11 AM
@@ -63,7 +64,7 @@
                                         <sf:option value="lost">Lost</sf:option>
                                         <sf:option value="stolen">Stolen</sf:option>
                                         <sf:option value="late">Late</sf:option>
-                                        <sf:option value="retired">Retired</sf:option>
+                                        <%--<sf:option value="retired">Retired</sf:option>--%>
                                         <sf:option value="one">Damage: 1</sf:option>
                                         <sf:option value="two">Damage: 2</sf:option>
                                         <sf:option value="three">Damage: 3</sf:option>
@@ -82,35 +83,7 @@
                                     <sf:input path="serialNumber" type="text" class="form-control" id="serialNumber" name="serialNumber"/>
                                 </div>
                             </div>
-                            <%--
-                            imagePath is a field of AssetType, not directly a part of Asset. Adding images should be a part of creating/ editing asset types.
-                            AssetType.imagePath has type string ("text" for spring forms). Can't accept type file. Uploading image files should be a separate task on add asset types page.
                             
-                            <sf:label path="imagePath" class="col-sm-3 control-label">Image</sf:label>
-                            <sf:input path="imagePath" type="file" cssClass="form-control" id="image" name="image"/>
-                            --%>
-
-                            <%-- temporarily exclude note pending addition of notes field in Asset class
-                            
-                            <sf:label path="noteCategory" cssClass="col-sm-3 control-label">Note Category</sf:label>
-                            <sf:select path="noteCategory" cssClass="form-control" name="status">
-                                <sf:option value="available">Available</sf:option>
-                                <sf:option value="checkedOut">Checked-Out</sf:option>
-                                <sf:option value="lost">Lost</sf:option>
-                                <sf:option value="stolen">Stolen</sf:option>
-                                <sf:option value="late">Late</sf:option>
-                                <sf:option value="retired">Retired</sf:option>
-                                <sf:option value="none">none</sf:option>
-                                <sf:option value="one">Damage: 1</sf:option>
-                                <sf:option value="two">Damage: 2</sf:option>
-                                <sf:option value="three">Damage: 3</sf:option>
-                                <sf:option value="four">Damage: 4</sf:option>
-                                <sf:option value="five">Damage: 5</sf:option>
-                            </sf:select>
-                            
-                            <sf:label path="assetNote" cssClass="col-sm-3 control-label">Note</sf:label>
-                            <sf:textarea path="assetNote" cssClass="form-control" name="assetNote" placeholder="Enter Note Here"/>
-                            --%>
 
                             <br/>
                             <div class="form-group">
@@ -122,9 +95,6 @@
                     </div>
                 </div>
             </div>
-            <%-- Not sure what this button is for. Seems redundant
-            <a class="btn btn-primary" href="home">Add Asset</a>
-            --%>
 
 
             <jsp:include page="include/footer.jsp"/>
@@ -141,10 +111,10 @@
                     },
                     fields: {
                         typeId: {
-                            message: 'The category is not valid',
+                            message: 'The asset type is not valid',
                             validators: {
                                 notEmpty: {
-                                    message: 'The category is required and cannot be empty'
+                                    message: 'The asset type is required and cannot be empty'
                                 }
                         }
                     },

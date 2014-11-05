@@ -17,11 +17,11 @@
         <div class="container">
             <jsp:include page="include/header.jsp"/>
 
-            <form class="form-horizontal" action="submitAddEventStepOne" role="form" name="editAddEvent">
+            <sf:form class="form-horizontal" action="submitAddEventStepOne" method="post" role="form" name="editAddEvent" modelAttribute="event">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Event Name</label>
+                    <sflabel path="eventName" cssClass="col-sm-2 control-label">Event Name</sf:label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="eventName"/>
+                        <sf:input path="eventName" type="text" cssClass="form-control" id="name" placeholder="Name" name="eventName"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,15 +47,15 @@
                     </div>
                 </div>-->
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">StartDate</label>
+                    <sf:label path="checkOutDate" cssClass="col-sm-2 control-label">StartDate</sf:label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" id="startDate" name="checkOutDate"/>
+                        <sf:input path="checkOutDate" type="date" cssClass="form-control" id="startDate" name="checkOutDate"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="input" class="col-sm-2 control-label">End Date</label>
+                    <sf:label path="dueDate" cssClass="col-sm-2 control-label">End Date</sf:label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" id="endDate" name="dueDate"/>
+                        <sf:input path="dueDate" type="date" cssClass="form-control" id="endDate" name="dueDate"/>
                     </div>
                 </div>
 <!--                <div class="form-group">
@@ -76,7 +76,7 @@
                     <input type="submit" class="btn btn-primary glyphicon glyphicon-chevron-right" value="Next"/>
                 </div>
             </div>
-        </form>
+        </sf:form>
         
         
         

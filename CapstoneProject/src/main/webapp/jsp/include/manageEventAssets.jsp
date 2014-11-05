@@ -20,6 +20,23 @@
     <body>
         <div class="container">
             <div class="col-md-12">
+                <div class="col-md-3">
+                        <form role="form" method="get" action="manage_assets">
+                            <div class="form-group">
+                                <label>Search By Category:</label>
+                                <select name="selectCategory" class="form-control">
+                                    <option value="all">All</option>
+                                    <jstl:forEach var="category" items="${categoryList}">
+                                        <option value="${category.categoryName}">${category.categoryName}</option>
+                                    </jstl:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Search" class="form-control"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
         <table class="table table-hover">
 
                         <tr>

@@ -23,7 +23,7 @@ public interface UserInterface {
     public void deleteUser(User user);
 
     public User getUserByUserId(int userId);
-    
+
     public Set<User> getAllUsers();
 
     public void resetPassword(User user);
@@ -33,4 +33,6 @@ public interface UserInterface {
     public void addNoteToUser(String note, int userId);
 
     public List<UserNote> getUserNotes(int userId);
+
+    public void createUserAuthorities(User user, String authority);
 }

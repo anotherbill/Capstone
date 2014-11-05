@@ -20,7 +20,7 @@
 
             <div class="row" style="margin-left: 25px">
                 <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 3px solid black; border-radius: 4px; padding-top: 15px; margin-bottom: 30px">
-                    <form action="submitAddEventStepTwo" id="addEditEvent" role="form">
+                    <form action="submitAddEventStepTwo" id="addEditEvent" role="form" method="get">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h2 class="text-center">Add Event</h2>
 

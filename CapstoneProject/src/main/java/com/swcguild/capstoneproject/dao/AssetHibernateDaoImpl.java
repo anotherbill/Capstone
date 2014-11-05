@@ -205,7 +205,7 @@ public class AssetHibernateDaoImpl implements AssetInterface {
             n.setNote(rs.getString("note_detail"));
             //some really ugly Java 7 Date stuff ughhh
             String dateStr = rs.getString("note_date");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 n.setNoteDate(formatter.parse(dateStr));
             } catch (ParseException pe) {

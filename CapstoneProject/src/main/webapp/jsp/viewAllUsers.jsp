@@ -35,16 +35,17 @@
                                 <img class="img-responsive" data-src="holder.js/242x200" alt="...">
                                 <!--add the generated img tag here-->
                                 <div class="caption">
-                                    <h4><span>Username: ${user.name}</span> </h4>
+                                    <h4><span>${user.name}</span> </h4>
 
-                                    <p>                        
+                                    <p>   
+                                        <br><b>Username:</b> <span>${user.userName}</span>
                                         <br><b>Enabled:</b> <span>${user.enabled}</span>
                                         <br><b>Standing:</b> <span>${user.goodStanding}</span>
                                         <br>
                                     </p>
                                     <a  href="viewUserInfo?userId=${user.userId}" class="btn btn-warning">Additional Info</a><br><br>
                                     <a href="editUser?userId=${user.userId}" class="btn btn-primary" role="button">Edit</a>  <a href="deleteUser?userId=${user.userId}" class="btn btn-danger" role="button" data-toggle="modal">Delete</a><br/><br/>
-                                    <a href="userAddNote?assetId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a>
+                                    <a href="userAddNote?userId=${user.userId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a>
                                 </div>
                             </div>
                         </div>

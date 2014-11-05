@@ -23,14 +23,18 @@
 
 
 
-                <div class="col-md-3">
+                <div class="col-md-12">
 
-                    <div class="col-md-3">
+                    <div class="col-md-12">
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
                             </div>
+                            <div class="col-md-3">
+                                <a href="manage_assets" class="btn btn-primary" role="button">Return to All Asset Types</a>
+                            </div>
+
                         </div>
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
@@ -39,6 +43,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -55,21 +60,22 @@
                         <th>Damage Status</th>
                         <th>Actions</th>
                     </tr>
-              
-                        <jstl:forEach var="asset" items="${assetList}"> 
-                            <tr>
-                                <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
-                                <td>${asset.assetType.category.categoryName}</td>
-                                <td>${asset.assetType.name}</td>
-                                <td>${asset.inStock}</td>
-                                <td>${asset.serialNumber}</td>
-                                <td>${asset.damageStatus}</td>
 
-                        <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning glyphicon glyphicon-pencil">  Edit</a><br/><br/><a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger glyphicon glyphicon-minus">  Delete</a><br/><br/>
-                            <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus"> Add Note</a><br/><br/>
-                            <a href="listAssetNotes?assetId=${asset.assetId}" class="btn btn-primary glyphicon glyphicon-list-alt">  View Asset Notes</a></td>
+                    <jstl:forEach var="asset" items="${assetList}"> 
+                        <tr>
+                            <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
+                            <td>${asset.assetType.category.categoryName}</td>
+                            <td>${asset.assetType.name}</td>
+                            <td>${asset.inStock}</td>
+                            <td>${asset.serialNumber}</td>
+                            <td>${asset.damageStatus}</td>
+
+                            <td><a href="updateAsset?assetId=${asset.assetId}" class="btn btn-warning glyphicon glyphicon-pencil">  Edit</a><br/><br/>
+                                <a href="removeAsset?assetId=${asset.assetId}" class="btn btn-danger glyphicon glyphicon-minus">  Retire</a><br/><br/>
+                                <a href="assetAddNote?assetId=${asset.assetId}" class="btn btn-success glyphicon glyphicon-plus"> Add Note</a><br/><br/>
+                                <a href="listAssetNotes?assetId=${asset.assetId}" class="btn btn-primary glyphicon glyphicon-list-alt">  View Asset Notes</a></td>
                         </tr>
-                   </jstl:forEach>
+                    </jstl:forEach>
                 </table>
             </div>
             <jsp:include page="modals/assetAddNote.jsp"/>

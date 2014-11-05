@@ -56,12 +56,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                            <div class="col-md-2">
+                            <div class="col-md-12">
                                 <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
+                                <%--<a class="btn btn-danger" role="button" href="viewRetiredAssets" style="margin-left: 20px">View Retired Assets</a>--%>
                             </div>
+                            
                         </div>
 
                         <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
@@ -69,6 +71,7 @@
                                 <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">  Add Asset</a>
                             </div>
                         </div>
+                        
                     </div>
 
 
@@ -83,7 +86,7 @@
                         <br/><br/>
                         <jstl:forEach var="types" items="${assetTypeList}">
                             <tr>
-                                <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
+                                <td><img class="image-responsive" src="${types.imagePath}" alt="..." style="height: 200px; width: 200px"></td>
                                 <td>${types.name}</td>
                                 <td>${types.category.categoryName}</td>
                                 <td><a href="updateAssetType?typeId=${types.assetTypeId}" class="btn btn-warning">Edit Asset Type</a><br/><br/>
