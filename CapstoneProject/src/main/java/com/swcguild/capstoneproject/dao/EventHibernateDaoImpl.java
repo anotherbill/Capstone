@@ -91,6 +91,11 @@ public class EventHibernateDaoImpl implements EventInterface {
     public void closeEvent(Event event) {
         event.setOpen(false);
     }
+    
+    @Override
+    public void openEvent(Event event){
+        event.setOpen(true);
+    }
 
 
 

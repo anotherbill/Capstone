@@ -32,6 +32,8 @@ public interface EventInterface {
     public Set<Asset> getAllAssetsForEvent(Event event);
 
     public void closeEvent(Event event);
+    
+    public void openEvent(Event event);
 
     public void addNoteToEvent(String note, int eventId);
 

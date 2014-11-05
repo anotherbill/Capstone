@@ -81,12 +81,32 @@ public class EventController {
         model.addAttribute("assetTypeList", assetTypeList);
 
         return "addEventStepTwo";
-        
+
     }
 
     @RequestMapping(value = "addEventStepTwo", method = RequestMethod.GET)
     public String createEventStepTwo(Model model, @RequestParam("eventId") int eventId) {
         return "addEventStepTwo?eventId=" + eventId;
     }
+
+    @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
+    public String closeEvent(Model model, @RequestParam("eventId") int eventId) {
+        Event eventToClose = eventDao.getEventByEventId(eventId);
+        eventDao.closeEvent(eventToClose);
+        return "redirect:index";
+    }
+
+    @RequestMapping(value = "/openEvent", method = RequestMethod.GET)
+    public String openEvent(Model model, @RequestParam("eventId") int eventId) {
+        Event eventToOpen = eventDao.getEventByEventId(eventId);
+        eventDao.openEvent(eventToOpen);
+        return "redirect:index";
+    }
+
+    @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
+    public String showEditEventPage(Model model, @RequestParam("eventId") int eventId){
+        return null;
+    }
+    
 
 }
