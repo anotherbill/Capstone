@@ -122,12 +122,12 @@
                             message: 'The user name is not valid',
                             validators: {
                                 notEmpty: {
-                                    message: 'The user name is required and cannot be empty'
+                                    message: 'The password is required and cannot be empty'
                                 },
                                 stringLength: {
                                     min: 5,
                                     max: 20,
-                                    message: 'The name must be more than 5 and less than 20 characters long'
+                                    message: 'The password must be more than 5 and less than 20 characters long'
                                 }
                             }
                         },

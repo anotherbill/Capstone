@@ -19,7 +19,7 @@
 
             <sf:form class="form-horizontal" action="submitAddEventStepOne" method="post" role="form" name="editAddEvent" modelAttribute="event">
                 <div class="form-group">
-                    <sflabel path="eventName" cssClass="col-sm-2 control-label">Event Name</sf:label>
+                    <sf:label path="eventName" cssClass="col-sm-2 control-label">Event Name</sf:label>
                     <div class="col-sm-10">
                         <sf:input path="eventName" type="text" cssClass="form-control" id="name" placeholder="Name" name="eventName"/>
                     </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>-->
                 <div class="form-group">
-                    <sf:label path="checkOutDate" cssClass="col-sm-2 control-label">StartDate</sf:label>
+                    <sf:label path="checkOutDate" cssClass="col-sm-2 control-label">Start Date</sf:label>
                     <div class="col-sm-10">
                         <sf:input path="checkOutDate" type="date" cssClass="form-control" id="startDate" name="checkOutDate"/>
                     </div>
@@ -73,7 +73,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" class="btn btn-primary glyphicon glyphicon-chevron-right" value="Next"/>
+                    <input type="submit" class="btn btn-primary glyphicon glyphicon-chevron-right" value="Next >"/>
                 </div>
             </div>
         </sf:form>
