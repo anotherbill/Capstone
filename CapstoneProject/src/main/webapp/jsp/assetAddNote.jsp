@@ -73,6 +73,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                 <sf:textarea path="note" cssClass="form-control" id="note" name="assetNote" placeholder="Enter Note Here"></sf:textarea>
+                                <sf:errors path="note" cssclass="error"></sf:errors><br/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -92,6 +93,7 @@
                                     <sf:option value="four">Damage: 4</sf:option>
                                     <sf:option value="five">Damage: 5</sf:option>
                                 </sf:select>
+                                    <sf:errors path="category" cssclass="error"></sf:errors><br/>
                             </div>
                         </div>
                         <sf:hidden path="assetId"/>

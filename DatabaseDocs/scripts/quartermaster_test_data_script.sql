@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `assets_events` (
   `asset_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `return_date` date DEFAULT NULL,
+  `damage_loss_theft` varchar(20) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`asset_id`,`event_id`),
   KEY `event_id` (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
@@ -86,14 +87,14 @@ CREATE TABLE IF NOT EXISTS `assets_events` (
 -- Dumping data for table `assets_events`
 --
 DELETE FROM `assets_events`;
-INSERT INTO `assets_events` (`asset_id`, `event_id`, `return_date`) VALUES
-(1, 1, NULL),
-(9, 3, NULL),
-(10, 4, '2014-10-29'),
-(11, 6, NULL),
-(13, 5, NULL),
-(15, 6, NULL),
-(17, 4, NULL);
+INSERT INTO `assets_events` (`asset_id`, `event_id`, `return_date`, `damage_loss_theft`) VALUES
+(1, 1, NULL, 'none'),
+(9, 3, NULL, 'one'),
+(10, 4, '2014-10-29', 'none'),
+(11, 6, NULL, 'two'),
+(13, 5, NULL, 'three'),
+(15, 6, NULL, 'four'),
+(17, 4, NULL, 'five');
 
 -- --------------------------------------------------------
 

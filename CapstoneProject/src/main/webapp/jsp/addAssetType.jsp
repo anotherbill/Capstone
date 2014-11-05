@@ -25,53 +25,55 @@
             <jsp:include page="include/header.jsp"/>
             <div class="container">
 
-            <div class="row">
-                <div class="col-md-6">
-                    ${categoryIdError}
-                    <sf:form cssClass="form-horizontal" role="form" action="submitNewAssetType" id="addEditAssetType" method="post" modelAttribute="newAssetType">
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <sf:label path="name">Name</sf:label>
+                <div class="row">
+                    <div class="col-md-6">
+                        ${categoryIdError}
+                        <sf:form cssClass="form-horizontal" role="form" action="submitNewAssetType" id="addEditAssetType" method="post" modelAttribute="newAssetType">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <sf:label path="name">Name</sf:label>
+                                    </div>
+                                    <div class="col-md-9">
+                                    <sf:input type="text" path="name" name="name" cssClass="form-control"/>
+                                    <sf:errors path="name" cssclass="error"></sf:errors><br/>
+                                    </div>
                                 </div>
-                                <div class="col-md-9">
-                                <sf:input type="text" path="name" name="name" cssClass="form-control"/>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <label>Category</label>
-                            </div>
-                            <div class="col-md-9">
-                                <select class="form-control" name="categoryId">
-                                    <option value=""></option>
-                                    <jstl:forEach var="category" items="${categoryList}">
-                                        <option value="${category.categoryId}">${category.categoryName}</option>
-                                    </jstl:forEach>       
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <sf:label path="imagePath">Image</sf:label>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label>Category</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="categoryId">
+                                            <option value=""></option>
+                                        <jstl:forEach var="category" items="${categoryList}">
+                                            <option value="${category.categoryId}">${category.categoryName}</option>
+                                        </jstl:forEach>       
+                                    </select>
                                 </div>
-                                <div class="col-md-9">
-                                <sf:input type="text" path="imagePath" cssClass="form-control" name="imagePath" value="img/asset/images.jpg"/>
                             </div>
-                        </div>
 
-                        <br/>
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <input type="submit" value="Add Asset Type" class="btn btn-primary"/>
-                            </div>
-                        </div>
-                    </sf:form>
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <sf:label path="imagePath">Image</sf:label>
+                                    </div>
+                                    <div class="col-md-9">
+                                    <sf:input type="text" path="imagePath" cssClass="form-control" name="imagePath" value="img/asset/images.jpg"/>
+                                    <sf:errors path="imagePath" cssclass="error"></sf:errors><br/>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <input type="submit" value="Add Asset Type" class="btn btn-primary"/>
+                                    </div>
+                                </div>
+                        </sf:form>
+                    </div>
                 </div>
             </div>
-                    </div>
             <jsp:include page="include/footer.jsp"/>
         </div>
         <script>
@@ -96,8 +98,8 @@
                                     message: 'The name must be more than 2 and less than 30 characters long'
                                 },
                                 regexp: {
-                                    regexp: /^[a-zA-Z0-9_- ]+$/,
-                                    message: 'The name can only consist of alphabetical, number and underscore'
+                                    regexp: /^[a-zA-Z0-9_ ]+$/,
+                                            message: 'The name can only consist of alphabetical, number and underscore'
                                 }
                             }
                         },
@@ -107,23 +109,20 @@
                                 notEmpty: {
                                     message: 'The category is required and cannot be empty'
                                 }
-                        }
-                    },
+                            }
+                        },
                         imagePath: {
                             message: 'The image path is not valid',
                             validators: {
                                 notEmpty: {
                                     message: 'The image path is required and cannot be empty'
-                                },
-
+                                }
                             }
                         }
-
-
                     }
                 });
             });
         </script>
-        
+
     </body>
 </html>

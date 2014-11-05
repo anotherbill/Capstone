@@ -151,7 +151,7 @@
                                 },
                                 regexp: {
                                     regexp: /^[a-zA-Z0-9+]*$/,
-                                    message: 'The user name can only consist of numbers'
+                                    message: 'The user name can only consist of letters and numbers'
                                 }
                             }
                         },
