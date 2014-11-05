@@ -94,7 +94,7 @@ INSERT INTO `assets_events` (`asset_id`, `event_id`, `return_date`, `damage_loss
 (11, 6, NULL, 'two'),
 (13, 5, NULL, 'three'),
 (15, 6, NULL, 'four'),
-(17, 4, NULL, 'five'),
+(17, 4, NULL, 'five');
 
 -- --------------------------------------------------------
 
