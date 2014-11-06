@@ -71,10 +71,10 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "ON a.asset_id = ae.asset_id ";
 
     private static final String SQL_GET_UTILIZATION_EFFICIENCY //chartD
-            = "SELECT at.name, COUNT(CASE WHEN return_date = 'NULL' THEN DATEDIFF(check_out_date, NOW()) ELSE DATEDIFF(check_out_date, return_date) END) AS calcD "
+            = "SELECT at.name, SUM(CASE WHEN ae.return_date = 'NULL' THEN DATEDIFF(NOW(), e.check_out_date) ELSE DATEDIFF(ae.return_date, e.check_out_date) END) AS calcD "
             + "FROM categories AS c "
             + "INNER JOIN asset_types AS at "
-            + "ON c.category_id = at.category_id "
+            + "ON c.category_id = at.category_id "  
             + "INNER JOIN assets AS a "
             + "ON at.asset_type_id = a.asset_type_id "
             + "INNER JOIN assets_events AS ae "
@@ -93,7 +93,7 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "GROUP BY username";
 
     private static final String SQL_GET_CATEGORY_EVENT_AVERAGE //chartF  //the distinct doesn't show 7, shows 5 and 2
-            = "SELECT c.category_name, COUNT(a.asset_id)/COUNT(DISTINCT e.event_name) AS countF "
+            = "SELECT c.category_name, COUNT(a.asset_id) AS countF "
             + "FROM categories AS c "
             + "INNER JOIN asset_types AS at "
             + "ON c.category_id = at.category_id "
@@ -140,7 +140,7 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "GROUP BY u.username";
 
     private static final String SQL_GET_RATE_OF_LATENESS //chartJ
-            = "SELECT e.event_name, DATEDIFF(return_date, due_date) AS calcJ "
+            = "SELECT e.event_name, AVG(DATEDIFF(return_date, due_date)) AS calcJ "
             + "FROM events AS e "
             + "INNER JOIN assets_events AS ae "
             + "ON e.event_id = ae.event_id "

@@ -23,12 +23,6 @@ public class ReportController {
         this.dao = dao;
     }
 
-//    @RequestMapping(value = "/sayhi", method = RequestMethod.GET)
-//    public String sayHi(Map<String, Object> model) {
-//        model.put("message", "Hello from the controller");
-//        return "hello";
-//    }
-
     @RequestMapping(value = "/chartA", method = RequestMethod.GET)
     @ResponseBody
     public String getTableA() {

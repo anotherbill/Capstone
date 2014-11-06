@@ -122,7 +122,7 @@ $(document).ready(function () {
         $.get('http://localhost:8080/CapstoneProject/reports/chartH').success(function (data) {
             var dataTable = new google.visualization.DataTable(data);
             var options = {
-                'title': 'Loss_Theft Per Item',
+                'title': 'Loss_Theft Per Category',
                 vAxis: {title: 'Asset Category'},
                 hAxis: {title: 'Count of Assets Lost_Damaged'},
                 'width': 500,
