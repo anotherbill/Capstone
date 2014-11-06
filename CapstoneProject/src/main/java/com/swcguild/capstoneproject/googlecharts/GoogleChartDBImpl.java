@@ -74,7 +74,7 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             = "SELECT at.name, SUM(CASE WHEN ae.return_date = 'NULL' THEN DATEDIFF(NOW(), e.check_out_date) ELSE DATEDIFF(ae.return_date, e.check_out_date) END) AS calcD "
             + "FROM categories AS c "
             + "INNER JOIN asset_types AS at "
-            + "ON c.category_id = at.category_id "  
+            + "ON c.category_id = at.category_id "
             + "INNER JOIN assets AS a "
             + "ON at.asset_type_id = a.asset_type_id "
             + "INNER JOIN assets_events AS ae "
@@ -92,8 +92,8 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "WHERE check_out_date > 6/30/2014 "
             + "GROUP BY username";
 
-    private static final String SQL_GET_CATEGORY_EVENT_AVERAGE //chartF  //the distinct doesn't show 7, shows 5 and 2
-            = "SELECT c.category_name, COUNT(a.asset_id) AS countF "
+    private static final String SQL_GET_CATEGORY_EVENT_AVERAGE //chartF 
+            = "SELECT c.category_name, (COUNT(distinct a.asset_id)/(select count(*) from events)) AS countF "
             + "FROM categories AS c "
             + "INNER JOIN asset_types AS at "
             + "ON c.category_id = at.category_id "
@@ -308,7 +308,7 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             //convert ResultSet values to TableRow values
             TableRow tr = new TableRow();
             tr.addCell(rs.getString("c.category_name"));
-            tr.addCell(rs.getInt("countF"));
+            tr.addCell(rs.getDouble("countF"));
             return tr;
         }
     }
