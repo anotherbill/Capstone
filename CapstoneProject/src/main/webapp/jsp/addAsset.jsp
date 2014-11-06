@@ -30,6 +30,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
+                        ${badAssetTypeError}
                         <sf:form cssClass="form-horizontal" role="form" action="submitNewAsset" method="post" id="addEditAsset" modelAttribute="newAsset">
 
 

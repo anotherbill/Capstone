@@ -24,6 +24,7 @@
 
             <div class="row">
                 <div class="col-md-6">
+                    ${badCategoryError}
                     <sf:form cssClass="form-horizontal" role="form" id="addEditAssetType" action="submitAssetTypeUpdate" method="post" modelAttribute="assetType">
                         <div class="form-group">
                             <div class="col-md-3">

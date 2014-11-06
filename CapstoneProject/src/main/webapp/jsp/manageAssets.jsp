@@ -27,13 +27,9 @@
             <div class="container">
 
 
-            ${assetTypeDeletionError}
-            ${assetTypeUpdateError}
-            ${assetTypeError}
-            ${assetTypeDeletionError}
-            ${categoryUpdateError}
-            ${categoryDeletionError}
-            ${displayUpdateAssetFormError}
+            ${badCategoryError}
+            ${badAssetTypeError}
+            ${badAssetError}
 
 
             <div class="row">

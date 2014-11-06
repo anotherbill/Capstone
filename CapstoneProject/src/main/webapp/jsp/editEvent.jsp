@@ -20,7 +20,7 @@
 
             <div class="row" style="margin-left: 25px">
                 <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 3px solid black; border-radius: 4px; padding-top: 15px; margin-bottom: 30px">
-                    <sf:form action="submitEditEvent" id="addEditEvent" role="form" modelAttribute="event">
+                    <sf:form id="addEditEvent" role="form" modelAttribute="event">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h2 class="text-center">Edit Event</h2>
 
@@ -88,130 +88,132 @@
                             </div>
 
                         </div>
-                        </sf:form>
+                    </sf:form>
 
-                            <div class="col-md-12">
-                                <table class="table table-hover">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
 
-                                    <tr>
-                                        <th>Asset Type</th>
-                                        <th>Category</th>
-                                        <th>Availability</th>
-                                        <th>Damage</th>
-                                        <th>Serial Number</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    <tr>
-                                        <jstl:forEach var="assets" items="${assetCheckedOutList}">
-                                            <td>${asset.assetType.name}</td>
-                                            <td>${asset.assetType.category.categoryName}</td>
-                                            <td>${asset.inStock}</td>
-                                            <td>${asset.damageStatus}</td>
-                                            <td>${asset.serialNumber}</td>
-                                            <td>
-                                                <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
-                                            </td>
-                                        </jstl:forEach>
-                                    </tr>
-                                </table>
-                            </div>
-
-
-
-
-                            <jsp:include page="include/manageEventAssets.jsp"/>
-
-
-
-                            <%-- PLACEHOLDER BEGIN --%>
-                            <div class="row" style="padding-top: 30px">
-                                <form role="form">
-
-                                    <div class="col-md-3 col-sm-6 col-xs-12" >
-                                        <div class="thumbnail">
-                                            <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                            <!--add the generated img tag here-->
-                                            <div class="caption">
-                                                <h4><span>One Person Tent</span> </h4>
-
-                                                <p>                        
-                                                    <br><b>Category:</b> <span>Tents</span>
-                                                    <br><b>Brand:</b> <span>Campbell</span>
-                                                    <br>
-                                                </p>
-                                                <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                        <div class="thumbnail">
-                                            <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                            <!--add the generated img tag here-->
-                                            <div class="caption">
-                                                <h4><span>Fishing Pole</span> </h4>
-
-                                                <p>                        
-                                                    <br><b>Category:</b> <span>Fishing</span>
-                                                    <br><b>Brand:</b> <span>REI</span>
-                                                    <br>
-                                                </p>
-                                                <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                        <div class="thumbnail">
-                                            <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                            <!--add the generated img tag here-->
-                                            <div class="caption">
-                                                <h4><span>Sleeping Bag</span> </h4>
-
-                                                <p>                        
-                                                    <br><b>Category:</b> <span>Sleeping Bags</span>
-                                                    <br><b>Brand:</b> <span>Marmot</span>
-                                                    <br>
-                                                </p>
-                                                <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                        <div class="thumbnail">
-                                            <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                            <!--add the generated img tag here-->
-                                            <div class="caption">
-                                                <h4><span>Sleeping Bag Liner</span> </h4>
-
-                                                <p>                        
-                                                    <br><b>Category:</b> <span>Sleeping Bags</span>
-                                                    <br><b>Brand:</b> <span>REI</span>
-                                                    <br>
-                                                </p>
-                                                <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <%-- PLACEHOLDER END --%>
-
-                                    <jsp:include page="include/addEditEventAssets"/>
-
-
-
-                                    <input type="submit" value="Update Event" class="btn btn-primary" style="float: right; font-size: 24px; margin: 10px 0px 30px 0px"/>
-
-                                </form>
-                            </div>
-
-
-                        </div>
+                            <tr>
+                                <th>Asset Type</th>
+                                <th>Category</th>
+                                <th>Availability</th>
+                                <th>Damage</th>
+                                <th>Serial Number</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr>
+                                <jstl:forEach var="assets" items="${assetCheckedOutList}">
+                                    <td>${asset.assetType.name}</td>
+                                    <td>${asset.assetType.category.categoryName}</td>
+                                    <td>${asset.inStock}</td>
+                                    <td>${asset.damageStatus}</td>
+                                    <td>${asset.serialNumber}</td>
+                                    <td>
+                                        <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                        <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
+                                    </td>
+                                </jstl:forEach>
+                            </tr>
+                        </table>
                     </div>
 
 
 
 
+                    <jsp:include page="include/manageEventAssets.jsp"/>
 
-                    <jsp:include page="include/footer.jsp"/>
+
+
+                    <%-- PLACEHOLDER BEGIN --%>
+                    <div class="row" style="padding-top: 30px">
+                        <form role="form">
+
+                            <div class="col-md-3 col-sm-6 col-xs-12" >
+                                <div class="thumbnail">
+                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">
+                                    <!--add the generated img tag here-->
+                                    <div class="caption">
+                                        <h4><span>One Person Tent</span> </h4>
+
+                                        <p>                        
+                                            <br><b>Category:</b> <span>Tents</span>
+                                            <br><b>Brand:</b> <span>Campbell</span>
+                                            <br>
+                                        </p>
+                                        <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="thumbnail">
+                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">
+                                    <!--add the generated img tag here-->
+                                    <div class="caption">
+                                        <h4><span>Fishing Pole</span> </h4>
+
+                                        <p>                        
+                                            <br><b>Category:</b> <span>Fishing</span>
+                                            <br><b>Brand:</b> <span>REI</span>
+                                            <br>
+                                        </p>
+                                        <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="thumbnail">
+                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">
+                                    <!--add the generated img tag here-->
+                                    <div class="caption">
+                                        <h4><span>Sleeping Bag</span> </h4>
+
+                                        <p>                        
+                                            <br><b>Category:</b> <span>Sleeping Bags</span>
+                                            <br><b>Brand:</b> <span>Marmot</span>
+                                            <br>
+                                        </p>
+                                        <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="thumbnail">
+                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">
+                                    <!--add the generated img tag here-->
+                                    <div class="caption">
+                                        <h4><span>Sleeping Bag Liner</span> </h4>
+
+                                        <p>                        
+                                            <br><b>Category:</b> <span>Sleeping Bags</span>
+                                            <br><b>Brand:</b> <span>REI</span>
+                                            <br>
+                                        </p>
+                                        <a href="removeFromEvent" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <%-- PLACEHOLDER END --%>
+
+                            <jsp:include page="include/addEditEventAssets"/>
+
+
+
+                            <input type="submit" value="Update Event" class="btn btn-primary" style="float: right; font-size: 24px; margin: 10px 0px 30px 0px"/>
+
+                        </form>
+                    </div>
+
+
                 </div>
-            </body>
-        </html>
+            </div>
+
+
+
+
+
+            <jsp:include page="include/footer.jsp"/>
+        </div>
+
+X
+    </body>
+</html>
