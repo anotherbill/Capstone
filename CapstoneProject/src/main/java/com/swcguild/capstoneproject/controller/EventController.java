@@ -13,6 +13,8 @@ import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.EventNote;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -86,7 +88,7 @@ public class EventController {
 
     @RequestMapping(value = "addEventStepTwo", method = RequestMethod.GET)
     public String createEventStepTwo(Model model, @RequestParam("eventId") int eventId) {
-        return "addEventStepTwo?eventId=" + eventId;
+        return "addEventStepTwo?eventId=" + eventId; //irrelevant 
     }
 
     @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
@@ -106,8 +108,6 @@ public class EventController {
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
     public String showEditEventPage(Model model, @RequestParam("eventId") int eventId){
        Event eventToEdit = eventDao.getEventByEventId(eventId);
-
-        eventDao.addEvent(eventToEdit);
         model.addAttribute("event", eventToEdit);
 
         Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(eventToEdit);
@@ -122,5 +122,31 @@ public class EventController {
         return "editEvent";
     }
     
+    @RequestMapping(value = "/viewEventInfo", method=RequestMethod.GET)
+    public String showEventInfo(Model model, @RequestParam("eventId") int eventId){
+        Event event = eventDao.getEventByEventId(eventId);
+        model.addAttribute("event", event);
+        return "viewEventInfo";
+    }
+            
+    @RequestMapping(value ="/eventAddNote", method=RequestMethod.GET)
+    public String showEventNotes(Model model, @RequestParam("eventId")int eventId){
+        Event event = eventDao.getEventByEventId(eventId);
+        model.addAttribute("event", event);
+        
+        EventNote eventNote = new EventNote();
+        eventNote.setEventId(eventId);
+        model.addAttribute("eventNote", eventNote);
+        
+        List<EventNote> eventNotes = eventDao.getEventNote(eventId);
+        model.addAttribute("eventNoteList", eventNotes);
 
+        return "eventAddNote";
+    }
+    
+    @RequestMapping(value="/submitNewEventNote", method = RequestMethod.POST)
+    public String addEventNoteToDatabase(Model model, @ModelAttribute("eventNote") EventNote eventNote){
+        eventDao.addNoteToEvent(eventNote.getNote(), eventNote.getEventId());
+        return "redirect:eventAddNote?eventId=" + eventNote.getEventId();
+    }
 }
