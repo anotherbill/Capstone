@@ -36,98 +36,51 @@
                                 <h4><span>Event: ${event.eventName}</span></h4>
 
                                 <p>                        
-                                    <br><b>User: </b> <span>${event.user.name}</span>
+                                    <br><b>User: </b> <span>${event.user.name}</span><br/>
+                                    <b>${event.open}</b>
                                     <br>
                                 </p>
                                 <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">Additional Info</a>
                                 <a href="editEvent?eventId=${event.eventId}" class="btn btn-primary" role="button">Edit</a><br/><br/>
-                                <a href="openEvent?eventId=${event.eventId}" class="btn btn-success" role="button" id="open" onclick="disableOpen()">Open Event</a>
-                                <a href="closeEvent?eventId=${event.eventId}" class="btn btn-danger" role="button" id="close" onclick="disableClose()">Close Event</a><br/><br/>
+                                <a class="open-${event.eventId} btn btn-success" role="button" id="open">Open Event</a>
+                                <a class="close-${event.eventId} btn btn-danger" role="button" id="close">Close Event</a><br/><br/>
                                 <a href="eventAddNote?eventId=${event.eventId}" class="btn btn-warning glyphicon glyphicon-plus"> Add Note</a>
                             </div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        function closeEvent() {
+
+
+
+                        }
+                        $(document).ready(function () {
+                            $(".close-${event.eventId}").click(function () {
+                                $(".close-${event.eventId}").css("display", "none");
+                                $(".open-${event.eventId}").css("display", "block");
+                            });
+
+                        });
+                    </script>
+                    <script type="text/javascript">
+                        function openEvent() {
+
+
+
+                        }
+                        $(document).ready(function () {
+                            $(".open-${event.eventId}").click(function () {
+                                $(".open-${event.eventId}").css("display", "none");
+                                $(".close-${event.eventId}").css("display", "block");
+                            });
+
+                        });
+                    </script>
                 </jstl:forEach>
             </div>
 
 
-            <%-- PLACEHOLDER BEGIN --%>
-            <!--                <div class="row">
-                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="thumbnail">
-                                        <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                        add the generated img tag here
-                                        <div class="caption">
-                                            <h4><span>Event 1</span> </h4>
-            
-                                            <p>                        
-                                                <br><b>Event:</b> <span>Event Name</span>
-                                                <br>
-                                            </p>
-                                            <a href="#viewEventInfoModal" class="btn btn-warning" role="button" data-toggle="modal">Additional Info</a>
-                                            <a href="editEvent.jsp" class="btn btn-primary" role="button">Edit</a><br/><br/>  <a href="deleteEvent" class="btn btn-danger" role="button" data-toggle="modal">Delete</a>
-                                            <a href="closeEvent" class="btn btn-info" role="button" data-toggle="modal">Close Event</a><br/><br/>
-                                            <a href="modals/eventAddNote.jsp" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="thumbnail">
-                                        <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                        add the generated img tag here
-                                        <div class="caption">
-                                            <h4><span>Event 1</span> </h4>
-            
-                                            <p>                        
-                                                <br><b>Event:</b> <span>Event Name</span>
-                                                <br>
-                                            </p>
-                                            <a href="#viewEventInfoModal" class="btn btn-warning" role="button" data-toggle="modal">Additional Info</a>
-                                            <a href="editEvent.jsp" class="btn btn-primary" role="button">Edit</a><br/><br/>  <a href="deleteEvent" class="btn btn-danger" role="button" data-toggle="modal">Delete</a>
-                                            <a href="closeEvent" class="btn btn-info" role="button" data-toggle="modal">Close Event</a><br/><br/>
-                                            <a href="modals/eventAddNote.jsp" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="thumbnail">
-                                        <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                        add the generated img tag here
-                                        <div class="caption">
-                                            <h4><span>Event 1</span> </h4>
-            
-                                            <p>                        
-                                                <br><b>Event:</b> <span>Event Name</span>
-                                                <br>
-                                            </p>
-                                            <a href="#viewEventInfoModal" class="btn btn-warning" role="button" data-toggle="modal">Additional Info</a>
-                                            <a href="editEvent.jsp" class="btn btn-primary" role="button">Edit</a><br/><br/>  <a href="deleteEvent" class="btn btn-danger" role="button" data-toggle="modal">Delete</a>
-                                            <a href="closeEvent" class="btn btn-info" role="button" data-toggle="modal">Close Event</a><br/><br/>
-                                            <a href="modals/eventAddNote.jsp" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <div class="thumbnail">
-                                        <img class="img-responsive" data-src="holder.js/242x200" alt="...">
-                                        add the generated img tag here
-                                        <div class="caption">
-                                            <h4><span>Event 1</span> </h4>
-            
-                                            <p>                        
-                                                <br><b>Event:</b> <span>Event Name</span>
-                                                <br>
-                                            </p>
-                                            <a href="#viewEventInfoModal" class="btn btn-warning" role="button" data-toggle="modal">Additional Info</a>
-                                            <a href="editEvent.jsp" class="btn btn-primary" role="button">Edit</a><br/><br/>  <a href="deleteEvent" class="btn btn-danger" role="button" data-toggle="modal">Delete</a>
-                                            <a href="closeEvent" class="btn btn-info" role="button" data-toggle="modal">Close Event</a><br/><br/>
-                                            <a href="modals/eventAddNote.jsp" class="btn btn-success glyphicon glyphicon-plus" data-toggle="modal">Add Note</a>
-                                        </div>
-                                    </div>
-                                </div>
-            
-                            </div>-->
-            <%-- PLACEHOLDER END --%>
+
 
 
             <jsp:include page="modals/manageMyEvents.jsp"/>
@@ -135,26 +88,39 @@
 
         </div>
 
-            
-            <script type="text/javascript">
- $(document).ready(function () {
-     $("#open").click(function () {
-         $("#open").attr("disabled", "disabled");
-         $("#yahoo").css("background-color", "silver");
-     })
 
-     $("#b2").click(function () {
-         $("#yahoo").removeAttr("disabled");
-         $("#yahoo").css("background-color", "white");
-     })
 
-     $("#yahoo").click(function (e) {
-         if ($("#yahoo").attr("disabled") == "disabled") {
-             e.preventDefault();
-         }
-     });
- });
-</script>
+
+        <!--        <script type="text/javascript">
+                    function openEvent() {
+        
+        
+        
+                    }
+                    $(document).ready(function () {
+                        $("#open").click(function () {
+                            //$("this").attr("disabled", "disabled");
+                            $(this).css("display", "none");
+                            $("#close").css("display", "block");
+                        });
+        
+                    });
+                </script>
+                <script type="text/javascript">
+                    function closeEvent() {
+        
+        
+        
+                    }
+                    $(document).ready(function () {
+                        $("#close").click(function () {
+                            //$("this").attr("disabled", "disabled");
+                            $(this).css("display", "none");
+                            $("#open").css("display", "block");
+                        });
+        
+                    });
+                </script>-->
 
 
     </body>
