@@ -88,7 +88,7 @@ public class EventController {
 
     @RequestMapping(value = "addEventStepTwo", method = RequestMethod.GET)
     public String createEventStepTwo(Model model, @RequestParam("eventId") int eventId) {
-        return "addEventStepTwo?eventId=" + eventId;
+        return "addEventStepTwo?eventId=" + eventId; //irrelevant 
     }
 
     @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
@@ -108,8 +108,6 @@ public class EventController {
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
     public String showEditEventPage(Model model, @RequestParam("eventId") int eventId){
        Event eventToEdit = eventDao.getEventByEventId(eventId);
-
-        eventDao.addEvent(eventToEdit);
         model.addAttribute("event", eventToEdit);
 
         Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(eventToEdit);
