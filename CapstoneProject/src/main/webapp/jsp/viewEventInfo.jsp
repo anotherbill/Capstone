@@ -24,31 +24,34 @@
 
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-2">
-                    <a href="eventAddNote?eventId=${event.eventId}" class="btn btn-success glyphicon glyphicon-plus">Add Note</a><br/><br/>
-                    <a href="editevent?eventId=${event.eventId}" class="btn btn-primary glyphicon glyphicon-plus">Edit Event</a>
+                    <a href="index" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a><br><br>
+                    <a href="eventAddNote?eventId=${event.eventId}" class="btn btn-success glyphicon glyphicon-plus"> Add Note</a><br/><br/>
+                    <a href="editEvent?eventId=${event.eventId}" class="btn btn-primary glyphicon glyphicon-plus"> Edit Event</a>
                 </div>
             </div>
-            <div class="col-md-12">
-                <table class="table table-hover">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover">
 
-                    <tr>
-                        <th>Event Name</th>
-                        <th>Username</th>
-                        <th>Standing</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr>
-                        <td>${event.eventName}</td>
-                        <td>${event.user.userName}</td>
-                        <td>${event.user.goodStanding}</td>
-                        <td>${event.checkOutDate}</td>
-                        <td>${event.dueDate}</td>
-                        <td>${event.open}</td>
-                    </tr>
-                </table>
-                <hr/>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Username</th>
+                            <th>Standing</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>${event.eventName}</td>
+                            <td>${event.user.userName}</td>
+                            <td>${event.user.goodStanding}</td>
+                            <td>${event.checkOutDate}</td>
+                            <td>${event.dueDate}</td>
+                            <td>${event.open}</td>
+                        </tr>
+                    </table>
+                    <hr/>
+                </div>
             </div>
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -62,17 +65,17 @@
                         <th>Actions</th>
                     </tr>
                     <tr>
-                    <jstl:forEach var="assets" items="${event.assets}">
-                        <td>${asset.assetType.name}</td>
-                        <td>${asset.assetType.category.categoryName}</td>
-                        <td>${asset.inStock}</td>
-                        <td>${asset.damageStatus}</td>
-                        <td>${asset.serialNumber}</td>
-                        <td>
-                            <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                            <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
-                        </td>
-                    </jstl:forEach>
+                        <jstl:forEach var="assets" items="${event.assets}">
+                            <td>${asset.assetType.name}</td>
+                            <td>${asset.assetType.category.categoryName}</td>
+                            <td>${asset.inStock}</td>
+                            <td>${asset.damageStatus}</td>
+                            <td>${asset.serialNumber}</td>
+                            <td>
+                                <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
+                            </td>
+                        </jstl:forEach>
                     </tr>
                 </table>
             </div>

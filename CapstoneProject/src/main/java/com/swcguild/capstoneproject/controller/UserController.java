@@ -99,7 +99,7 @@ public class UserController {
         return "userAddNote";
     }
     
-    @RequestMapping(value="/submitNewAssetNote", method = RequestMethod.POST)
+    @RequestMapping(value="/submitNewUserNote", method = RequestMethod.POST)
     public String writeUserNoteToDatabase(@ModelAttribute("userNote") UserNote userNote, Model model){
         userDao.addNoteToUser(userNote.getNote(), userNote.getUserId());
         return "redirect:userAddNote?userId=" + userNote.getUserId();
