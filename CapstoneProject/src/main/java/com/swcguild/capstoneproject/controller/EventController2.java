@@ -13,6 +13,7 @@ import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
+import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class EventController2 {
+    private static final String BAD_ASSET_TYPE_ERROR_MESSAGE = "Oops! Invalid asset type ID. Must supply asset type ID as an integer. Asset type ID must refer to an existing asset type.";
+    private static final String NO_SUCH_ASSET_AVAILABLE_PART1 = "I'm sorry, but we currently do not have any ";
+    private static final String NO_SUCH_ASSET_AVAILABLE_PART2 = " available.";
+    
+    
     private EventInterface eventDao;
     private UserInterface userDao;
     private AssetInterface assetDao;
@@ -80,11 +86,62 @@ public class EventController2 {
         model.addAttribute("assetTypeList", assetTypeList);
 
         return "addEventStepTwo";
-
     }
+    
+    @RequestMapping(value = "addEventAsset", method = RequestMethod.GET)
+    public String addEventAsset(Model model,  @ModelAttribute("event") Event event, HttpServletRequest request){
+        int typeId;
+        AssetType assetType;
+        Asset asset;
+        boolean nullVal;
+        Set<Asset> eventAssets = new HashSet<>();
+        
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            typeId = 0;
+        }
 
-    @RequestMapping(value = "addEventStepTwo", method = RequestMethod.GET)
-    public String createEventStepTwo(Model model, @RequestParam("eventId") int eventId) {
-        return "addEventStepTwo?eventId=" + eventId; //irrelevant 
+        assetType = assetDao.getAssetTypeById(typeId);
+        
+        nullVal = assetType == null;
+        if (nullVal) {
+            if (nullVal) {
+                model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            }
+            return "redirect:addEventStepTwo";
+        }
+        
+        asset = assetDao.getAnyAvailableAssetByAssetType(assetType);
+        nullVal = asset == null;
+        if (nullVal) {
+            if (nullVal) {
+                model.addAttribute("unavailableAssetError", NO_SUCH_ASSET_AVAILABLE_PART1 + assetType.getName() + NO_SUCH_ASSET_AVAILABLE_PART2);
+            }
+            return "redirect:addEventStepTwo";
+        }
+        asset.setInStock(false);
+        assetDao.editAsset(asset);
+        
+        eventAssets = event.getAssets();
+        if(eventAssets == null){
+            eventAssets = new HashSet<>();
+        }
+        eventAssets.add(asset);
+        event.setAssets(eventAssets);
+        eventDao.editEvent(event);
+        
+        model.addAttribute("event", event);
+
+        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
+        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+
+        Set<Category> categoryList = assetDao.getAllCategories();
+        model.addAttribute("categoryList", categoryList);
+
+        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
+        model.addAttribute("assetTypeList", assetTypeList);
+
+        return "addEventStepTwo";
     }
 }
