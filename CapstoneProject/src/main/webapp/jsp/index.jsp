@@ -37,31 +37,21 @@
 
                                 <p>                        
                                     <br><b>User: </b> <span>${event.user.name}</span><br/>
-<!--                                    <b>${event.open}</b>-->
+                                   <b>${event.open}</b>
                                     <br>
                                 </p>
                                 <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">Additional Info</a>
                                 <a href="editEvent?eventId=${event.eventId}" class="btn btn-primary" role="button">Edit</a><br/><br/>
-                                <a class="open-${event.eventId} btn btn-success" role="button" id="open">Open Event</a>
-                                <a class="close-${event.eventId} btn btn-danger" role="button" id="close">Close Event</a><br/><br/>
+                                <jstl:if var="open" test="${event.open == false}">
+                                <a class="open-${event.eventId} btn btn-success" href="openEvent?eventId=${event.eventId}" role="button" id="open">Open Event</a><br/><br/>
+                                </jstl:if>
+                                <jstl:if var="open" test="${event.open == true}">
+                                <a class="close-${event.eventId} btn btn-danger" href="closeEvent?eventId=${event.eventId}" role="button" id="close">Close Event</a><br/><br/>
+                                </jstl:if>
                                 <a href="eventAddNote?eventId=${event.eventId}" class="btn btn-warning glyphicon glyphicon-plus"> Add Note</a>
                             </div>
                         </div>
                     </div>
-                    <script type="text/javascript">
-                        function closeEvent() {
-
-
-
-                        }
-                        $(document).ready(function () {
-                            $(".close-${event.eventId}").click(function () {
-                                $(".close-${event.eventId}").css("display", "none");
-                                $(".open-${event.eventId}").css("display", "block");
-                            });
-
-                        });
-                    </script>
                     <script type="text/javascript">
                         function openEvent() {
 
@@ -76,6 +66,24 @@
 
                         });
                     </script>
+                    <script type="text/javascript">
+                        function closeEvent() {
+
+
+
+                        }
+                        $(document).ready(function () {
+                            $(".close-${event.eventId}").click(function () {
+                                $(".close-${event.eventId}").css("display", "none");
+                                $(".open-${event.eventId}").css("display", "block");
+                            });
+
+                        });
+
+                    </script>
+                    
+                    
+                    
                 </jstl:forEach>
             </div>
 

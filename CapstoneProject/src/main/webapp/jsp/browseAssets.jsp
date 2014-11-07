@@ -56,7 +56,7 @@
                 </jstl:forEach>
             </div>
 
-            <a href="index.jsp" class="btn btn-primary glyphicon glyphicon-chevron-home">Home</a><br/><br/>
+            <a href="home" class="btn btn-primary glyphicon glyphicon-chevron-home">Home</a><br/><br/>
 
 
 
