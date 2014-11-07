@@ -79,7 +79,12 @@ public class AssetHibernateDaoImpl implements AssetInterface {
                 .createSQLQuery("select * from assets where asset_type_id = " + assetType.getAssetTypeId() + " and in_stock = 1 limit 1")
                 .addEntity(Asset.class).list();
 
-        return assetToGet.get(0);
+        if (assetToGet.isEmpty()) {
+            return null;
+        } else {
+
+            return assetToGet.get(0);
+        }
     }
 
     @Override
@@ -216,7 +221,7 @@ public class AssetHibernateDaoImpl implements AssetInterface {
         }
 
     }
-    
+
 //    The ruins of some kind of Hibernate hack implementation, uncomment at your own risk
 //    
 //    @Override
@@ -235,6 +240,4 @@ public class AssetHibernateDaoImpl implements AssetInterface {
 //                .createSQLQuery("select * from asset_notes where asset_id = " + assetId)
 //                .list();
 //    }
-
-    
 }
