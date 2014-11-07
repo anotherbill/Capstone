@@ -11,16 +11,52 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Event: Manage Assets</title>
 
         <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <div class="container">
+        <%--<div class="container">--%>
+
+        <div class="row"><%--CHECKED OUT ASSETS ROW--%>
             <div class="col-md-12">
-                <div class="col-md-3">
+                <h3 class="text-center">Assets Checked Out</h3>
+                <table class="table table-hover">
+
+                    <tr>
+                        <th>Asset Type</th>
+                        <th>Category</th>
+                        <th>Availability</th>
+                        <th>Damage</th>
+                        <th>Serial Number</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <jstl:forEach var="assets" items="${assetCheckedOutList}">
+                            <td>${asset.assetType.name}</td>
+                            <td>${asset.assetType.category.categoryName}</td>
+                            <td>${asset.inStock}</td>
+                            <td>${asset.damageStatus}</td>
+                            <td>${asset.serialNumber}</td>
+                            <td>
+                                <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
+                            </td>
+                        </jstl:forEach>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row"><%--ASSET SELECTION ROW--%>
+            <div class="col-md-12">
+
+                <h3 class="text-center">Select Assets</h3>
+
+                <div class="row">
+                    <div class="col-md-3">
                         <form role="form" method="get" action="manage_assets">
                             <div class="form-group">
                                 <label>Search By Category:</label>
@@ -36,27 +72,29 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-6">
-        <table class="table table-hover">
 
-                        <tr>
-                            <th></th>
-                            <th>Asset Type</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                        <br/><br/>
-                        <jstl:forEach var="types" items="${assetTypeList}">
+                    <div class="col-md-9">
+                        <table class="table table-hover">
                             <tr>
-                                <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
-                                <td>${types.name}</td>
-                                <td>${types.category.categoryName}</td>
-                                <td><a href="addEditEventAssets?typeId=${types.assetTypeId}" class="btn btn-primary">List All Assets of This Type</a></td>
-
+                                <th></th>
+                                <th>Asset Type</th>
+                                <th>Category</th>
+                                <th>Actions</th>
                             </tr>
-                        </jstl:forEach>
-                    </table>
+                            <jstl:forEach var="types" items="${assetTypeList}">
+                                <tr>
+                                    <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
+                                    <td>${types.name}</td>
+                                    <td>${types.category.categoryName}</td>
+                                    <td><a href="addEventAsset?typeId=${types.assetTypeId}" class="btn btn-primary">Add to Event</a></td>
+
+                                </tr>
+                            </jstl:forEach>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+        <%--</div>--%>
     </body>
 </html>
