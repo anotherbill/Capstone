@@ -33,7 +33,7 @@
                             <img class="img-responsive" data-src="holder.js/242x200" alt="...">
                             <!--add the generated img tag here-->
                             <div class="caption">
-                                <h4><span>Event: ${event.eventName}</span></h4>
+                                <h4><span>${event.eventName}</span></h4>
 
                                 <p>                        
                                     <br><b>User: </b> <span>${event.user.name}</span><br/>
