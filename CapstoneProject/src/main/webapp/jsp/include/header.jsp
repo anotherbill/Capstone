@@ -67,7 +67,7 @@
                         <li class="dropdown">
                             <a href="../reports.html" class="dropdown-toggle" data-toggle="dropdown">Reports <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="viewReports">View All Reports</a>
+                                <li><a href="reports">View All Reports</a>
                                 </li>
                             </ul>
                         </li>

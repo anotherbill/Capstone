@@ -109,4 +109,15 @@ public class EventController {
         eventDao.addNoteToEvent(eventNote.getNote(), eventNote.getEventId());
         return "redirect:eventAddNote?eventId=" + eventNote.getEventId();
     }
+    
+    @RequestMapping(value="/submitEditEvent", method = RequestMethod.POST)
+    public String editEventWriteToDatabase(Model model, @ModelAttribute("event") Event event, HttpServletRequest req){
+        boolean open = Boolean.parseBoolean(req.getParameter("open"));
+        int userId = Integer.parseInt(req.getParameter("user.userId"));
+        User eventUser = userDao.getUserByUserId(userId);
+        event.setUser(eventUser);
+        event.setOpen(open);
+        eventDao.editEvent(event);
+        return "redirect:viewEventInfo?eventId=" + event.getEventId();
+    }
 }

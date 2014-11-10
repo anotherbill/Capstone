@@ -36,10 +36,10 @@
                         <tr>
                             <th>Event Name</th>
                             <th>Username</th>
-                            <th>Standing</th>
+                            <th>User Good Standing</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Status</th>
+                            <th>Open</th>
                         </tr>
                         <tr>
                             <td>${event.eventName}</td>
