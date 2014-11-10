@@ -18,7 +18,6 @@
         <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <%--<div class="container">--%>
         <div class="row"><%--Error Message ROW--%>
             <div class="col-md-12">
                 ${badEventError}
@@ -49,8 +48,8 @@
                             <td>${assets.damageStatus}</td>
                             <td>${assets.serialNumber}</td>
                             <td>
-                                <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
+                                <a href="listAssetNotes?assetId=${assets.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                <a href="removeAssetFromEvent?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
                             </td>
                         </tr>
                     </jstl:forEach>
@@ -96,10 +95,6 @@
                                     <td>${types.name}</td>
                                     <td>${types.category.categoryName}</td>
                                     <td>
-                                        <%--<sf:form role="form" action="addEventAsset" method="post" modelAttribute="event">
-                                            <input type="hidden" value="${types.assetTypeId}" name="typeId"/>
-                                            <input type="submit" value="Add to Event" class="btn btn-primary"/>
-                                        </sf:form>--%>
                                         <a href="addEventAsset?typeId=${types.assetTypeId}&eventId=${event.eventId}" class="btn btn-primary">Add to Event</a>
                                     </td>
 
@@ -111,6 +106,5 @@
                 </div>
             </div>
         </div>
-        <%--</div>--%>
     </body>
 </html>
