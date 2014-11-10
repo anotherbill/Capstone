@@ -51,29 +51,34 @@
                             <td>${event.open}</td>
                         </tr>
                     </table>
-                    <sf:form id="editEvent" role="form" action="submitEditEvent" method="post" modelAttribute="event" cssClass="form-inline">
-                        <div class="form-group">
-                            <sf:input path="eventName" type="text" cssClass="form-control" id="name" name="eventName" cssStyle="width:180px"/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <sf:form id="editEvent" role="form" action="submitEditEvent" method="post" modelAttribute="event">
+                                <div class="form-group">
+                                    <label>Event Name</label><sf:input path="eventName" type="text" cssClass="form-control" id="name" name="eventName"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>User</label><sf:input path="user.userName" type="text" cssClass="form-control" id="user" name="userName"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label><sf:input path="checkOutDate"  type="date" cssClass="form-control" id="startDate" name="checkOutDate"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label><sf:input path="dueDate" type="date" cssClass="form-control" id="endDate" name="dueDate"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Open</label>
+                                    <select class="form-control" name="open">
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                                <sf:hidden path="eventId" value="${event.eventId}"/>
+                                <sf:hidden path="user.userId" value="${user.userId}"/><br><br>
+                                <input type="submit" value="Edit Event" class="btn btn-primary"/>
+                            </sf:form>
                         </div>
-                        <div class="form-group">
-                            <sf:input path="user.userName" type="text" cssClass="form-control" id="user" name="userName" cssStyle="width:195px"/>
-                        </div>
-                        <div class="form-group">
-                            <sf:input path="checkOutDate"  type="date" cssClass="form-control" id="startDate" name="checkOutDate" cssStyle="width:235px"/>
-                        </div>
-                        <div class="form-group">
-                            <sf:input path="dueDate" type="date" cssClass="form-control" id="endDate" name="dueDate" cssStyle="width:225px"/>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" name="open">
-                                <option value="true">True</option>
-                                <option value="false">False</option>
-                            </select>
-                        </div>
-                        <sf:hidden path="eventId" value="${event.eventId}"/>
-                        <sf:hidden path="user.userId" value="${user.userId}"/><br><br>
-                        <input type="submit" value="Edit Event" class="btn btn-primary"/>
-                    </sf:form>
+                    </div>
                 </div>
             </div>
 
