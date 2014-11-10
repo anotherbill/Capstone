@@ -19,10 +19,11 @@
     </head>
     <body>
         <div class="row"><%--Error Message ROW--%>
-            <div class="col-md-12">
-                ${badEventError}
-                ${badAssetTypeError}
-                ${unavailableAssetError}
+            <div class="col-md-12" style="color: #ee0000">
+                <p>${badEventError}</p>
+                <p>${badAssetTypeError}</p>
+                <p>${unavailableAssetError}</p>
+                <p>${badAssetError}</p>
             </div>
         </div>
 
