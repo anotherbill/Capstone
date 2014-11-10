@@ -16,7 +16,7 @@
     <body>
        
             <div class="text-center"><h1>QuarterMaster Reports Charts</h1></div>
-            <div class="text-center"><a href="index.jsp" class="btn btn-primary">Home</a></div>
+            <div class="text-center"><a href="/CapstoneProject" class="btn btn-primary">Home</a></div>
             <hr/>
             <div class="row">
                 <div class="text-center"><h3>Damage Reports</h3></div>
