@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class EventController2 {
     private static final String BAD_ASSET_TYPE_ERROR_MESSAGE = "Oops! Invalid asset type ID. Must supply asset type ID as an integer. Asset type ID must refer to an existing asset type.";
+    private static final String BAD_EVENT_ERROR_MESSAGE = "Oops! Invalid event ID. Must supply event ID as an integer. Event ID must refer to an existing Event.";
     private static final String NO_SUCH_ASSET_AVAILABLE_PART1 = "I'm sorry, but we currently do not have any ";
     private static final String NO_SUCH_ASSET_AVAILABLE_PART2 = " available.";
     
@@ -89,48 +90,34 @@ public class EventController2 {
     }
     
     @RequestMapping(value = "addEventAsset", method = RequestMethod.GET)
-    public String addEventAsset(Model model,  @ModelAttribute("event") Event event, HttpServletRequest request){
+    public String addEventAsset(Model model, HttpServletRequest request){
         int typeId;
+        int eventId;
+        Event event;
         AssetType assetType;
         Asset asset;
         boolean nullVal;
         Set<Asset> eventAssets = new HashSet<>();
         
-        try {
-            typeId = Integer.parseInt(request.getParameter("typeId"));
-        } catch (NumberFormatException e) {
-            typeId = 0;
+        //attempt to retrieve Event by Id
+        try{
+            eventId = Integer.parseInt(request.getParameter("eventId"));
+        } catch(NumberFormatException e){
+            eventId = 0;
         }
-
-        assetType = assetDao.getAssetTypeById(typeId);
         
-        nullVal = assetType == null;
+        event = eventDao.getEventByEventId(eventId);
+        
+        //resolve invalid eventId
+        nullVal = event == null;
         if (nullVal) {
             if (nullVal) {
-                model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+                model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
             }
-            return "redirect:addEventStepTwo";
+            return "addEventStepTwo";
         }
         
-        asset = assetDao.getAnyAvailableAssetByAssetType(assetType);
-        nullVal = asset == null;
-        if (nullVal) {
-            if (nullVal) {
-                model.addAttribute("unavailableAssetError", NO_SUCH_ASSET_AVAILABLE_PART1 + assetType.getName() + NO_SUCH_ASSET_AVAILABLE_PART2);
-            }
-            return "redirect:addEventStepTwo";
-        }
-        asset.setInStock(false);
-        assetDao.editAsset(asset);
-        
-        eventAssets = event.getAssets();
-        if(eventAssets == null){
-            eventAssets = new HashSet<>();
-        }
-        eventAssets.add(asset);
-        event.setAssets(eventAssets);
-        eventDao.editEvent(event);
-        
+        //supply model attributes
         model.addAttribute("event", event);
 
         Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
@@ -142,6 +129,49 @@ public class EventController2 {
         Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
         model.addAttribute("assetTypeList", assetTypeList);
 
+        
+        //attempt to retrieve AssetType by Id
+        try {
+            typeId = Integer.parseInt(request.getParameter("typeId"));
+        } catch (NumberFormatException e) {
+            typeId = 0;
+        }
+
+        assetType = assetDao.getAssetTypeById(typeId);
+        
+        //resolve invalid assetTypeId
+        nullVal = assetType == null;
+        if (nullVal) {
+            if (nullVal) {
+                model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            }
+            return "addEventStepTwo";
+        }
+        
+        //attempt to retrieve available asset by assetType
+        asset = assetDao.getAnyAvailableAssetByAssetType(assetType);
+        //resolve unavailable asset
+        nullVal = asset == null;
+        if (nullVal) {
+            if (nullVal) {
+                model.addAttribute("unavailableAssetError", NO_SUCH_ASSET_AVAILABLE_PART1 + assetType.getName() + NO_SUCH_ASSET_AVAILABLE_PART2);
+            }
+            return "addEventStepTwo";
+        }
+        asset.setInStock(false);
+        assetDao.editAsset(asset);
+        
+        //retrieve assets associated with event
+        eventAssets = event.getAssets();
+        if(eventAssets == null){
+            eventAssets = new HashSet<>();
+        }
+        
+        //assign new asset to event
+        eventAssets.add(asset);
+        event.setAssets(eventAssets);
+        eventDao.editEvent(event);
+        
         return "addEventStepTwo";
     }
 }

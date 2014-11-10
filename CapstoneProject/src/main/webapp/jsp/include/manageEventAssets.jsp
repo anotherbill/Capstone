@@ -19,6 +19,14 @@
     </head>
     <body>
         <%--<div class="container">--%>
+        <div class="row"><%--Error Message ROW--%>
+            <div class="col-md-12">
+                ${badEventError}
+                ${badAssetTypeError}
+                ${unavailableAssetError}
+            </div>
+        </div>
+
 
         <div class="row"><%--CHECKED OUT ASSETS ROW--%>
             <div class="col-md-12">
@@ -28,24 +36,24 @@
                     <tr>
                         <th>Asset Type</th>
                         <th>Category</th>
-                        <th>Availability</th>
+                            <%--<th>Availability</th>--%>
                         <th>Damage</th>
                         <th>Serial Number</th>
                         <th>Actions</th>
                     </tr>
-                    <tr>
-                        <jstl:forEach var="assets" items="${assetCheckedOutList}">
-                            <td>${asset.assetType.name}</td>
-                            <td>${asset.assetType.category.categoryName}</td>
-                            <td>${asset.inStock}</td>
-                            <td>${asset.damageStatus}</td>
-                            <td>${asset.serialNumber}</td>
+                    <jstl:forEach var="assets" items="${event.assets}">
+                        <tr>
+                            <td>${assets.assetType.name}</td>
+                            <td>${assets.assetType.category.categoryName}</td>
+                            <%--<td>${assets.inStock}</td>--%>
+                            <td>${assets.damageStatus}</td>
+                            <td>${assets.serialNumber}</td>
                             <td>
                                 <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
                                 <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
                             </td>
-                        </jstl:forEach>
-                    </tr>
+                        </tr>
+                    </jstl:forEach>
                 </table>
             </div>
         </div>
@@ -81,15 +89,23 @@
                                 <th>Category</th>
                                 <th>Actions</th>
                             </tr>
+
                             <jstl:forEach var="types" items="${assetTypeList}">
                                 <tr>
                                     <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
                                     <td>${types.name}</td>
                                     <td>${types.category.categoryName}</td>
-                                    <td><a href="addEventAsset?typeId=${types.assetTypeId}" class="btn btn-primary">Add to Event</a></td>
+                                    <td>
+                                        <%--<sf:form role="form" action="addEventAsset" method="post" modelAttribute="event">
+                                            <input type="hidden" value="${types.assetTypeId}" name="typeId"/>
+                                            <input type="submit" value="Add to Event" class="btn btn-primary"/>
+                                        </sf:form>--%>
+                                        <a href="addEventAsset?typeId=${types.assetTypeId}&eventId=${event.eventId}" class="btn btn-primary">Add to Event</a>
+                                    </td>
 
                                 </tr>
                             </jstl:forEach>
+
                         </table>
                     </div>
                 </div>
