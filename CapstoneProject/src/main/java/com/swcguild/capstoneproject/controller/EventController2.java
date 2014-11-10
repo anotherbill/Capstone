@@ -30,12 +30,14 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class EventController2 {
+
     private static final String BAD_ASSET_TYPE_ERROR_MESSAGE = "Oops! Invalid asset type ID. Must supply asset type ID as an integer. Asset type ID must refer to an existing asset type.";
+    private static final String BAD_ASSET_ERROR_MESSAGE = "Oops! Invalid asset ID. Must supply asset ID as an integer. Asset ID must refer to an existing asset.";
     private static final String BAD_EVENT_ERROR_MESSAGE = "Oops! Invalid event ID. Must supply event ID as an integer. Event ID must refer to an existing Event.";
+    private static final String NO_SUCH_ASSET_IN_EVENT = "Oops! This asset is not associated with this event. Please make sure you have the correct asset Id";
     private static final String NO_SUCH_ASSET_AVAILABLE_PART1 = "I'm sorry, but we currently do not have any ";
-    private static final String NO_SUCH_ASSET_AVAILABLE_PART2 = " available.";
-    
-    
+    private static final String NO_SUCH_ASSET_AVAILABLE_PART2 = "(s) available.";
+
     private EventInterface eventDao;
     private UserInterface userDao;
     private AssetInterface assetDao;
@@ -54,8 +56,8 @@ public class EventController2 {
     public void setAssetDao(AssetInterface assetDao) {
         this.assetDao = assetDao;
     }
-    
-     @RequestMapping(value = "/addEvent", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/addEvent", method = RequestMethod.GET)
     public String addEventStepOne(Model model) {
         Event event = new Event();
         model.addAttribute("event", event);
@@ -75,61 +77,34 @@ public class EventController2 {
         event.setOpen(true);
 
         eventDao.addEvent(event);
-        model.addAttribute("event", event);
-
-        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
-        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
-
-        Set<Category> categoryList = assetDao.getAllCategories();
-        model.addAttribute("categoryList", categoryList);
-
-        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
-        model.addAttribute("assetTypeList", assetTypeList);
+        
+        model = supplyModelAttributes(model, event);
 
         return "addEventStepTwo";
     }
-    
+
     @RequestMapping(value = "addEventAsset", method = RequestMethod.GET)
-    public String addEventAsset(Model model, HttpServletRequest request){
+    public String addEventAsset(Model model, HttpServletRequest request) {
         int typeId;
-        int eventId;
         Event event;
         AssetType assetType;
         Asset asset;
         boolean nullVal;
         Set<Asset> eventAssets = new HashSet<>();
-        
+
         //attempt to retrieve Event by Id
-        try{
-            eventId = Integer.parseInt(request.getParameter("eventId"));
-        } catch(NumberFormatException e){
-            eventId = 0;
-        }
-        
-        event = eventDao.getEventByEventId(eventId);
-        
+        event = retrieveEventById(request);
+
         //resolve invalid eventId
         nullVal = event == null;
         if (nullVal) {
-            if (nullVal) {
-                model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
-            }
+            model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
             return "addEventStepTwo";
         }
-        
+
         //supply model attributes
-        model.addAttribute("event", event);
+        model = supplyModelAttributes(model, event);
 
-        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
-        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
-
-        Set<Category> categoryList = assetDao.getAllCategories();
-        model.addAttribute("categoryList", categoryList);
-
-        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
-        model.addAttribute("assetTypeList", assetTypeList);
-
-        
         //attempt to retrieve AssetType by Id
         try {
             typeId = Integer.parseInt(request.getParameter("typeId"));
@@ -138,7 +113,7 @@ public class EventController2 {
         }
 
         assetType = assetDao.getAssetTypeById(typeId);
-        
+
         //resolve invalid assetTypeId
         nullVal = assetType == null;
         if (nullVal) {
@@ -147,7 +122,7 @@ public class EventController2 {
             }
             return "addEventStepTwo";
         }
-        
+
         //attempt to retrieve available asset by assetType
         asset = assetDao.getAnyAvailableAssetByAssetType(assetType);
         //resolve unavailable asset
@@ -160,18 +135,98 @@ public class EventController2 {
         }
         asset.setInStock(false);
         assetDao.editAsset(asset);
-        
+
         //retrieve assets associated with event
         eventAssets = event.getAssets();
-        if(eventAssets == null){
+        if (eventAssets == null) {
             eventAssets = new HashSet<>();
         }
-        
+
         //assign new asset to event
         eventAssets.add(asset);
         event.setAssets(eventAssets);
         eventDao.editEvent(event);
+
+        return "addEventStepTwo";
+    }
+
+    @RequestMapping(value = "removeAssetFromEvent", method = RequestMethod.GET)
+    public String removeAssetFromEvent(Model model, HttpServletRequest request) {
+        int assetId;
+        Event event = retrieveEventById(request);
+        Asset asset;
+        Set<Asset> eventAssets;
+        
+        //resolve invalid eventId
+        if (event == null) {
+            model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
+            return "addEventStepTwo";
+        }
+
+        //supply model attributes
+        model = supplyModelAttributes(model, event);
+        
+        //retrieve asset
+        try {
+            assetId = Integer.parseInt(request.getParameter("assetId"));
+        } catch (NumberFormatException e) {
+            assetId = 0;
+        }
+
+        asset = assetDao.getAssetById(assetId);
+        
+        //resolve invalid assetId
+        if (asset == null) {
+            model.addAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
+            return "addEventStepTwo";
+        }
+
+        
+        //retrieve assets associated with event
+        eventAssets = event.getAssets();
+        if (eventAssets == null) {
+            eventAssets = new HashSet<>();
+        }
+        
+        if(!eventAssets.remove(asset)){
+            model.addAttribute("badAssetError", NO_SUCH_ASSET_IN_EVENT);
+            return "addEventStepTwo";
+        }
+        else{
+            event.setAssets(eventAssets);
+            eventDao.editEvent(event);
+            asset.setInStock(true);
+            assetDao.editAsset(asset);
+        }
         
         return "addEventStepTwo";
+
+    }
+    
+    //helper methods
+    private Model supplyModelAttributes(Model model, Event event){
+        model.addAttribute("event", event);
+
+        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
+        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+
+        Set<Category> categoryList = assetDao.getAllCategories();
+        model.addAttribute("categoryList", categoryList);
+
+        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
+        model.addAttribute("assetTypeList", assetTypeList);
+        
+        return model;
+    }
+    
+    private Event retrieveEventById(HttpServletRequest request){
+        int eventId;
+        try {
+            eventId = Integer.parseInt(request.getParameter("eventId"));
+        } catch (NumberFormatException e) {
+            eventId = 0;
+        }
+
+        return eventDao.getEventByEventId(eventId);
     }
 }
