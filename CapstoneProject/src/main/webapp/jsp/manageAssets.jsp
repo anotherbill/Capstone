@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage Assets</title>
 
-<!--        <link rel="stylesheet" href="bootstrapvalidator-0.5.2/dist/css/bootstrapValidator.min.css"/>-->
+        <!--        <link rel="stylesheet" href="bootstrapvalidator-0.5.2/dist/css/bootstrapValidator.min.css"/>-->
 
 
         <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
@@ -27,103 +27,96 @@
             <div class="container">
 
 
-            ${badCategoryError}
-            ${badAssetTypeError}
-            ${badAssetError}
+                ${badCategoryError}
+                ${badAssetTypeError}
+                ${badAssetError}
 
 
-            <div class="row">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h3>Asset Management</h3>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Asset Type</th>
+                                    <th>Category</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <jstl:forEach var="types" items="${assetTypeList}">
+                                <tr>
+                                    <td><img class="image-responsive" src="${types.imagePath}" alt="..." style="height: 200px; width: 200px"></td>
+                                    <td>${types.name}</td>
+                                    <td>${types.category.categoryName}</td>
+                                    <td><a href="updateAssetType?typeId=${types.assetTypeId}" class="btn btn-warning">Edit Asset Type</a><br/><br/>
+                                        <a href="removeAssetType?typeId=${types.assetTypeId}" class="btn btn-danger">Delete</a><br/><br/>
+                                        <a href="listAssets?typeId=${types.assetTypeId}" class="btn btn-primary">List All Assets of This Type</a></td>
 
-                <div class="col-md-9">
+                                </tr>
+                            </jstl:forEach>
+                        </table>
+
+                    </div>
+
 
                     <div class="col-md-3">
-                        <form role="form" method="get" action="manage_assets">
-                            <div class="form-group">
-                                <label>Search By Category:</label>
-                                <select name="selectCategory" class="form-control">
-                                    <option value="all">All</option>
-                                    <jstl:forEach var="category" items="${categoryList}">
-                                        <option value="${category.categoryName}">${category.categoryName}</option>
-                                    </jstl:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Search" class="form-control"/>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-6">
+                        <div class="panel panel-primary" style="padding:12px">
+                            <div class="text-center panel-heading">Category Management</div>
 
-                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                            <div class="col-md-12">
-                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAssetType">  Add Asset Type</a>
-                                <%--<a class="btn btn-danger" role="button" href="viewRetiredAssets" style="margin-left: 20px">View Retired Assets</a>--%>
-                            </div>
-                            
+                            <sf:form role="form" action="submitNewCategory" id="manageCategories" method="post" modelAttribute="category" cssClass="form-inline">
+                                <div class="form-group"> 
+                                    <br>
+                                    Create a new Category
+                                    <sf:input path="categoryName" type="text" cssClass="form-control" name="categoryName" /><br/>
+                                    <sf:errors path="categoryName" cssClass="error"></sf:errors><br/>
+                                        <input type="submit" class="form-control btn btn-primary" value="Add Category"/>
+                                    </div>
+                            </sf:form>
+                            <br>
+                            <jstl:forEach var="category" items="${categoryList}">
+                                <p style="padding-bottom: 15px">${category.categoryName}
+                                    <a href="updateCategory?categoryId=${category.categoryId}" class="btn btn-warning btn-sm" style="float:right; margin-left: 10px">Edit</a>
+                                    <a href="removeCategory?categoryId=${category.categoryId}" class="btn btn-danger btn-sm" style="float:right">Delete</a></p>
+                                </jstl:forEach>
                         </div>
 
-                        <div class="row" style="padding: 0px; margin: 0px; padding-bottom: 20px">
-                            <div class="col-md-2">
-                                <a class="btn btn-primary glyphicon glyphicon-plus" href="addAsset">  Add Asset</a>
-                            </div>
+                        <div class="panel panel-primary" style="padding:12px">
+                            <div class="panel-heading">Search By Category</div>
+                            <br>
+                            <form role="form" method="get" action="manage_assets">
+                                <div class="form-group">
+                                    <select name="selectCategory" class="form-control">
+                                        <option value="all">All</option>
+                                        <jstl:forEach var="category" items="${categoryList}">
+                                            <option value="${category.categoryName}">${category.categoryName}</option>
+                                        </jstl:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Search" class="form-control"/>
+                                </div>
+                            </form>
                         </div>
-                        
+
+                        <a class="btn btn-primary" href="addAssetType"><span class="glyphicon glyphicon-plus"></span>  Add Asset Type</a>
+                        <a class="btn btn-primary" href="addAsset"><span class="glyphicon glyphicon-plus"></span>  Add Asset</a>
+
                     </div>
 
 
-                    <table class="table table-hover">
 
-                        <tr>
-                            <th></th>
-                            <th>Asset Type</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                        <br/><br/>
-                        <jstl:forEach var="types" items="${assetTypeList}">
-                            <tr>
-                                <td><img class="image-responsive" src="${types.imagePath}" alt="..." style="height: 200px; width: 200px"></td>
-                                <td>${types.name}</td>
-                                <td>${types.category.categoryName}</td>
-                                <td><a href="updateAssetType?typeId=${types.assetTypeId}" class="btn btn-warning">Edit Asset Type</a><br/><br/>
-                                    <a href="removeAssetType?typeId=${types.assetTypeId}" class="btn btn-danger">Delete</a><br/><br/>
-                                    <a href="listAssets?typeId=${types.assetTypeId}" class="btn btn-primary">List All Assets of This Type</a></td>
-
-                            </tr>
-                        </jstl:forEach>
-                    </table>
+                    <jsp:include page="include/footer.jsp"/>
 
                 </div>
-
-
-                <div class="col-md-3" style="padding-bottom: 20px; float: left">
-                    <h2 class="text-center">Manage Categories</h2>
-                    <sf:form role="form" action="submitNewCategory" id="manageCategories" method="post" modelAttribute="category">
-                        <div class="form-group"> 
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-plus">
-                                    <sf:label path="categoryName">Add New Category:</sf:label></span></span><sf:input path="categoryName" type="text" class="form-control" style="float: right" name="categoryName"/><br/><br/>
-                                    <sf:errors path="categoryName" cssclass="error"></sf:errors><br/>
-                        </div>
-                            <div class="form-group">
-                                <input type="submit" class="form-control" value="Add Category"/>
-                            </div> 
-                    </sf:form>
-
-
-                    <jstl:forEach var="category" items="${categoryList}">
-                        <p style="padding-bottom: 15px">${category.categoryName}
-                            <a href="updateCategory?categoryId=${category.categoryId}" class="btn btn-warning btn-sm" style="float:right; margin-left: 10px">Edit</a>
-                            <a href="removeCategory?categoryId=${category.categoryId}" class="btn btn-danger btn-sm" style="float:right">Delete</a></p>
-                        </jstl:forEach>
-                </div>
-
-
-
-                <jsp:include page="include/footer.jsp"/>
-
             </div>
         </div>
-        </div>
+
+
+
+
+
+
         <script>
             $(document).ready(function () {
                 $('#manageCategories').bootstrapValidator({
