@@ -77,7 +77,7 @@
             </div>
 
 
-            <jsp:include page="include/addEditEventAssets.jsp"/>
+            <%--<jsp:include page="include/addEditEventAssets.jsp"/>--%>
 
 
             <jsp:include page="include/footer.jsp"/>
