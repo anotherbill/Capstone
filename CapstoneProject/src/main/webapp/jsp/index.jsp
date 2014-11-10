@@ -37,7 +37,9 @@
 
                                 <p>                        
                                     <br><b>User: </b> <span>${event.user.name}</span><br/>
-                                   <b>${event.open}</b>
+<!--                                   <b>${event.open}</b>-->
+                                    <b>Start Date: </b> ${event.checkOutDate}<br>
+                                    <b>Due Date: </b>${event.dueDate}<br>
                                     <br>
                                 </p>
                                 <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">Additional Info</a>
