@@ -5,7 +5,9 @@
  */
 package com.swcguild.capstoneproject.controller;
 
+import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
+import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.UserNote;
 import java.util.List;
@@ -27,10 +29,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 
     private UserInterface userDao;
+    private EventInterface eventDao;
     
     @Inject
     public UserController(UserInterface userDao) {
         this.userDao = userDao;
+    }
+    
+    @Inject
+    public void setEventDao(EventInterface eventDao) {
+        this.eventDao = eventDao;
     }
     
     
@@ -69,6 +77,9 @@ public class UserController {
         
         User user = userDao.getUserByUserId(userId);
         model.addAttribute("user", user);
+        
+        Set<Event> userEvents = eventDao.getEventsByUserId(userId);
+        model.addAttribute("events", userEvents);
         
         return "viewUserInfo";
     }
