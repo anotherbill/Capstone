@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-//@RequestMapping({"/"})
 public class AssetController {
 
     private static final String BAD_CATEGORY_ERROR_MESSAGE = "Oops! Invalid category ID. Must supply category ID as an integer. Category ID must refer to an existing category.";
@@ -31,28 +30,11 @@ public class AssetController {
     private static final String BAD_ASSET_ERROR_MESSAGE = "Oops! Invalid asset ID. Must supply asset ID as an integer. Asset ID must refer to an existing asset.";
 
     private AssetInterface assetDao;
-    //private EventInterface eventDao;
-    
-    /*
-    @Inject
-    public void setEventDao(EventInterface eventDao) {
-        this.eventDao = eventDao;
-    }
-    */
     
     @Inject
     public AssetController(AssetInterface assetDao) {
         this.assetDao = assetDao;
     }
-
-    /*
-    @RequestMapping(value = {"/", "/home", "/index"}, method = RequestMethod.GET)
-    public String home(Model model) {
-        Set<Event> eventList = eventDao.getAllEvents();
-        model.addAttribute("eventList", eventList);
-        return "index";
-    }
-    */
 
     //List Pages
     @RequestMapping(value = {"/assets"}, method = RequestMethod.GET)
