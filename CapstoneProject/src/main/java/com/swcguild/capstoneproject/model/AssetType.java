@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -43,6 +44,8 @@ public class AssetType {
     private String imagePath;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy="assetType")
+    @JsonIgnore
+    //@JsonManagedReference
     private Set<Asset> assets;
 
     public int getAssetTypeId() {
@@ -76,6 +79,7 @@ public class AssetType {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
 
     public Set<Asset> getAssets() {
         return assets;

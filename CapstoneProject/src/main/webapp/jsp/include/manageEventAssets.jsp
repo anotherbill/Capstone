@@ -39,8 +39,10 @@
                             <%--<th>Availability</th>--%>
                         <th>Damage</th>
                         <th>Serial Number</th>
+                        <th>Notes</th>
                         <th>Actions</th>
                     </tr>
+
                     <jstl:forEach var="assets" items="${event.assets}">
                         <tr>
                             <td>${assets.assetType.name}</td>
@@ -49,14 +51,42 @@
                             <td>${assets.damageStatus}</td>
                             <td>${assets.serialNumber}</td>
                             <td>
-                                <a href="listAssetNotes?assetId=${assets.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                <jstl:forEach var="entry" items="${assetNotes}">
+                                    <jstl:forEach items="${entry.value}" var="item" varStatus="loop"> 
+                                        <jstl:if test="${entry.key == assets}">
+                                        <p>${item.noteDate}: ${item.category}: ${item.note}</p>
+                                        </jstl:if>
+                                    </jstl:forEach>
+                                </jstl:forEach>
+                                <br/><br/>
+                                <input type="hidden" value="${assets.assetId}" name="assetId"/>
+                                
+                                <!--                                <div id="getNotesForAsset-list"></div>
+                                                                <p id="detail-category"></p>
+                                                                <p id="detail-noteDate"></p>
+                                                                <p id="detail-note"></p>-->
+                            </td>
+                            <td>
+
                                 <a href="removeAssetFromEvent?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
                             </td>
                         </tr>
                     </jstl:forEach>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                
+                            </td>
+                        </tr>
                 </table>
             </div>
         </div>
+
+        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/viewAssetNotes.js"></script>
 
         <div class="row"><%--ASSET SELECTION ROW--%>
             <div class="col-md-12">
@@ -107,5 +137,68 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- View Asset Notes Modal -->
+        <div class="modal fade" id="viewAssetNotes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Event's Assets</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12"> 
+
+                            <table class="table table-hover">
+
+                                <tr>
+                                    <th></th>
+                                    <th>Category</th>
+                                    <th>Asset Type</th>
+                                    <th>In Stock</th>
+                                    <th>Serial Number</th>
+                                    <th>Damage Status</th>
+
+                                </tr>
+
+                                <tr>
+                                    <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
+                                    <td>${asset.assetType.category.categoryName}</td>
+                                    <td>${asset.assetType.name}</td>
+                                    <td>${asset.inStock}</td>
+                                    <td>${asset.serialNumber}</td>
+                                    <td>${asset.damageStatus}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12"> 
+
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Notes</th>
+                                </tr>
+                                <jstl:forEach var="notes" items="${notes}"> 
+                                    <tr>
+                                        <td>${notes.noteDate}: ${notes.category}: ${notes.note}</td>
+                                        <td><div id="getNotesForAsset-list"></div>
+                                            <p id="detail-category"></p>
+                                            <p id="detail-noteDate"></p>
+                                            <p id="detail-note"></p>
+                                        </td>
+
+                                    </tr>
+                                </jstl:forEach>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

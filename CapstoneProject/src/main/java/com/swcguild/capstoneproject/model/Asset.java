@@ -14,8 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 /**
  *
@@ -23,7 +23,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name="assets")
+
 public class Asset {
+    
     @Id
     @GeneratedValue
     @Column(name="asset_id")
@@ -31,6 +33,7 @@ public class Asset {
     
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="asset_type_id")
+    //@JsonBackReference
     private AssetType assetType; //using Hibernate we can have the entire type
     
     @Column(name="in_stock")

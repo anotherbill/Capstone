@@ -13,7 +13,11 @@ import com.swcguild.capstoneproject.model.AssetType;
 import com.swcguild.capstoneproject.model.Category;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
+import com.swcguild.capstoneproject.model.notes.AssetNote;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +83,7 @@ public class EventController2 {
         event.setOpen(true);
 
         eventDao.addEvent(event);
-        
+
         model = supplyModelAttributes(model, event);
 
         return "addEventStepTwo";
@@ -150,6 +154,13 @@ public class EventController2 {
         event.setAssets(eventAssets);
         eventDao.editEvent(event);
 
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
+
+        for (Asset a : eventAssets) {
+            assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+        }
+        model.addAttribute("assetNotes", assetNotes);
+
         return "addEventStepTwo";
     }
 
@@ -160,7 +171,7 @@ public class EventController2 {
         Event event = retrieveEventById(request);
         Asset asset;
         Set<Asset> eventAssets;
-        
+
         //resolve invalid eventId
         if (event == null) {
             model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
@@ -169,7 +180,7 @@ public class EventController2 {
 
         //supply model attributes
         model = supplyModelAttributes(model, event);
-        
+
         //retrieve asset
         try {
             assetId = Integer.parseInt(request.getParameter("assetId"));
@@ -178,37 +189,35 @@ public class EventController2 {
         }
 
         asset = assetDao.getAssetById(assetId);
-        
+
         //resolve invalid assetId
         if (asset == null) {
             model.addAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
             return "addEventStepTwo";
         }
 
-        
         //retrieve assets associated with event
         eventAssets = event.getAssets();
         if (eventAssets == null) {
             eventAssets = new HashSet<>();
         }
-        
-        if(!eventAssets.remove(asset)){
+
+        if (!eventAssets.remove(asset)) {
             model.addAttribute("badAssetError", NO_SUCH_ASSET_IN_EVENT);
             return "addEventStepTwo";
-        }
-        else{
+        } else {
             event.setAssets(eventAssets);
             eventDao.editEvent(event);
             asset.setInStock(true);
             assetDao.editAsset(asset);
         }
-        
+
         return "addEventStepTwo";
 
     }
-    
+
     //helper methods
-    private Model supplyModelAttributes(Model model, Event event){
+    private Model supplyModelAttributes(Model model, Event event) {
         model.addAttribute("event", event);
 
         Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(event);
@@ -219,11 +228,11 @@ public class EventController2 {
 
         Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
         model.addAttribute("assetTypeList", assetTypeList);
-        
+
         return model;
     }
-    
-    private Event retrieveEventById(HttpServletRequest request){
+
+    private Event retrieveEventById(HttpServletRequest request) {
         int eventId;
         try {
             eventId = Integer.parseInt(request.getParameter("eventId"));
