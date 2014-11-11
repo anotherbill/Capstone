@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-              xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/mvc
@@ -23,7 +23,7 @@
           class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
-                    value="jdbc:mysql://localhost:3306/quartermaster_dev"/>
+                  value="jdbc:mysql://localhost:3306/quartermaster_dev"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
         <property name="initialSize" value="5"/>
@@ -45,10 +45,13 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     <bean id="chartsDao" class="com.swcguild.capstoneproject.googlecharts.GoogleChartDBImpl">
-            <property name="jdbcTemplate" ref="jdbcTemplate" />
-        </bean>
-    
-<!--    <bean id="noteDao" class="com.swcguild.capstoneproject.dao.NoteDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    <bean id="checkIn" class="com.swcguild.capstoneproject.dao.AssetCheckInService">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+        <property name="assetDao" ref="assetDao" />
+    </bean>
+    <!--    <bean id="noteDao" class="com.swcguild.capstoneproject.dao.NoteDbImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>-->
     
@@ -67,7 +70,7 @@
           class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan"
-                    value="com.swcguild.capstoneproject.model" />
+                  value="com.swcguild.capstoneproject.model" />
         <property name="hibernateProperties">
             <props>
                 <prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
