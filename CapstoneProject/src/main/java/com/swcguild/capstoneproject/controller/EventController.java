@@ -6,6 +6,7 @@
 package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.AssetCheckInService;
+import com.swcguild.capstoneproject.dao.interfaces.AssetCheckInServiceInterface;
 import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
@@ -38,7 +39,7 @@ public class EventController {
     private EventInterface eventDao;
     private UserInterface userDao;
     private AssetInterface assetDao;
-    private AssetCheckInService checkIn;
+    private AssetCheckInServiceInterface checkIn;
 
     @Inject
     public void setEventDao(EventInterface eventDao) {
@@ -56,7 +57,7 @@ public class EventController {
     }
 
     @Inject
-    public void setCheckIn(AssetCheckInService checkIn) {
+    public void setCheckIn(AssetCheckInServiceInterface checkIn) {
         this.checkIn = checkIn;
     }
 
