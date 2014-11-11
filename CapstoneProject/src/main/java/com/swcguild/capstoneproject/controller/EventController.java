@@ -144,6 +144,7 @@ public class EventController {
     public String checkInAsset(Model model, HttpServletRequest req) {
         int eventId;
         int assetId;
+        String damageStatus = req.getParameter("damageStatus");
 
         try {
             eventId = Integer.parseInt(req.getParameter("eventId"));
@@ -157,7 +158,7 @@ public class EventController {
             assetId = 0;
         }
 
-        checkIn.checkInAsset(eventId, assetId);
+        checkIn.checkInAsset(eventId, assetId, damageStatus);
         return "redirect:editEvent?eventId=" + eventId;
     }
 }

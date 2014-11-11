@@ -95,7 +95,7 @@
                             <th>Category</th>
                             <th>Due</th>
                             <th>Returned</th>
-                            <%--<th>Status</th>--%>
+                                <%--<th>Status</th>--%>
                             <th>Damage</th>
                             <th>Serial Number</th>
                             <th>Actions</th>
@@ -127,7 +127,32 @@
                                 <td>
                                     <a href="viewAssetNotes?assetId=${assets.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
                                     <jstl:if test="${returnDates[i.index]==null}">
-                                        <a href="checkInAsset?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Check In</a>
+
+                                        <div class="panel panel-primary" style="padding:12px">
+                                            <form role="form" method="get" action="checkInAsset">
+                                                <div class="form-group">
+                                                    <select name="damageStatus" class="form-control">
+                                                        <option value="none">none</option>
+                                                        <option value="lost">Lost</option>
+                                                        <option value="stolen">Stolen</option>
+                                                        <option value="late">Late</option>
+                                                        <option value="Damage: 1">Damage: 1</option>
+                                                        <option value="Damage: 2">Damage: 2</option>
+                                                        <option value="Damage: 3">Damage: 3</option>
+                                                        <option value="Damage: 4">Damage: 4</option>
+                                                        <option value="Damage: 5">Damage: 5</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="hidden" value="${assets.assetId}" name="assetId"/>
+                                                    <input type="hidden" value="${event.eventId}" name="eventId"/>
+                                                    <input type="submit" value="Check In" class="form-control"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <%--
+                                <a href="checkInAsset?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Check In</a>
+                                        --%>
                                     </jstl:if>
                                 </td>
                             </tr>

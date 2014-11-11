@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AssetCheckInServiceInterface {
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-    Date checkInAsset(int eventId, int assetId);
+    public Date checkInAsset(int eventId, int assetId, String damageStatus);
 
-    Date getReturnDate(int eventId, int assetId);
-
-    @Inject
-    void setAssetDao(AssetInterface assetDao);
+    public Date getReturnDate(int eventId, int assetId);
 
     @Inject
-    void setJdbcTemplate(JdbcTemplate jdbcTemplate);
+    public void setAssetDao(AssetInterface assetDao);
+
+    @Inject
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate);
     
 }
