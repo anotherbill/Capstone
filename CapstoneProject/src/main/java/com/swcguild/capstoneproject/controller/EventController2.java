@@ -18,6 +18,8 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +86,7 @@ public class EventController2 {
     }
 
     @RequestMapping(value = "addEventAsset", method = RequestMethod.GET)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public String addEventAsset(Model model, HttpServletRequest request) {
         int typeId;
         Event event;
@@ -151,6 +154,7 @@ public class EventController2 {
     }
 
     @RequestMapping(value = "removeAssetFromEvent", method = RequestMethod.GET)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public String removeAssetFromEvent(Model model, HttpServletRequest request) {
         int assetId;
         Event event = retrieveEventById(request);
