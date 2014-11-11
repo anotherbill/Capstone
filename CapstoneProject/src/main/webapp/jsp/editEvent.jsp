@@ -58,6 +58,9 @@
                                     <label>Event Name</label><sf:input path="eventName" type="text" cssClass="form-control" id="name" name="eventName"/>
                                 </div>
                                 <div class="form-group">
+
+                                    <%--Consider supplying list of users and converting input to drop down--%>
+
                                     <label>User</label><sf:input path="user.userName" type="text" cssClass="form-control" id="user" name="userName"/>
                                 </div>
                                 <div class="form-group">
@@ -90,24 +93,45 @@
                         <tr>
                             <th>Asset Type</th>
                             <th>Category</th>
-                            <th>Availability</th>
+                            <th>Due</th>
+                            <th>Returned</th>
+                            <%--<th>Status</th>--%>
                             <th>Damage</th>
                             <th>Serial Number</th>
                             <th>Actions</th>
                         </tr>
-                        <tr>
-                            <jstl:forEach var="assets" items="${assetCheckedOutList}">
-                                <td>${asset.assetType.name}</td>
-                                <td>${asset.assetType.category.categoryName}</td>
-                                <td>${asset.inStock}</td>
-                                <td>${asset.damageStatus}</td>
-                                <td>${asset.serialNumber}</td>
+                        <jstl:forEach var="assets" items="${assetCheckedOutList}" varStatus="i">
+                            <tr>
+                                <td>${assets.assetType.name}</td>
+                                <td>${assets.assetType.category.categoryName}</td>
+                                <td>${event.dueDate}</td>
+                                <td>${returnDates[i.index]}</td>
+                                <%--<td><%-- Status --%><%--
+                                    <jstl:choose>
+                                        <jstl:when test="${false}"><%--overdue
+                                            Overdue
+                                        </jstl:when>
+                                        <jstl:when test="${true}"><%--checked out
+                                            Checked Out (current default)
+                                        </jstl:when>
+                                        <jstl:when test="${true}"><%--returned late
+                                            Returned Late
+                                        </jstl:when>
+                                        <jstl:otherwise><%--returned on time
+                                            Returned
+                                        </jstl:otherwise>
+                                    </jstl:choose>
+                                </td>--%>
+                                <td>${assets.damageStatus}</td>
+                                <td>${assets.serialNumber}</td>
                                 <td>
-                                    <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                    <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
+                                    <a href="viewAssetNotes?assetId=${assets.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                    <jstl:if test="${returnDates[i.index]==null}">
+                                        <a href="checkInAsset?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Check In</a>
+                                    </jstl:if>
                                 </td>
-                            </jstl:forEach>
-                        </tr>
+                            </tr>
+                        </jstl:forEach>
                     </table>
                 </div>
             </div>
