@@ -5,6 +5,7 @@
  */
 package com.swcguild.capstoneproject.controller;
 
+import com.swcguild.capstoneproject.dao.AssetCheckInService;
 import com.swcguild.capstoneproject.dao.interfaces.AssetInterface;
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
@@ -14,6 +15,8 @@ import com.swcguild.capstoneproject.model.Category;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.EventNote;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
@@ -35,6 +38,7 @@ public class EventController {
     private EventInterface eventDao;
     private UserInterface userDao;
     private AssetInterface assetDao;
+    private AssetCheckInService checkIn;
 
     @Inject
     public void setEventDao(EventInterface eventDao) {
@@ -49,6 +53,11 @@ public class EventController {
     @Inject
     public void setAssetDao(AssetInterface assetDao) {
         this.assetDao = assetDao;
+    }
+
+    @Inject
+    public void setCheckIn(AssetCheckInService checkIn) {
+        this.checkIn = checkIn;
     }
 
     @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
@@ -67,12 +76,21 @@ public class EventController {
 
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
     public String showEditEventPage(Model model, @RequestParam("eventId") int eventId) {
+        //List<Asset> assetList = new ArrayList<>();
+        List<Date> returnDates = new ArrayList<>();
         Event eventToEdit = eventDao.getEventByEventId(eventId);
         model.addAttribute("event", eventToEdit);
 
-        Set<Asset> assetsCheckedOutForEvent = eventDao.getAllAssetsForEvent(eventToEdit);
-        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+        List<Asset> assetsCheckedOutForEvent = new ArrayList<>();
+        assetsCheckedOutForEvent.addAll(eventDao.getAllAssetsForEvent(eventToEdit));
+        //assetList.addAll(assetsCheckedOutForEvent);
+        for(Asset a: assetsCheckedOutForEvent){
+            returnDates.add(checkIn.getReturnDate(eventId, a.getAssetId()));//get return date for asset
+        }
 
+        model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
+        model.addAttribute("returnDates", returnDates);
+        
         Set<Category> categoryList = assetDao.getAllCategories();
         model.addAttribute("categoryList", categoryList);
 
@@ -109,9 +127,9 @@ public class EventController {
         eventDao.addNoteToEvent(eventNote.getNote(), eventNote.getEventId());
         return "redirect:eventAddNote?eventId=" + eventNote.getEventId();
     }
-    
-    @RequestMapping(value="/submitEditEvent", method = RequestMethod.POST)
-    public String editEventWriteToDatabase(Model model, @ModelAttribute("event") Event event, HttpServletRequest req){
+
+    @RequestMapping(value = "/submitEditEvent", method = RequestMethod.POST)
+    public String editEventWriteToDatabase(Model model, @ModelAttribute("event") Event event, HttpServletRequest req) {
         boolean open = Boolean.parseBoolean(req.getParameter("open"));
         int userId = Integer.parseInt(req.getParameter("user.userId"));
         User eventUser = userDao.getUserByUserId(userId);
@@ -119,5 +137,26 @@ public class EventController {
         event.setOpen(open);
         eventDao.editEvent(event);
         return "redirect:viewEventInfo?eventId=" + event.getEventId();
+    }
+
+    @RequestMapping(value = "/checkInAsset", method = RequestMethod.GET)
+    public String checkInAsset(Model model, HttpServletRequest req) {
+        int eventId;
+        int assetId;
+
+        try {
+            eventId = Integer.parseInt(req.getParameter("eventId"));
+        } catch (NumberFormatException e) {
+            eventId = 0;
+        }
+
+        try {
+            assetId = Integer.parseInt(req.getParameter("assetId"));
+        } catch (NumberFormatException e) {
+            assetId = 0;
+        }
+
+        checkIn.checkInAsset(eventId, assetId);
+        return "redirect:editEvent?eventId=" + eventId;
     }
 }
