@@ -15,6 +15,7 @@
                 <h1>AssetTypes</h1>
         
         <div id="assetType-list"></div>
+        <div id="asset-list"></div>
         
         <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/assetType.js"></script>

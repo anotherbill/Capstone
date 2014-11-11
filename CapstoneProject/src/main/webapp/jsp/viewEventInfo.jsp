@@ -53,31 +53,35 @@
                     <hr/>
                 </div>
             </div>
-            <div class="col-md-12">
-                <table class="table table-hover">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover">
 
-                    <tr>
-                        <th>Asset Type</th>
-                        <th>Category</th>
-                        <th>Availability</th>
-                        <th>Damage</th>
-                        <th>Serial Number</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr>
-                        <jstl:forEach var="assets" items="${event.assets}">
-                            <td>${asset.assetType.name}</td>
-                            <td>${asset.assetType.category.categoryName}</td>
-                            <td>${asset.inStock}</td>
-                            <td>${asset.damageStatus}</td>
-                            <td>${asset.serialNumber}</td>
-                            <td>
-                                <a href="viewAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
-                            </td>
+                        <tr>
+                            <th>Asset Type</th>
+                            <th>Category</th>
+                            <th>Availability</th>
+                            <th>Damage</th>
+                            <th>Serial Number</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        <jstl:forEach var="asset" items="${event.assets}">
+                            <tr>
+                                <td>${asset.assetType.name}</td>
+                                <td>${asset.assetType.category.categoryName}</td>
+                                <td>${asset.inStock}</td>
+                                <td>${asset.damageStatus}</td>
+                                <td>${asset.serialNumber}</td>
+                                <td>
+                                    <a href="listAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
+                                    <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
+                                </td>
+                            </tr>
                         </jstl:forEach>
-                    </tr>
-                </table>
+
+                    </table>
+                </div>
             </div>
         </div>
         <jsp:include page="include/footer.jsp"/>

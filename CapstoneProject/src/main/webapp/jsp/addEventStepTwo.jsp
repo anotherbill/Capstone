@@ -52,7 +52,9 @@
                                         <td>${event.checkOutDate}<br/><br/>
                                         </td>
                                         <td>${event.dueDate}<br/><br/>
+                                            <input type="hidden" value="${event.eventId}" id="eventId"/>
                                         </td>
+                                    
                                         <td>
                                             <jstl:choose>
                                                 <jstl:when test="${event.open}">Open</jstl:when>
@@ -61,6 +63,7 @@
                                             </jstl:choose>
                                             <br/><br/>
                                         </td>
+                                        
 
                                     </tr>
                                 </table>
