@@ -28,7 +28,11 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">< Back to Event Info</a><br><br>
+                    <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">< Back to Event Info</a><br>
+                    
+                    <span style="color: #ee0000">${badAssetError}</span>
+                    
+                    <br>
                 </div>
             </div>
 

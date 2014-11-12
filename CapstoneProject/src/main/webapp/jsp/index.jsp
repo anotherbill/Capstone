@@ -24,6 +24,7 @@
 
                 <div class="row" style="padding: 0px; margin: 0px; margin-bottom: 30px">
                     <a class="btn btn-primary glyphicon glyphicon-plus" href="addEvent">Add Event</a>
+                    <p style="color: #ee0000">${badEventError}</p>
                 </div>
             </div>
             <div class="container">

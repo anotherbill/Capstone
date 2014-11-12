@@ -36,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class EventController {
 
+    private static final String BAD_EVENT_ERROR_MESSAGE = "Oops! Invalid event ID. Must supply event ID as an integer. Event ID must refer to an existing Event.";
+    private static final String BAD_ASSET_ERROR_MESSAGE = "Oops! Invalid asset ID. Must supply asset ID as an integer. Asset ID must refer to an existing asset.";
+
     private EventInterface eventDao;
     private UserInterface userDao;
     private AssetInterface assetDao;
@@ -76,27 +79,52 @@ public class EventController {
     }
 
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
-    public String showEditEventPage(Model model, @RequestParam("eventId") int eventId) {
-        //List<Asset> assetList = new ArrayList<>();
+    public String showEditEventPage(Model model, HttpServletRequest request) {
+        int eventId;
+        String badAssetError;
         List<Date> returnDates = new ArrayList<>();
-        Event eventToEdit = eventDao.getEventByEventId(eventId);
+        Event eventToEdit;
+        List<Asset> assetsCheckedOutForEvent;
+        Set<Category> categoryList;
+        Set<AssetType> assetTypeList;
+        
+        //retrieve selected event
+        try{
+            eventId = Integer.parseInt(request.getParameter("eventId"));
+        }
+        catch(NumberFormatException e){
+            eventId = 0;
+        }
+        
+        eventToEdit = eventDao.getEventByEventId(eventId);
+        
+        if(eventToEdit == null){
+            model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
+            return "redirect:home";
+        }
         model.addAttribute("event", eventToEdit);
 
-        List<Asset> assetsCheckedOutForEvent = new ArrayList<>();
+        //retrieve asset associated with event
+        assetsCheckedOutForEvent = new ArrayList<>();
         assetsCheckedOutForEvent.addAll(eventDao.getAllAssetsForEvent(eventToEdit));
-        //assetList.addAll(assetsCheckedOutForEvent);
-        for(Asset a: assetsCheckedOutForEvent){
-            returnDates.add(checkIn.getReturnDate(eventId, a.getAssetId()));//get return date for asset
-        }
-
         model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
-        model.addAttribute("returnDates", returnDates);
         
-        Set<Category> categoryList = assetDao.getAllCategories();
+        //retrieve return dates (if any) for each asset in order
+        for (Asset a : assetsCheckedOutForEvent) {
+            returnDates.add(checkIn.getReturnDate(eventId, a.getAssetId()));
+        }
+        model.addAttribute("returnDates", returnDates);
+
+        //retrieve categories and asset types
+        categoryList = assetDao.getAllCategories();
         model.addAttribute("categoryList", categoryList);
 
-        Set<AssetType> assetTypeList = assetDao.getAllAssetTypes();
+        assetTypeList = assetDao.getAllAssetTypes();
         model.addAttribute("assetTypeList", assetTypeList);
+        
+        //error message
+        badAssetError = request.getParameter("badAssetError");
+        model.addAttribute("badAssetError", badAssetError);
 
         return "editEvent";
     }
@@ -151,9 +179,10 @@ public class EventController {
         } catch (NumberFormatException e) {
             eventId = 0;
         }
-        
-        if(eventDao.getEventByEventId(eventId) == null){
-            return "redirect:editEvent?eventId=" + eventId;
+
+        if (eventDao.getEventByEventId(eventId) == null) {
+            model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
+            return "redirect:home";
         }
 
         try {
@@ -162,6 +191,11 @@ public class EventController {
             assetId = 0;
         }
 
+        if(assetDao.getAssetById(assetId) == null){
+            model.addAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
+            return "redirect:editEvent?eventId=" + eventId;
+        }
+        
         checkIn.checkInAsset(eventId, assetId, damageStatus);
         return "redirect:editEvent?eventId=" + eventId;
     }

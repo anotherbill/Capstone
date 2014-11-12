@@ -9,6 +9,7 @@ import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.model.Event;
 import java.util.Set;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,10 @@ public class HomeController {
     }
     
     @RequestMapping(value = {"/", "/home", "/index"}, method = RequestMethod.GET)
-    public String home(Model model) {
+    public String home(Model model, HttpServletRequest request) {
+        String badEventError = request.getParameter("badEventError");
+        model.addAttribute("badEventError", badEventError);
+        
         Set<Event> eventList = eventDao.getAllEvents();
         model.addAttribute("eventList", eventList);
         return "index";

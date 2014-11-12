@@ -88,18 +88,8 @@ public class AssetCheckInService implements AssetCheckInServiceInterface {
     }
     
     private boolean damageIncreased(Asset asset, String damageStatus){
-//        List<String>statList = new ArrayList<>();//consider utilizing Map for faster retrieval
         int oldRank=statList.size();
         int currentRank=0;
-//        statList.add("none");
-//        statList.add("Late");
-//        statList.add("Damage: 1");
-//        statList.add("Damage: 2");
-//        statList.add("Damage: 3");
-//        statList.add("Damage: 4");
-//        statList.add("Damage: 5");
-//        statList.add("Lost");
-//        statList.add("Stolen");
         for(int i = 0; i<statList.size();i++){
             if(damageStatus.equalsIgnoreCase(statList.get(i))){
                 currentRank=i;
