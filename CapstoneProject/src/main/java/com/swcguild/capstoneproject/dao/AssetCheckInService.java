@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class AssetCheckInService implements AssetCheckInServiceInterface {
 
-    private static final String SQL_CHECK_IN_ASSET = "update assets_events set return_date = ? where event_id = ? and asset_id = ?;";
+//    private static final String SQL_CHECK_IN_ASSET = "update assets_events set return_date = ? where event_id = ? and asset_id = ?;";
     private static final String SQL_CHECK_IN_ASSET_WITH_DAMAGE = "update assets_events set return_date = ?, damage_loss_theft = ? where event_id = ? and asset_id = ?;";
     private static final String SQL_SELECT_RETURN_DATE = "select return_date from assets_events where event_id = ? and asset_id = ?;";
 
@@ -35,7 +35,7 @@ public class AssetCheckInService implements AssetCheckInServiceInterface {
     public AssetCheckInService() {
         this.statList = new ArrayList<>();
         statList.add("none");
-        statList.add("Late");
+//        statList.add("Late");
         statList.add("Damage: 1");
         statList.add("Damage: 2");
         statList.add("Damage: 3");

@@ -133,14 +133,14 @@
                                                 <div class="form-group">
                                                     <select name="damageStatus" class="form-control">
                                                         <option value="none">none</option>
-                                                        <option value="lost">Lost</option>
-                                                        <option value="stolen">Stolen</option>
-                                                        <option value="late">Late</option>
+                                                        <%--<option value="late">Late</option>--%>
                                                         <option value="Damage: 1">Damage: 1</option>
                                                         <option value="Damage: 2">Damage: 2</option>
                                                         <option value="Damage: 3">Damage: 3</option>
                                                         <option value="Damage: 4">Damage: 4</option>
                                                         <option value="Damage: 5">Damage: 5</option>
+                                                        <option value="lost">Lost</option>
+                                                        <option value="stolen">Stolen</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
