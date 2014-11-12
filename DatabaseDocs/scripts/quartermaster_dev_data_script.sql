@@ -142,7 +142,7 @@ INSERT INTO `asset_notes` (`asset_note_id`, `asset_id`, `note_detail`, `note_cat
 (15, 8, 'asset id 8 note 2', 'Lost'),
 (16, 18, 'Just a note about asset id 18', 'none'),
 (17, 19, 'Just a note about asset id 19', 'Damage: 1'),
-(18, 20, 'Just a note about asset id 20' 'Damage: 1'),
+(18, 20, 'Just a note about asset id 20', 'Damage: 1'),
 (19, 21, 'Just a note about asset id 21', 'Damage: 1'),
 (20, 22, 'Just a note about asset id 22', 'Damage: 3'),
 (21, 23, 'Just a note about asset id 23', 'none'),
