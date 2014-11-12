@@ -45,28 +45,60 @@ public class AssetController {
 
         return "browseAssets";
     }
+    
     @RequestMapping(value = {"/fileUploadForm"}, method = RequestMethod.GET)
     public String fileUpload(Model model, HttpServletRequest request) {
         Set<AssetType> types = getSelectedAssetTypes(request.getParameter("selectCategory"));
         model.addAttribute("categoryList", assetDao.getAllCategories());
         model.addAttribute("assetTypeList", types);
 
+        int typeId;
+        
+        try{
+            typeId =Integer.parseInt(request.getParameter("typeId"));
+        }
+        catch(NumberFormatException e){
+            typeId = 0;
+        }
+        
+        if(assetDao.getAssetTypeById(typeId) == null){
+            model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+        
+        model.addAttribute("typeId", typeId);
+        
         return "fileUploadForm";
     }
     
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String uploadFile(HttpServletRequest req, 
             Model model, 
-            @RequestParam("name") String name, 
+            @RequestParam("name") String name, //also want asset type id (or put on model) do ??
             @RequestParam("uploadFile") MultipartFile file) {
-
+        int typeId;
+        
+        try{
+            typeId =Integer.parseInt(req.getParameter("typeId"));
+        }
+        catch(NumberFormatException e){
+            typeId = 0;
+        }
+        
+        if(assetDao.getAssetTypeById(typeId) == null){
+            model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+            return "redirect:manage_assets";
+        }
+        
+        model.addAttribute("typeId", typeId);
+        
         // only save the file if the user actually uploaded something
         if (!file.isEmpty()) {
             try {
                 // add the filename to the model so we can display it on the success page
                 model.addAttribute("fileName", name);
                 // we want to put the uploaded image into the 'images' folder of our application
-                String savePath = req.getSession().getServletContext().getRealPath("/") + "images/";
+                String savePath = req.getSession().getServletContext().getRealPath("/") + "img/";
                 File dir = new File(savePath);
                 // if 'images' directory is not there, go ahead and create it
                 if (!dir.exists()) {
@@ -78,8 +110,8 @@ public class AssetController {
                 
                 // the success page uses this value in the src attribute of the 
                 // img tag so it can display the newly uploaded file
-                model.addAttribute("imageRef", "../images/" + name);
-                return "fileUploadSuccess";
+                model.addAttribute("imageRef", "img/" + name);
+                return "redirect:updateAssetType";
             } catch (Exception e) {
                 // if we encounter an exception, add the error message to the model
                 // and return back to the file upload form page
@@ -280,6 +312,8 @@ public class AssetController {
 
     @RequestMapping(value = {"/updateAssetType"}, method = RequestMethod.GET)
     public String displayEditAssetType(Model model, HttpServletRequest request) {
+        String imageRef = request.getParameter("imageRef");
+        model.addAttribute("imageRef", imageRef);
         int assetTypeId;
         //error message
         //String badCategoryError = request.getParameter("badCategoryError");

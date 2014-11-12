@@ -57,8 +57,9 @@
                                 <sf:label path="imagePath">Image</sf:label>
                                 </div>
                                 <div class="col-md-9">
-                                <sf:input type="text" path="imagePath" cssClass="form-control"/>
-                                <a href="fileUploadForm">Upload File <a/>
+                                    ${imageRef}
+                                <sf:input type="hidden" path="imagePath" value="${imageRef}"/>
+                                <a href="fileUploadForm?typeId=${assetType.assetTypeId}">Upload File </a>
                                 <sf:errors path="imagePath" cssclass="error"></sf:errors><br/>
                             </div>
                         </div>

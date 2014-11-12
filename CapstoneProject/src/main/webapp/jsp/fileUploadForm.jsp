@@ -27,6 +27,7 @@
                     <label for="uploadFile">Upload File:</label> 
                     <input type="file" id="uploadFile" name="uploadFile"/>
                 </div>
+                <input type="hidden" value="${typeId}" name="typeId"/>
                 <input type="submit" value="Upload File"/>
             </form>
         </div>
