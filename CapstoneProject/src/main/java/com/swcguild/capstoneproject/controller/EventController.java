@@ -151,6 +151,10 @@ public class EventController {
         } catch (NumberFormatException e) {
             eventId = 0;
         }
+        
+        if(eventDao.getEventByEventId(eventId) == null){
+            return "redirect:editEvent?eventId=" + eventId;
+        }
 
         try {
             assetId = Integer.parseInt(req.getParameter("assetId"));
