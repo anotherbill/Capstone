@@ -7,10 +7,14 @@ package com.swcguild.capstoneproject.controller;
 
 import com.swcguild.capstoneproject.dao.interfaces.EventInterface;
 import com.swcguild.capstoneproject.dao.interfaces.UserInterface;
+import com.swcguild.capstoneproject.model.Asset;
 import com.swcguild.capstoneproject.model.Event;
 import com.swcguild.capstoneproject.model.User;
 import com.swcguild.capstoneproject.model.notes.UserNote;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +83,24 @@ public class UserController {
         model.addAttribute("user", user);
         
         Set<Event> userEvents = eventDao.getEventsByUserId(userId);
+       
         model.addAttribute("events", userEvents);
+        Map<Event, Set<Asset>> EventAndAssets = new HashMap<>();
+        
+//        List<Asset> eventAssets = new ArrayList<>();
+        //List<Event> events = new ArrayList<>();
+        
+       // events.addAll(eventDao.getEventsByUserId(userId));
+//        
+//        for (Event e : events) {
+//            eventAssets.addAll(eventDao.getAllAssetsForEvent(e));
+//        }
+        
+        for (Event e : userEvents) {
+            EventAndAssets.put(e, eventDao.getAllAssetsForEvent(e));
+        }
+
+        model.addAttribute("EventAndAssets", EventAndAssets);
         
         return "viewUserInfo";
     }

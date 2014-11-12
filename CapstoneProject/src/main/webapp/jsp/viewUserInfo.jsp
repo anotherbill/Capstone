@@ -30,7 +30,7 @@
             </div>
 
 
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <table class="table table-hover">
 
                     <tr>
@@ -39,65 +39,63 @@
                         <th>Username</th>
                         <th>GoodStanding</th>
                         <th>Enabled</th>
-                        <th>Events/Assets</th>
                     </tr>
                     <tr>
                         <td>${user.name}</td>
                         <td>${user.userName}</td>
                         <td>${user.goodStanding}</td>
                         <td>${user.enabled}</td>
-                        <jstl:forEach var="event" items="${events}">
-                            <td>
-                                <div class="col-md-12"> 
+                    </tr>
+                </table>
+                <h2 class="text-center">Events</h2>
 
-                                    <table class="table table-hover">
+                <div class="col-md-12">
+                    <table class="table table-hover">
+                        <td>
+                            <%-- <jstl:forEach var="event" items="${events}">--%>
 
-                                        <tr>
-                                            <th></th>
-                                            <th>Event Name</th>
-                                            <th>check Out Date</th>
-                                            <th>Due Date</th>
-                                            <th>Assets</th>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
-                                            <td>${event.eventName}</td>
-                                            <td>${event.checkOutDate}</td>
-                                            <td>${event.dueDate}</td>
-                                            <jstl:forEach var="assets" items="${eventAssets}">
-                                                <td>${event.assets}</td>
+                            <jstl:forEach items="${events}" var="userEvents">
 
-                                            <tr/>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Event Name</th>
+                                <th>check Out Date</th>
+                                <th>Due Date</th>
+                                <th>Additional Info</th>
+                            </tr>
+                            <tr>
+                                <td><img class="image-responsive" src="${types.imagePath}" alt="..."></td>
+                                <td>${userEvents.eventName}</td>
+                                <td>${userEvents.checkOutDate}</td>
+                                <td>${userEvents.dueDate}</td>
 
-                                        </jstl:forEach>
-                                    </table>
+                                <td>
+                                    <a href="viewEventInfo?eventId=${userEvents.eventId}" class="btn btn-default">Additional Info</a>
+                                </td>
 
-                                </div>
-                            </td>
+                            <tr/>
+
                         </jstl:forEach>
 
-                    <div class="col-md-8">
-                        <table class="table table-hover">
+                    </table>
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Notes</th>
+                        </tr>
+                        <jstl:forEach var="userNote" items="${userNoteList}"> 
                             <tr>
-                                <th>Notes</th>
+                                <td>${userNote.noteDate}: ${userNote.note}</td>
                             </tr>
-                            <jstl:forEach var="userNote" items="${userNoteList}"> 
-                                <tr>
-                                    <td>${userNote.noteDate}: ${userNote.note}</td>
-                                </tr>
-                            </jstl:forEach>
+                        </jstl:forEach>
 
-                        </table>
-                    </div>
+                    </table>
+                </div>
 
 
-                    <jsp:include page="include/footer.jsp"/>
+                <jsp:include page="include/footer.jsp"/>
             </div>
+        </div>
     </body>
 </html>
