@@ -38,11 +38,11 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "ON at.asset_type_id = a.asset_type_id "
             + "INNER JOIN asset_notes AS an "
             + "ON a.asset_id = an.asset_id "
-            + "WHERE note_category = 'one' "
-            + "OR note_category = 'two' "
-            + "OR note_category = 'three' "
-            + "OR note_category = 'four' "
-            + "OR note_category = 'five' "
+            + "WHERE note_category = 'Damage: 1' "
+            + "OR note_category = 'Damage: 2' "
+            + "OR note_category = 'Damage: 3' "
+            + "OR note_category = 'Damage: 4' "
+            + "OR note_category = 'Damage: 5' "
             + "AND note_date > 6/30/2014 "
             + "GROUP BY c.category_name";
 
@@ -53,11 +53,11 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "ON u.user_id = e.user_id "
             + "INNER JOIN assets_events AS ae "
             + "ON e.event_id = ae.event_id "
-            + "WHERE ae.damage_loss_theft = 'one' "
-            + "OR ae.damage_loss_theft = 'two' "
-            + "OR ae.damage_loss_theft = 'three' "
-            + "OR ae.damage_loss_theft = 'four' "
-            + "OR ae.damage_loss_theft = 'five' "
+            + "WHERE ae.damage_loss_theft = 'Damage: 1' "
+            + "OR ae.damage_loss_theft = 'Damage: 2' "
+            + "OR ae.damage_loss_theft = 'Damage: 3' "
+            + "OR ae.damage_loss_theft = 'Damage: 4' "
+            + "OR ae.damage_loss_theft = 'Damage: 5' "
             + "GROUP BY e.user_id";
 
     private static final String SQL_GET_SEASONAL_UTILIZATION_RATE //chartC (doesn't work)
@@ -112,8 +112,8 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "ON u.user_id = e.user_id "
             + "INNER JOIN assets_events AS ae "
             + "ON e.event_id = ae.event_id "
-            + "WHERE ae.damage_loss_theft = 'lost' "
-            + "OR ae.damage_loss_theft = 'stolen' "
+            + "WHERE ae.damage_loss_theft = 'Lost' "
+            + "OR ae.damage_loss_theft = 'Stolen' "
             + "GROUP BY u.username";
 
     private static final String SQL_GET_LOSS_THEFT_PER_CATEGORY //chartH
@@ -125,8 +125,8 @@ public class GoogleChartDBImpl implements GoogleChartsDao {
             + "ON at.asset_type_id = a.asset_type_id "
             + "INNER JOIN asset_notes AS an "
             + "ON a.asset_id = an.asset_id "
-            + "WHERE note_category = 'lost' "
-            + "OR note_category = 'stolen' "
+            + "WHERE note_category = 'Lost' "
+            + "OR note_category = 'Stolen' "
             + "GROUP BY c.category_name ";
 
     private static final String SQL_GET_LATE_ITEMS_BY_USER //chartI
