@@ -13,9 +13,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Event: Manage Assets</title>
 
-        <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="bootstrapvalidator-0.5.2/dist/js/bootstrapValidator.min.js" type="text/javascript"></script>
+
+
     </head>
     <body>
         <div class="row"><%--Error Message ROW--%>
@@ -39,54 +38,100 @@
                             <%--<th>Availability</th>--%>
                         <th>Damage</th>
                         <th>Serial Number</th>
-                        <th>Notes</th>
+                        <th style="width: 400px">Notes</th>
                         <th>Actions</th>
                     </tr>
 
                     <jstl:forEach var="assets" items="${event.assets}">
+
                         <tr>
                             <td>${assets.assetType.name}</td>
                             <td>${assets.assetType.category.categoryName}</td>
                             <%--<td>${assets.inStock}</td>--%>
                             <td>${assets.damageStatus}</td>
                             <td>${assets.serialNumber}</td>
-                            <td>
-                                <jstl:forEach var="entry" items="${assetNotes}">
-                                    <jstl:forEach items="${entry.value}" var="item" varStatus="loop"> 
-                                        <jstl:if test="${entry.key == assets}">
-                                        <p>${item.noteDate}: ${item.category}: ${item.note}</p>
-                                        </jstl:if>
+                            <td style="width: 400px">
+                                <input type="hidden" value="${assets.assetId}" id="assetId"/>
+
+
+                                <a class="open-${assets.assetId} btn btn-success" role="button" id="open" style="width: 125px">Open Notes</a>
+                                <a class="close-${assets.assetId} btn btn-danger" role="button" id="close" style="width: 125px">Close Notes</a>
+
+                                <div class="notes-${assets.assetId}" id="notes">
+                                    <jstl:forEach var="entry" items="${assetNotes}">
+                                        <jstl:forEach items="${entry.value}" var="item">  
+                                            <jstl:if test="${entry.key == assets}">
+                                                <p>${item.noteDate}: ${item.category}: ${item.note}</p>
+                                            </jstl:if>
+                                        </jstl:forEach>
                                     </jstl:forEach>
-                                </jstl:forEach>
+                                </div>
+
+
                                 <br/><br/>
-                                <input type="hidden" value="${assets.assetId}" name="assetId"/>
-                                
-                                <!--                                <div id="getNotesForAsset-list"></div>
-                                                                <p id="detail-category"></p>
-                                                                <p id="detail-noteDate"></p>
-                                                                <p id="detail-note"></p>-->
                             </td>
                             <td>
 
                                 <a href="removeAssetFromEvent?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a>
                             </td>
                         </tr>
+
+                        <script type="text/javascript">
+
+                            $(document).ready(function () {
+                                $(".close-${assets.assetId}").css("display", "none");
+                                $(".open-${assets.assetId}").css("display", "block");
+                                $(".notes-${assets.assetId}").css("display", "none");
+                            });
+
+                        </script>
+
+
+                        <script type="text/javascript">
+                            function openNotes() {
+                            }
+                            $(document).ready(function () {
+                                $(".open-${assets.assetId}").click(function () {
+                                    $(".open-${assets.assetId}").css("display", "none");
+                                    $(".close-${assets.assetId}").css("display", "block");
+                                    $(".notes-${assets.assetId}").css("display", "block");
+                                });
+
+                            });
+                        </script>
+
+                        
+                        <script type="text/javascript">
+                            function closeNotes() {
+                            }
+                            $(document).ready(function () {
+                                $(".close-${assets.assetId}").click(function () {
+                                    $(".close-${assets.assetId}").css("display", "none");
+                                    $(".open-${assets.assetId}").css("display", "block");
+                                    $(".notes-${assets.assetId}").css("display", "none");
+                                });
+
+                            });
+
+                        </script>
+
+
                     </jstl:forEach>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                
-                            </td>
-                        </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
 
-        <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/js/viewAssetNotes.js"></script>
+
 
         <div class="row"><%--ASSET SELECTION ROW--%>
             <div class="col-md-12">
@@ -138,17 +183,17 @@
             </div>
         </div>
 
-
-        <!-- View Asset Notes Modal -->
-        <div class="modal fade" id="viewAssetNotes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Event's Assets</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12"> 
+        <%--
+                 View Asset Notes Modal 
+                <div class="modal fade" id="viewAssetNotes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Event's Assets</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12"> 
 
                             <table class="table table-hover">
 
@@ -198,7 +243,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
+
 
     </body>
 </html>

@@ -111,6 +111,7 @@ public class EventController {
         Asset asset;
         boolean nullVal;
         Set<Asset> eventAssets = new HashSet<>();
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
 
         //attempt to retrieve Event by Id
         event = retrieveEventById(request);
@@ -119,6 +120,11 @@ public class EventController {
         nullVal = event == null;
         if (nullVal) {
             model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
+
+            for (Asset a : eventAssets) {
+                assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+            }
+            model.addAttribute("assetNotes", assetNotes);
             return "addEventStepTwo";
         }
 
@@ -139,6 +145,11 @@ public class EventController {
         if (nullVal) {
             if (nullVal) {
                 model.addAttribute("badAssetTypeError", BAD_ASSET_TYPE_ERROR_MESSAGE);
+
+                for (Asset a : eventAssets) {
+                    assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+                }
+                model.addAttribute("assetNotes", assetNotes);
             }
             return "addEventStepTwo";
         }
@@ -150,6 +161,12 @@ public class EventController {
         if (nullVal) {
             if (nullVal) {
                 model.addAttribute("unavailableAssetError", NO_SUCH_ASSET_AVAILABLE_PART1 + assetType.getName() + NO_SUCH_ASSET_AVAILABLE_PART2);
+
+                eventAssets = eventDao.getAllAssetsForEvent(event);
+                for (Asset a : eventAssets) {
+                    assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+                }
+                model.addAttribute("assetNotes", assetNotes);
             }
             return "addEventStepTwo";
         }
@@ -167,8 +184,6 @@ public class EventController {
         event.setAssets(eventAssets);
         eventDao.editEvent(event);
 
-        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
-
         for (Asset a : eventAssets) {
             assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
         }
@@ -184,6 +199,7 @@ public class EventController {
         Event event = retrieveEventById(request);
         Asset asset;
         Set<Asset> eventAssets;
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
 
         //resolve invalid eventId
         if (event == null) {
@@ -225,10 +241,15 @@ public class EventController {
             assetDao.editAsset(asset);
         }
 
+        for (Asset a : eventAssets) {
+            assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+        }
+        model.addAttribute("assetNotes", assetNotes);
+
         return "addEventStepTwo";
 
     }
-    
+
     //Open/ Close Events
     @RequestMapping(value = "/closeEvent", method = RequestMethod.GET)
     public String closeEvent(Model model, @RequestParam("eventId") int eventId) {
@@ -248,6 +269,13 @@ public class EventController {
     @RequestMapping(value = "/viewEventInfo", method = RequestMethod.GET)
     public String showEventInfo(Model model, @RequestParam("eventId") int eventId) {
         Event event = eventDao.getEventByEventId(eventId);
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
+        Set<Asset> eventAssets = eventDao.getAllAssetsForEvent(event);
+        for (Asset a : eventAssets) {
+            assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+        }
+        model.addAttribute("assetNotes", assetNotes);
+        
         model.addAttribute("event", event);
         return "viewEventInfo";
     }
@@ -273,7 +301,7 @@ public class EventController {
         eventDao.addNoteToEvent(eventNote.getNote(), eventNote.getEventId());
         return "redirect:eventAddNote?eventId=" + eventNote.getEventId();
     }
-    
+
     //Event Editing Methods
     @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
     public String showEditEventPage(Model model, HttpServletRequest request) {
@@ -284,18 +312,17 @@ public class EventController {
         List<Asset> assetsCheckedOutForEvent;
         Set<Category> categoryList;
         Set<AssetType> assetTypeList;
-        
+
         //retrieve selected event
-        try{
+        try {
             eventId = Integer.parseInt(request.getParameter("eventId"));
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             eventId = 0;
         }
-        
+
         eventToEdit = eventDao.getEventByEventId(eventId);
-        
-        if(eventToEdit == null){
+
+        if (eventToEdit == null) {
             model.addAttribute("badEventError", BAD_EVENT_ERROR_MESSAGE);
             return "redirect:home";
         }
@@ -305,7 +332,8 @@ public class EventController {
         assetsCheckedOutForEvent = new ArrayList<>();
         assetsCheckedOutForEvent.addAll(eventDao.getAllAssetsForEvent(eventToEdit));
         model.addAttribute("assetCheckedOutList", assetsCheckedOutForEvent);
-        
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
+
         //retrieve return dates (if any) for each asset in order
         for (Asset a : assetsCheckedOutForEvent) {
             returnDates.add(checkIn.getReturnDate(eventId, a.getAssetId()));
@@ -318,10 +346,15 @@ public class EventController {
 
         assetTypeList = assetDao.getAllAssetTypes();
         model.addAttribute("assetTypeList", assetTypeList);
-        
+
         //error message
         badAssetError = request.getParameter("badAssetError");
         model.addAttribute("badAssetError", badAssetError);
+        
+        for (Asset a : assetsCheckedOutForEvent) {
+            assetNotes.put(a, assetDao.getAssetNotes(a.getAssetId()));
+        }
+        model.addAttribute("assetNotes", assetNotes);
 
         return "editEvent";
     }
@@ -335,15 +368,18 @@ public class EventController {
         User eventUser = userDao.getUserByUserId(userId);
         event.setUser(eventUser);
         event.setOpen(open);
-        
+        Map<Asset, List<AssetNote>> assetNotes = new HashMap<>();
+
         //retrieve assets from existing event and attach to updated event before writing to DB
         oldEvent = eventDao.getEventByEventId(event.getEventId());
         eventAssets = oldEvent.getAssets();
         event.setAssets(eventAssets);
-        
+
         //update event in database
         eventDao.editEvent(event);
 //        return "redirect:viewEventInfo?eventId=" + event.getEventId();
+        
+        
         return "redirect:editEvent?eventId=" + event.getEventId();
     }
 
@@ -370,11 +406,11 @@ public class EventController {
             assetId = 0;
         }
 
-        if(assetDao.getAssetById(assetId) == null){
+        if (assetDao.getAssetById(assetId) == null) {
             model.addAttribute("badAssetError", BAD_ASSET_ERROR_MESSAGE);
             return "redirect:editEvent?eventId=" + eventId;
         }
-        
+
         checkIn.checkInAsset(eventId, assetId, damageStatus);
         return "redirect:editEvent?eventId=" + eventId;
     }
