@@ -8,8 +8,8 @@
 $(document).ready(function () {
     //loadAssets();
     //loadAssetNotes();
-    getNotesForAsset();
-    checkedInOutAssets();
+    //getNotesForAsset();
+    //checkedInOutAssets();
     
     $('#addAsset').click(function() {
         $.ajax({

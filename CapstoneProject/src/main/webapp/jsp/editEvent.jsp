@@ -29,9 +29,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <a href="viewEventInfo?eventId=${event.eventId}" class="btn btn-default">< Back to Event Info</a><br>
-                    
+
                     <span style="color: #ee0000">${badAssetError}</span>
-                    
+
                     <br>
                 </div>
             </div>
@@ -99,9 +99,9 @@
                             <th>Category</th>
                             <th>Due</th>
                             <th>Returned</th>
-                                <%--<th>Status</th>--%>
                             <th>Damage</th>
                             <th>Serial Number</th>
+                            <th>Notes</th>
                             <th>Actions</th>
                         </tr>
                         <jstl:forEach var="assets" items="${assetCheckedOutList}" varStatus="i">
@@ -128,37 +128,96 @@
                                 </td>--%>
                                 <td>${assets.damageStatus}</td>
                                 <td>${assets.serialNumber}</td>
-                                <td>
-                                    <a href="viewAssetNotes?assetId=${assets.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                    <jstl:if test="${returnDates[i.index]==null}">
+                                <td style="width: 400px">
+                                    <input type="hidden" value="${assets.assetId}" id="assetId"/>
 
-                                        <div class="panel panel-primary" style="padding:12px">
-                                            <form role="form" method="get" action="checkInAsset">
-                                                <div class="form-group">
-                                                    <select name="damageStatus" class="form-control">
-                                                        <option value="none">none</option>
-                                                        <%--<option value="late">Late</option>--%>
-                                                        <option value="Damage: 1">Damage: 1</option>
-                                                        <option value="Damage: 2">Damage: 2</option>
-                                                        <option value="Damage: 3">Damage: 3</option>
-                                                        <option value="Damage: 4">Damage: 4</option>
-                                                        <option value="Damage: 5">Damage: 5</option>
-                                                        <option value="lost">Lost</option>
-                                                        <option value="stolen">Stolen</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="hidden" value="${assets.assetId}" name="assetId"/>
-                                                    <input type="hidden" value="${event.eventId}" name="eventId"/>
-                                                    <input type="submit" value="Check In" class="form-control"/>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <%--
-                                <a href="checkInAsset?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Check In</a>
-                                        --%>
-                                    </jstl:if>
+
+                                    <a class="open-${assets.assetId} btn btn-success" role="button" id="open" style="width: 125px">Open Notes</a>
+                                    <a class="close-${assets.assetId} btn btn-danger" role="button" id="close" style="width: 125px">Close Notes</a>
+
+                                    <div class="notes-${assets.assetId}" id="notes">
+                                        <jstl:forEach var="entry" items="${assetNotes}">
+                                            <jstl:forEach items="${entry.value}" var="item">  
+                                                <jstl:if test="${entry.key == assets}">
+                                                    <p>${item.noteDate}: ${item.category}: ${item.note}</p>
+                                                </jstl:if>
+                                            </jstl:forEach>
+                                        </jstl:forEach>
+                                    </div>
+
+
+                                    <br/><br/>
                                 </td>
+
+
+                            <script type="text/javascript">
+
+                                $(document).ready(function () {
+                                    $(".close-${assets.assetId}").css("display", "none");
+                                    $(".open-${assets.assetId}").css("display", "block");
+                                    $(".notes-${assets.assetId}").css("display", "none");
+                                });
+
+                            </script>
+
+
+                            <script type="text/javascript">
+                                function openNotes() {
+                                }
+                                $(document).ready(function () {
+                                    $(".open-${assets.assetId}").click(function () {
+                                        $(".open-${assets.assetId}").css("display", "none");
+                                        $(".close-${assets.assetId}").css("display", "block");
+                                        $(".notes-${assets.assetId}").css("display", "block");
+                                    });
+
+                                });
+                            </script>
+
+
+                            <script type="text/javascript">
+                                function closeNotes() {
+                                }
+                                $(document).ready(function () {
+                                    $(".close-${assets.assetId}").click(function () {
+                                        $(".close-${assets.assetId}").css("display", "none");
+                                        $(".open-${assets.assetId}").css("display", "block");
+                                        $(".notes-${assets.assetId}").css("display", "none");
+                                    });
+
+                                });
+
+                            </script>
+                            <td>
+                                <jstl:if test="${returnDates[i.index]==null}">
+
+                                    <div class="panel panel-primary" style="padding:12px">
+                                        <form role="form" method="get" action="checkInAsset">
+                                            <div class="form-group">
+                                                <select name="damageStatus" class="form-control">
+                                                    <option value="none">none</option>
+                                                    <%--<option value="late">Late</option>--%>
+                                                    <option value="Damage: 1">Damage: 1</option>
+                                                    <option value="Damage: 2">Damage: 2</option>
+                                                    <option value="Damage: 3">Damage: 3</option>
+                                                    <option value="Damage: 4">Damage: 4</option>
+                                                    <option value="Damage: 5">Damage: 5</option>
+                                                    <option value="lost">Lost</option>
+                                                    <option value="stolen">Stolen</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" value="${assets.assetId}" name="assetId"/>
+                                                <input type="hidden" value="${event.eventId}" name="eventId"/>
+                                                <input type="submit" value="Check In" class="form-control"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <%--
+                            <a href="checkInAsset?assetId=${assets.assetId}&eventId=${event.eventId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Check In</a>
+                                    --%>
+                                </jstl:if>
+                            </td>
                             </tr>
                         </jstl:forEach>
                     </table>

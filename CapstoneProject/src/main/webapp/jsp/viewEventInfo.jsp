@@ -63,7 +63,7 @@
                             <th>Availability</th>
                             <th>Damage</th>
                             <th>Serial Number</th>
-                            <th>Actions</th>
+                            <th>Notes</th>
                         </tr>
 
                         <jstl:forEach var="asset" items="${event.assets}">
@@ -73,11 +73,70 @@
                                 <td>${asset.inStock}</td>
                                 <td>${asset.damageStatus}</td>
                                 <td>${asset.serialNumber}</td>
+                                <td style="width: 400px">
+                                    <input type="hidden" value="${assets.assetId}" id="assetId"/>
+
+
+                                    <a class="open-${asset.assetId} btn btn-success" role="button" id="open" style="width: 125px">Open Notes</a>
+                                    <a class="close-${asset.assetId} btn btn-danger" role="button" id="close" style="width: 125px">Close Notes</a>
+
+                                    <div class="notes-${asset.assetId}" id="notes">
+                                        <jstl:forEach var="entry" items="${assetNotes}">
+                                            <jstl:forEach items="${entry.value}" var="item">  
+                                                <jstl:if test="${entry.key == asset}">
+                                                    <p>${item.noteDate}: ${item.category}: ${item.note}</p>
+                                                </jstl:if>
+                                            </jstl:forEach>
+                                        </jstl:forEach>
+                                    </div>
+
+
+                                    <br/><br/>
+                                </td>
                                 <td>
-                                    <a href="listAssetNotes?assetId=${asset.assetId}" role="button" class="btn btn-primary glyphicon glyphicon-list-alt">View Asset Notes</a><br/><br/>
-                                    <a href="checkInAsset?assetId=${asset.assetId}" role="button" class="btn btn-danger glyphicon glyphicon-minus">Remove From Event</a><br/><br/>
                                 </td>
                             </tr>
+
+                            <script type="text/javascript">
+
+                                $(document).ready(function () {
+                                    $(".close-${asset.assetId}").css("display", "none");
+                                    $(".open-${asset.assetId}").css("display", "block");
+                                    $(".notes-${asset.assetId}").css("display", "none");
+                                });
+
+                            </script>
+
+
+                            <script type="text/javascript">
+                                function openNotes() {
+                                }
+                                $(document).ready(function () {
+                                    $(".open-${asset.assetId}").click(function () {
+                                        $(".open-${asset.assetId}").css("display", "none");
+                                        $(".close-${asset.assetId}").css("display", "block");
+                                        $(".notes-${asset.assetId}").css("display", "block");
+                                    });
+
+                                });
+                            </script>
+
+
+                            <script type="text/javascript">
+                                function closeNotes() {
+                                }
+                                $(document).ready(function () {
+                                    $(".close-${asset.assetId}").click(function () {
+                                        $(".close-${asset.assetId}").css("display", "none");
+                                        $(".open-${asset.assetId}").css("display", "block");
+                                        $(".notes-${asset.assetId}").css("display", "none");
+                                    });
+
+                                });
+
+                            </script>
+
+
                         </jstl:forEach>
 
                     </table>
