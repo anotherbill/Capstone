@@ -63,7 +63,7 @@
 
                     <jstl:forEach var="asset" items="${assetList}"> 
                         <tr>
-                            <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..."></td>
+                            <td><img class="image-responsive" src="${asset.assetType.imagePath}" alt="..." style="height: 200px; width: 200px"></td>
                             <td>${asset.assetType.category.categoryName}</td>
                             <td>${asset.assetType.name}</td>
                             <td>${asset.inStock}</td>

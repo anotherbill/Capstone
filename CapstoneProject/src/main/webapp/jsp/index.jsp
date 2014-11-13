@@ -34,7 +34,7 @@
 
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="thumbnail">
-                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">
+<!--                                    <img class="img-responsive" data-src="holder.js/242x200" alt="...">-->
                                     <!--add the generated img tag here-->
                                     <div class="caption">
                                         <h4><span>${event.eventName}</span></h4>
