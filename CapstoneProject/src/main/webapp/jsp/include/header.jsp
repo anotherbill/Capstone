@@ -77,7 +77,7 @@
                         <li class="dropdown">
                             <a href="#account" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="signin">Sign In</a>
+                                <li><a href="login">Sign In</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li><a href="#manageMyEventsModal" role="button" data-toggle="modal">View My Events</a>
@@ -88,7 +88,7 @@
                                     <a href="#"></a>
                                 </li>
                                 <li class="divider"></li>
-                                <li class="disabled"><a href="#">Log Out</a>
+                                <li><a href="<c:url value="j_spring_security_logout" />">Log Out</a>
                                 </li>
                             </ul>
                         </li>
