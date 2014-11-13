@@ -187,8 +187,49 @@ INSERT INTO `asset_types` (`asset_type_id`, `name`, `category_id`, `image_path`)
 CREATE TABLE IF NOT EXISTS `authorities` (
   `username` varchar(40) COLLATE latin1_general_ci NOT NULL,
   `authority` varchar(40) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`username`, `authority`),
   KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `authorities`
+--
+DELETE FROM `authorities`;
+INSERT INTO `authorities` (`username`, `authority`) VALUES
+('bill', 'ROLE_USER'),
+('bill', 'ROLE_RETAIL'),
+('bill', 'ROLE_MANAGER'),
+('bill', 'ROLE_ADMIN'),
+('stuart', 'ROLE_USER'),
+('stuart', 'ROLE_RETAIL'),
+('stuart', 'ROLE_MANAGER'),
+('stuart', 'ROLE_ADMIN'),
+('colin', 'ROLE_USER'),
+('colin', 'ROLE_RETAIL'),
+('colin', 'ROLE_MANAGER'),
+('colin', 'ROLE_ADMIN'),
+('jennifer', 'ROLE_USER'),
+('jennifer', 'ROLE_RETAIL'),
+('jennifer', 'ROLE_MANAGER'),
+('jennifer', 'ROLE_ADMIN'),
+('eugene', 'ROLE_USER'),
+('eugene', 'ROLE_RETAIL'),
+('eugene', 'ROLE_MANAGER'),
+('eugene', 'ROLE_ADMIN'),
+('rachel', 'ROLE_USER'),
+('rachel', 'ROLE_RETAIL'),
+('rachel', 'ROLE_MANAGER'),
+('rachel', 'ROLE_ADMIN'),
+('kevin', 'ROLE_USER'),
+('kevin', 'ROLE_RETAIL'),
+('kevin', 'ROLE_MANAGER'),
+('natalie', 'ROLE_USER'),
+('brian', 'ROLE_USER'),
+('brian', 'ROLE_RETAIL'),
+('jakob', 'ROLE_USER'),
+('josephine', 'ROLE_USER'),
+('josephine', 'ROLE_RETAIL'),
+('sean', 'ROLE_USER');
 
 -- --------------------------------------------------------
 
@@ -296,18 +337,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 DELETE FROM `users`;
 INSERT INTO `users` (`user_id`, `username`, `password`, `enabled`, `name`, `good_standing`) VALUES
-(3, 'bill', '', b'1', '1', b'1'),
-(4, 'stuart', '', b'1', '1', b'1'),
-(5, 'colin', '', b'1', '1', b'1'),
-(6, 'jennifer', '', b'1', '1', b'1'),
-(7, 'eugene', '', b'1', '1', b'1'),
-(8, 'rachel', '', b'1', '1', b'1'),
-(9, 'kevin', '', b'1', '0', b'1'),
-(10, 'natalie', '', b'1', '0', b'1'),
-(11, 'brian', '', b'1', '0', b'1'),
-(12, 'jakob', '', b'1', '0', b'1'),
-(13, 'josephine', '', b'1', '0', b'1'),
-(14, 'shawn', '', b'1', '0', b'1');
+(3, 'bill', 'admin', b'1', 'William Conner', b'1'),
+(4, 'stuart', 'admin', b'1', 'Stuart Russell', b'1'),
+(5, 'colin', 'admin', b'1', 'Colin Purvis', b'1'),
+(6, 'jennifer', 'admin', b'1', 'Jennifer Kelly', b'1'),
+(7, 'eugene', 'admin', b'1', 'Eugene Baibourine', b'1'),
+(8, 'rachel', 'admin', b'1', 'Rachel Rodini', b'1'),
+(9, 'kevin', 'password', b'1', 'Kevin Love', b'1'),
+(10, 'natalie', 'password', b'1', 'Natalie Sheerer', b'1'),
+(11, 'brian', 'password', b'1', 'Brian Kurr', b'1'),
+(12, 'jakob', 'password', b'1', 'Jakob Schiffkorn', b'1'),
+(13, 'josephine', 'password', b'1', 'Josephine Lao', b'1'),
+(14, 'sean', 'password', b'1', 'Sean O''Neil', b'1');
 
 -- --------------------------------------------------------
 
