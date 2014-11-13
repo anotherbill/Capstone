@@ -187,6 +187,7 @@ INSERT INTO `asset_types` (`asset_type_id`, `name`, `category_id`, `image_path`)
 CREATE TABLE IF NOT EXISTS `authorities` (
   `username` varchar(40) COLLATE latin1_general_ci NOT NULL,
   `authority` varchar(40) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`username`, `authority`),
   KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
